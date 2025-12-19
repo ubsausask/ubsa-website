@@ -1,0 +1,105 @@
+/* Navbar Wrapper */
+.ubsa-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  /* Gradient from Almost Black to Transparent (as requested) */
+  background: linear-gradient(to bottom, var(--bg-main, #001d1d), transparent);
+  padding: 0 2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Flex Container */
+.nav-container {
+  max-width: 1200px;
+  height: 90px; /* Height of the navbar area */
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo Styling */
+.nav-logo {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-main {
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: var(--btn-pri, #db280a); /* Crimson Red */
+}
+
+.logo-sub {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: var(--text-main, #ffeac8); /* Cream */
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+/* Navigation Links */
+.nav-menu {
+  display: flex;
+  gap: 2.5rem; /* Spacing between links */
+  align-items: center;
+}
+
+.nav-link {
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text-main, #ffeac8);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--accent, #e36f04); /* Tiger Orange */
+}
+
+/* Active State Underline (Optional Polish) */
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--accent, #e36f04);
+}
+
+/* Join Button */
+.btn-join {
+  background-color: var(--btn-pri, #db280a); /* Crimson Red */
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s;
+  display: inline-block;
+}
+
+.btn-join:hover {
+  background-color: #b01f07; /* Darker Crimson */
+  transform: translateY(-2px);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none; /* Hide menu links on mobile */
+  }
+  
+  .ubsa-navbar {
+    padding: 0 1.5rem;
+  }
+}

@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ubsa-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      # Syncs your local folder with the container so changes update instantly
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Helps hot-reload work on Windows
+    stdin_open: true
+    tty: true
+
+  # backend: 
+  #   # Uncomment and configure this when you are ready to work on the backend
+  #   build: ./backend
+  #   ports:
+  #     - "5000:5000"
