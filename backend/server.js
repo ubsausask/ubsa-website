@@ -21,6 +21,14 @@ app.get('/', (req, res) => {
 
 // --- ROUTES WILL GO HERE LATER ---
 // app.use('/api/events', require('./routes/eventRoutes'));
+// Add these lines to your existing server.js
+const eventRoutes = require('./routes/eventRoutes');
+
+// Make the uploads folder accessible to the browser
+app.use('/uploads', express.static('uploads'));
+
+// Use the routes
+app.use('/api/events', eventRoutes);
 
 // Start Server
 app.listen(PORT, () => {

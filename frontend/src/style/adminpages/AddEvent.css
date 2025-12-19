@@ -1,0 +1,72 @@
+.add-event-page {
+  padding-top: 140px;
+  max-width: 600px;
+  margin: 0 auto;
+  min-height: 100vh;
+  color: white;
+  padding-bottom: 4rem;
+}
+
+.add-event-page h1 {
+  text-align: center;
+  color: #e36f04;
+  margin-bottom: 2rem;
+}
+
+.event-form {
+  background: #001313;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #004f26;
+}
+
+.event-form label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.event-form input, 
+.event-form textarea, 
+.event-form select {
+  width: 100%;
+  padding: 0.8rem;
+  background: #002b2b;
+  border: 1px solid #004f26;
+  color: white;
+  border-radius: 6px;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row div {
+  flex: 1;
+}
+
+.btn-submit {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 1rem;
+  background: #db280a;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.btn-submit:hover {
+  background: #b01f07;
+}
+
+.status-msg {
+  text-align: center;
+  background: rgba(255,255,255,0.1);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+}

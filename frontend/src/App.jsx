@@ -8,6 +8,7 @@ import Gallery from './pages/Gallery';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Sponsors from './pages/Sponsors';
+import AddEvent from './pages/adminpages/AddEvent';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/sponsors" element={<Sponsors />} />
+        <Route path="/admin/add-event" element={<AddEvent />} />
       </Routes>
       <Footer />
     </Router>

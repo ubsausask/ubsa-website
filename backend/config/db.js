@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const pool = mysql.createPool({
+const dbConfig = {
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -11,11 +11,27 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
-});
+};
 
-// Convert pool to promise-based (easier to use with async/await)
-const promisePool = pool.promise();
+let pool;
 
-console.log(`Shahed your MySQL Database Connected: ${process.env.DB_NAME}`);
+try {
+  pool = mysql.createPool(dbConfig);
+  // Convert pool to promise-based
+  const promisePool = pool.promise();
+  
+  // Test connection
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error('❌ DB Connection Failed:', err.code);
+      console.error('   (The server will restart automatically via Docker)');
+    } else {
+      console.log(`✅ Connected to MySQL Database: ${process.env.DB_NAME}`);
+      connection.release();
+    }
+  });
 
-module.exports = promisePool;
+  module.exports = promisePool;
+} catch (error) {
+  console.error('DB Config Error:', error);
+}

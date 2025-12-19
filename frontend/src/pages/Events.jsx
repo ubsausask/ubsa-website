@@ -1,123 +1,111 @@
-import React, { useState } from 'react';
-import eventBg from '../assets/Event_page.webp'; // Import your image
-import '../style/Events.css';
+import React, { useState, useEffect } from "react";
+import "../style/Events.css";
 
 export default function Events() {
-  const [view, setView] = useState('upcoming');
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // --- MOCK DATA ---
-  const eventsData = {
-    upcoming: [
-      {
-        id: 1,
-        title: "Pohela Boishakh 1432",
-        date: "April 14, 2025",
-        time: "10:00 AM - 4:00 PM",
-        location: "Physics Bowl, USask",
-        description: "Join us for the biggest Bengali New Year celebration in Saskatchewan! Food, music, and colors await.",
-        image: "https://images.unsplash.com/photo-1604606774045-3bb7c2658a46?auto=format&fit=crop&q=80&w=800",
-        link: "#register"
-      },
-      {
-        id: 2,
-        title: "Annual Badminton Tournament",
-        date: "May 20, 2025",
-        time: "5:00 PM",
-        location: "PAC Gym",
-        description: "Compete for the cup! Singles and doubles categories available for all skill levels.",
-        image: "https://images.unsplash.com/photo-1626224583764-847890e05399?auto=format&fit=crop&q=80&w=800",
-        link: "#register"
-      }
-    ],
-    past: [
-      {
-        id: 3,
-        title: "Freshers' Reception 2024",
-        date: "September 15, 2024",
-        location: "Louis' Loft",
-        description: "Welcoming our new batch of students with open arms and warm chai.",
-        image: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&q=80&w=800"
-      },
-      {
-        id: 4,
-        title: "International Mother Language Day",
-        date: "February 21, 2024",
-        location: "Arts Building",
-        description: "Honoring the martyrs and celebrating the diversity of languages at USask.",
-        image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800"
-      }
-    ]
+  // 1. CALL THE BACKEND API
+  useEffect(() => {
+    fetch('http://localhost:5000/api/events')
+      .then(res => res.json())
+      .then(data => {
+        setEvents(data); // Store the data from the database
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Error fetching events:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  // 2. Filter events (Upcoming vs Past)
+  const upcomingEvents = events.filter(e => e.type === 'upcoming');
+  const pastEvents = events.filter(e => e.type === 'past');
+
+  // Helper to format dates nicely (e.g., "Dec 25")
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return {
+      month: date.toLocaleString('default', { month: 'short' }),
+      day: date.getDate() + 1 // +1 fixes a common timezone "off by one" bug
+    };
   };
 
-  const activeEvents = eventsData[view];
+  // Helper to fix image URLs
+  // The backend sends "/uploads/image.jpg", so we add "http://localhost:5000"
+  const getImageUrl = (url) => {
+    if (!url) return 'https://placehold.co/600x400';
+    return url.startsWith('http') ? url : `http://localhost:5000${url}`;
+  };
+
+  if (loading) return <div className="loading-text" style={{paddingTop: '150px', color: 'white', textAlign: 'center'}}>Loading events...</div>;
 
   return (
     <div className="events-page">
       
-      {/* FIXED BACKGROUND LAYER */}
-      <div className="fixed-bg-layer" style={{ backgroundImage: `url(${eventBg})` }}>
-        <div className="bg-overlay"></div>
+      {/* HEADER */}
+      <div className="events-header">
+        <h1 className="page-title">
+          Our <span className="text-highlight">Gatherings</span>
+        </h1>
+        <p className="page-subtitle">
+          Join us in celebrating culture, innovation, and community spirit.
+        </p>
       </div>
 
-      {/* SCROLLABLE CONTENT */}
-      <div className="events-content-wrapper">
+      {/* SECTION 1: UPCOMING EVENTS */}
+      <section className="events-section">
+        <h2 className="section-title">📅 Upcoming Events</h2>
         
-        {/* Page Header */}
-        <div className="events-header">
-          <h1 className="page-title">Events & <span className="text-highlight">Gatherings</span></h1>
-          <p className="page-subtitle">
-            From cultural festivals to sports tournaments, we keep the spirit of Bengal alive in Saskatoon.
-          </p>
-        </div>
-
-        {/* Filter Toggles */}
-        <div className="events-filter">
-          <button 
-            className={`filter-btn ${view === 'upcoming' ? 'active' : ''}`}
-            onClick={() => setView('upcoming')}
-          >
-            Upcoming
-          </button>
-          <button 
-            className={`filter-btn ${view === 'past' ? 'active' : ''}`}
-            onClick={() => setView('past')}
-          >
-            Past Memories
-          </button>
-        </div>
-
-        {/* Events Grid */}
-        <div className="events-grid">
-          {activeEvents.map((event) => (
-            <div key={event.id} className="event-card">
-              <div className="card-image-wrapper">
-                <img src={event.image} alt={event.title} className="card-image" />
-                <div className="card-date-badge">
-                  {event.date.split(',')[0]}
+        {upcomingEvents.length === 0 ? (
+          <p className="no-events" style={{color: '#aaa', textAlign: 'center'}}>No upcoming events scheduled. Stay tuned!</p>
+        ) : (
+          <div className="events-grid">
+            {upcomingEvents.map((event) => {
+              const { month, day } = formatDate(event.date);
+              return (
+                <div key={event.id} className="event-card upcoming">
+                  <div className="card-image">
+                    <img src={getImageUrl(event.image_url)} alt={event.title} />
+                    <div className="date-badge">
+                      <span className="month">{month}</span>
+                      <span className="day">{day}</span>
+                    </div>
+                  </div>
+                  <div className="card-content">
+                    <h3>{event.title}</h3>
+                    <div className="event-meta">
+                      {event.time && <span>🕒 {event.time}</span>}
+                      {event.location && <span>📍 {event.location}</span>}
+                    </div>
+                    <p>{event.description}</p>
+                  </div>
                 </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
+
+      {/* SECTION 2: PAST MEMORIES */}
+      <section className="events-section past-section">
+        <h2 className="section-title">🕰️ Past Memories</h2>
+        <div className="events-grid">
+          {pastEvents.map((event) => (
+            <div key={event.id} className="event-card past">
+              <div className="card-image">
+                <img src={getImageUrl(event.image_url)} alt={event.title} />
               </div>
               <div className="card-content">
-                <h3 className="card-title">{event.title}</h3>
-                <div className="card-meta">
-                  <span>📍 {event.location}</span>
-                  {event.time && <span>⏰ {event.time}</span>}
-                </div>
-                <p className="card-desc">{event.description}</p>
-                {view === 'upcoming' && (
-                  <a href={event.link} className="card-cta">Register Now →</a>
-                )}
+                <h3>{event.title}</h3>
+                <p>{event.description}</p>
               </div>
             </div>
           ))}
         </div>
-
-        {activeEvents.length === 0 && (
-          <div className="no-events">
-            <p>No events found in this category.</p>
-          </div>
-        )}
-
-      </div>
+      </section>
+      
     </div>
   );
 }
