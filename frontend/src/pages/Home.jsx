@@ -1,16 +1,21 @@
 import React from 'react';
 import TigerHero from '../components/TigerHero';
-import Gallery from './Gallery'; // Importing your Gallery page
+import Gallery from './Gallery';
+import Events from './Events'; 
 
 export default function Home() {
   return (
     <>
-      {/* 1. Hero Animation Section */}
       <TigerHero />
 
-      {/* 2. Gallery Section (Appears after scrolling past the Tiger) */}
+      {/* Main Content */}
       <div style={{ position: 'relative', zIndex: 10, background: '#001d1d' }}>
+        
+        {/* Pass isHome={true} to fix the layout! */}
+        <Events isHome={true} />
+
         <Gallery />
+        
       </div>
     </>
   );

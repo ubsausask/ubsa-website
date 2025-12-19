@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "../style/Events.css";
 
-export default function Events() {
+export default function Events({ isHome = false }) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedEvent, setSelectedEvent] = useState(null); // State for Modal
 
-  // 1. CALL THE BACKEND API
   useEffect(() => {
     fetch('http://localhost:5000/api/events')
       .then(res => res.json())
       .then(data => {
-        setEvents(data); // Store the data from the database
+        setEvents(data);
         setLoading(false);
       })
       .catch(err => {
@@ -19,53 +19,100 @@ export default function Events() {
       });
   }, []);
 
-  // 2. Filter events (Upcoming vs Past)
-  const upcomingEvents = events.filter(e => e.type === 'upcoming');
-  const pastEvents = events.filter(e => e.type === 'past');
+  // --- Filtering Logic ---
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  // Helper to format dates nicely (e.g., "Dec 25")
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return {
-      month: date.toLocaleString('default', { month: 'short' }),
-      day: date.getDate() + 1 // +1 fixes a common timezone "off by one" bug
-    };
-  };
+  const upcomingEvents = events
+    .filter(e => {
+      const d = new Date(e.date); d.setHours(0,0,0,0);
+      return d >= today;
+    })
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-  // Helper to fix image URLs
-  // The backend sends "/uploads/image.jpg", so we add "http://localhost:5000"
+  const pastEvents = events
+    .filter(e => {
+      const d = new Date(e.date); d.setHours(0,0,0,0);
+      return d < today;
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  // On Home page, maybe limit items? (Optional: currently showing ALL)
+  const showUpcoming = isHome ? upcomingEvents.slice(0, 3) : upcomingEvents;
+  const showPast = isHome ? pastEvents.slice(0, 3) : pastEvents;
+
   const getImageUrl = (url) => {
     if (!url) return 'https://placehold.co/600x400';
     return url.startsWith('http') ? url : `http://localhost:5000${url}`;
   };
 
-  if (loading) return <div className="loading-text" style={{paddingTop: '150px', color: 'white', textAlign: 'center'}}>Loading events...</div>;
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return {
+      month: date.toLocaleString('default', { month: 'short' }),
+      day: date.getDate(),
+      full: date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+    };
+  };
+
+  // --- MODAL COMPONENT ---
+  const EventModal = ({ event, onClose }) => {
+    if (!event) return null;
+    return (
+      <div className="event-modal-overlay" onClick={onClose}>
+        <div className="event-modal-glass" onClick={(e) => e.stopPropagation()}>
+          <button className="modal-close-btn" onClick={onClose}>&times;</button>
+          
+          <div className="modal-content-wrapper">
+            {/* LEFT: Details */}
+            <div className="modal-details">
+              <h2 className="modal-title">{event.title}</h2>
+              <div className="modal-meta-row">
+                <span className="meta-tag">📅 {formatDate(event.date).full}</span>
+                {event.time && <span className="meta-tag">⏰ {event.time}</span>}
+              </div>
+              {event.location && <p className="modal-location">📍 {event.location}</p>}
+              
+              <div className="modal-description-scroll">
+                <p>{event.description}</p>
+              </div>
+            </div>
+
+            {/* RIGHT: Photo */}
+            <div className="modal-image-col">
+              <img src={getImageUrl(event.image_url)} alt={event.title} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  if (loading) return <div className="loading-text">Loading...</div>;
 
   return (
-    <div className="events-page">
+    <div className={`events-page ${isHome ? 'is-home' : ''}`}>
       
-      {/* HEADER */}
-      <div className="events-header">
-        <h1 className="page-title">
-          Our <span className="text-highlight">Gatherings</span>
-        </h1>
-        <p className="page-subtitle">
-          Join us in celebrating culture, innovation, and community spirit.
-        </p>
-      </div>
+      {/* 1. Page Header (Hidden on Home) */}
+      {!isHome && (
+        <div className="events-header">
+          <h1 className="page-title">Our <span className="text-highlight">Gatherings</span></h1>
+          <p className="page-subtitle">Celebrating culture, innovation, and community spirit.</p>
+        </div>
+      )}
 
-      {/* SECTION 1: UPCOMING EVENTS */}
-      <section className="events-section">
-        <h2 className="section-title">📅 Upcoming Events</h2>
-        
-        {upcomingEvents.length === 0 ? (
-          <p className="no-events" style={{color: '#aaa', textAlign: 'center'}}>No upcoming events scheduled. Stay tuned!</p>
-        ) : (
+      {/* 2. UPCOMING SECTION */}
+      {showUpcoming.length > 0 && (
+        <section className="events-section">
+          {/* Use specific styles for Home headers to match your theme */}
+          <h2 className={isHome ? "home-section-title" : "section-title"}>
+            {isHome ? "Upcoming Events" : "📅 Upcoming Events"}
+          </h2>
           <div className="events-grid">
-            {upcomingEvents.map((event) => {
+            {showUpcoming.map((event) => {
               const { month, day } = formatDate(event.date);
               return (
-                <div key={event.id} className="event-card upcoming">
+                <div key={event.id} className="event-card upcoming" onClick={() => setSelectedEvent(event)}>
                   <div className="card-image">
                     <img src={getImageUrl(event.image_url)} alt={event.title} />
                     <div className="date-badge">
@@ -76,36 +123,43 @@ export default function Events() {
                   <div className="card-content">
                     <h3>{event.title}</h3>
                     <div className="event-meta">
-                      {event.time && <span>🕒 {event.time}</span>}
-                      {event.location && <span>📍 {event.location}</span>}
+                      <span>{event.time || "All Day"}</span>
+                      <span>{event.location || "TBA"}</span>
                     </div>
-                    <p>{event.description}</p>
                   </div>
                 </div>
               );
             })}
           </div>
-        )}
-      </section>
+        </section>
+      )}
 
-      {/* SECTION 2: PAST MEMORIES */}
-      <section className="events-section past-section">
-        <h2 className="section-title">🕰️ Past Memories</h2>
-        <div className="events-grid">
-          {pastEvents.map((event) => (
-            <div key={event.id} className="event-card past">
-              <div className="card-image">
-                <img src={getImageUrl(event.image_url)} alt={event.title} />
+      {/* 3. PAST SECTION (Now Visible on Home too!) */}
+      {showPast.length > 0 && (
+        <section className="events-section past-section">
+          <h2 className={isHome ? "home-section-title" : "section-title"}>
+            {isHome ? "Past Memories" : "🕰️ Past Memories"}
+          </h2>
+          <div className="events-grid">
+            {showPast.map((event) => (
+              <div key={event.id} className="event-card past" onClick={() => setSelectedEvent(event)}>
+                <div className="card-image">
+                  <img src={getImageUrl(event.image_url)} alt={event.title} />
+                </div>
+                <div className="card-content">
+                  <h3>{event.title}</h3>
+                  <div className="event-meta">
+                     <span>{formatDate(event.date).full}</span>
+                  </div>
+                </div>
               </div>
-              <div className="card-content">
-                <h3>{event.title}</h3>
-                <p>{event.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-      
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 4. MODAL POPUP */}
+      {selectedEvent && <EventModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />}
     </div>
   );
 }
