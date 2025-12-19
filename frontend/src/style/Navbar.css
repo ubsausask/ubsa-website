@@ -5,49 +5,53 @@
   left: 0;
   width: 100%;
   z-index: 100;
-  /* Gradient from Almost Black to Transparent (as requested) */
-  background: linear-gradient(to bottom, var(--bg-main, #001d1d), transparent);
+  background: linear-gradient(to bottom, var(--bg-main, #001d1d) 10%, transparent);
   padding: 0 2rem;
   font-family: 'Inter', sans-serif;
+  transition: background 0.3s ease;
+  
+  /* CRITICAL FIX: Ensures padding doesn't push elements off screen */
+  box-sizing: border-box; 
 }
 
 /* Flex Container */
 .nav-container {
   max-width: 1200px;
-  height: 90px; /* Height of the navbar area */
+  height: 90px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%; /* Ensures it fills the allowed space */
 }
 
-/* Logo Styling */
+/* Logo Button Styling */
 .nav-logo {
-  text-decoration: none;
   display: flex;
-  flex-direction: column;
-  line-height: 1.1;
+  align-items: center;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
+  
+  /* Prevent logo from shrinking if space is tight */
+  flex-shrink: 0; 
 }
 
-.logo-main {
-  font-weight: 900;
-  font-size: 1.8rem;
-  color: var(--btn-pri, #db280a); /* Crimson Red */
+.nav-logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 8px rgba(227, 111, 4, 0.4));
 }
 
-.logo-sub {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  color: var(--text-main, #ffeac8); /* Cream */
-  text-transform: uppercase;
-  opacity: 0.9;
+.logo-img {
+  height: 70px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 /* Navigation Links */
 .nav-menu {
   display: flex;
-  gap: 2.5rem; /* Spacing between links */
+  gap: 2.5rem;
   align-items: center;
 }
 
@@ -62,10 +66,9 @@
 
 .nav-link:hover,
 .nav-link.active {
-  color: var(--accent, #e36f04); /* Tiger Orange */
+  color: var(--accent, #e36f04);
 }
 
-/* Active State Underline (Optional Polish) */
 .nav-link.active::after {
   content: '';
   position: absolute;
@@ -76,30 +79,44 @@
   background-color: var(--accent, #e36f04);
 }
 
+/* Join Button Container */
+.nav-cta {
+  flex-shrink: 0; /* Prevents button from being squashed */
+}
+
 /* Join Button */
 .btn-join {
-  background-color: var(--btn-pri, #db280a); /* Crimson Red */
+  background-color: var(--btn-pri, #db280a);
   color: #fff;
   padding: 0.7rem 1.5rem;
   border-radius: 4px;
   font-weight: bold;
   text-decoration: none;
   transition: background-color 0.3s ease, transform 0.2s;
-  display: inline-block;
+  white-space: nowrap; /* Prevents text from wrapping */
 }
 
 .btn-join:hover {
-  background-color: #b01f07; /* Darker Crimson */
+  background-color: #b01f07;
   transform: translateY(-2px);
 }
 
-/* Mobile Responsiveness */
+/* --- MOBILE FIXES --- */
 @media (max-width: 768px) {
-  .nav-menu {
-    display: none; /* Hide menu links on mobile */
+  .nav-menu { display: none; }
+  
+  .ubsa-navbar { 
+    /* Reduce side padding on mobile to give content more room */
+    padding: 0 1rem; 
   }
   
-  .ubsa-navbar {
-    padding: 0 1.5rem;
+  .logo-img { 
+    height: 50px; /* Resize logo for smaller header */
+  }
+
+  /* Compact Button for Mobile */
+  .btn-join {
+    padding: 0.5rem 1rem; /* Smaller padding */
+    font-size: 0.85rem;   /* Slightly smaller text */
   }
 }

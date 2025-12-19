@@ -1,0 +1,30 @@
+:root {
+  /* --- UBSA 2025 Color Palette --- */
+  
+  /* Backgrounds */
+  --bg-main:   #001d1d; /* Almost Black - Main Background */
+  --bg-sec:    #004f26; /* Forest Green - Secondary Blocks/Borders */
+  
+  /* Typography */
+  --text-main: #ffeac8; /* Cream - Primary Text */
+  --text-mute: rgba(255, 234, 200, 0.7); /* Muted Cream */
+  
+  /* Headings */
+  --head-main: #e36f04; /* Tiger Orange - Hero Titles */
+  --head-sub:  #ffeac8; /* Cream - Standard Headings */
+  
+  /* Buttons & Accents */
+  --btn-pri:   #db280a; /* Crimson Red - Primary CTA */
+  --btn-sec:   #047338; /* Kelly Green - Secondary Buttons/Tags */
+  --accent:    #e36f04; /* Tiger Orange - Icons/Highlights */
+} /* <--- CLOSE ROOT HERE */
+
+/* Global Reset */
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  margin: 0;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+a { text-decoration: none; }

@@ -1,28 +1,27 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import logo from '../assets/UBSA_Logo.png'; // Correctly points to your new transparent file
 import '../style/Navbar.css';
 
 export default function Navbar() {
   const location = useLocation();
-
-  // Helper to check active link for styling
   const isActive = (path) => location.pathname === path ? 'active' : '';
 
   return (
     <header className="ubsa-navbar">
       <div className="nav-container">
         
-        {/* Logo Section */}
-        <Link to="/" className="nav-logo">
-          <span className="logo-main">UBSA</span>
-          <span className="logo-sub">USASK</span>
+        {/* Logo acting as the Home Button */}
+        <Link to="/" className="nav-logo" aria-label="Return to Home">
+          <img 
+            src={logo} 
+            alt="UBSA Home" 
+            className="logo-img" 
+          />
         </Link>
 
         {/* Navigation Links */}
         <nav className="nav-menu">
-          <Link to="/" className={`nav-link ${isActive('/')}`}>
-            Home
-          </Link>
           <Link to="/events" className={`nav-link ${isActive('/events')}`}>
             Events
           </Link>
@@ -31,7 +30,7 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        {/* CTA Button */}
+        {/* Join Button */}
         <div className="nav-cta">
           <a href="mailto:ubsa.usask@gmail.com" className="btn-join">
             Join Us

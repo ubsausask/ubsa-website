@@ -9,3 +9,14 @@ Gallery — showcase cultural nights, celebrations, etc.
 Contact / Socials — contact info, email form, social links
 
 Sponsors & Donation — Sponsors logos, names with Donation Options
+
+
+Element,Color Code & Name,Usage Description
+Primary Background,#001d1d (Almost Black),The main background. It makes the oranges and bright greens glow.
+Secondary Background,#004f26 (Forest Green),"Use for headers, footers, or distinct section blocks to break up the black."
+Primary Font,#ffeac8 (Cream),Main body text. Much easier on the eyes than pure white on a dark background.
+Heading Font,#ffeac8 (Cream) or #e36f04 (Tiger Orange),"Use Cream for standard headings, use Orange for very impactful hero titles."
+Primary Button (CTA),BG: #db280a (Crimson Red)Text: #ffeac8 (Cream),This red-orange pops incredibly well against the dark background for primary actions.
+Secondary Button,BG: #047338 (Kelly Green)Text: #ffeac8 (Cream),A solid green button for secondary actions.
+Borders/Dividers,#004f26 (Forest Green),Subtle lines to separate content sections without being distracting.
+Accents/Icons,#e36f04 (Tiger Orange),"Use for icons, checkmarks, or active navigation states."
