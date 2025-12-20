@@ -11,27 +11,23 @@ router.post('/', async (req, res) => {
     VALUES (?, ?, ?, ?, ?)`;
 
   try {
-    // 1. ATTEMPT INSERT
-    // Using [result] destructuring for promise-based mysql2
+    // 1. Attempt the insert
     await db.query(sqlInsert, [firstName, lastName, email, studentId, department]);
 
-    // SUCCESS LOGIC
-    console.log("-----------------------------------------");
-    console.log(`✅ NEW REGISTRATION: ${email}`);
-    console.log("-----------------------------------------");
-
+    console.log(`✅ Success: ${email} registered.`);
+    
     return res.status(201).json({ 
       success: true, 
       message: "Member registered successfully!" 
     });
 
   } catch (err) {
-    // 2. CATCH DUPLICATE ENTRY (Prevents the crash)
+    // 2. Catch Duplicate Email (ER_DUP_ENTRY)
     if (err.code === 'ER_DUP_ENTRY') {
-      console.log(`⚠️  DUPLICATE ATTEMPT: ${email}`);
+      console.log(`⚠️  Duplicate email detected: ${email}`);
       
       try {
-        // Fetch the existing data to show on the digital ID modal
+        // Fetch the existing user's data to send to the frontend modal
         const [rows] = await db.query("SELECT * FROM members WHERE email = ?", [email]);
         
         return res.status(400).json({ 
@@ -40,15 +36,15 @@ router.post('/', async (req, res) => {
           existingMember: rows[0] 
         });
       } catch (fetchErr) {
-        return res.status(500).json({ success: false, message: "Error fetching existing record" });
+        return res.status(500).json({ success: false, message: "Error fetching data" });
       }
     }
 
-    // 3. CATCH OTHER ERRORS
-    console.error("❌ DATABASE ERROR:", err.message);
+    // 3. Catch all other DB errors (prevent server crash)
+    console.error("❌ Database Error:", err.message);
     return res.status(500).json({ 
       success: false, 
-      message: "An internal server error occurred." 
+      message: "Internal server error" 
     });
   }
 });
