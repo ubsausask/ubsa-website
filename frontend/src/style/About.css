@@ -1,90 +1,184 @@
-/* Page Layout */
-.about-page {
-  padding-top: 140px; /* Space for Navbar */
-  padding-bottom: 4rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  background-color: var(--bg-main, #001d1d);
+/* src/style/About.css */
+
+/* --- BACKGROUND SETUP --- */
+.about-container {
   min-height: 100vh;
-  color: var(--text-main, #ffeac8);
+  position: relative;
+  /* Dark overlay color to blend with the image */
+  background-color: #050505; 
+  color: white;
+  padding-bottom: 4rem;
+  overflow-x: hidden;
 }
 
-.text-highlight {
-  color: var(--head-main, #e36f04);
+/* Pseudo-element for the BLURRED FIXED BACKGROUND */
+.about-container::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Pointing to the background image in assets/Team */
+  background: url('../assets/Team/about_page_bg.png') no-repeat center center;
+  background-size: cover;
+  /* The Blur Effect */
+  filter: blur(5px) brightness(0.6); 
+  z-index: 0;
+  pointer-events: none;
 }
 
-/* Hero Section */
+/* Ensure content sits above the background */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- HERO --- */
 .about-hero {
   text-align: center;
-  margin-bottom: 4rem;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 8rem 1rem 4rem;
+  display: flex;
+  justify-content: center;
 }
 
-.page-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
-  margin-bottom: 1.5rem;
+.hero-card {
+  display: inline-block;
+  padding: 2rem 4rem;
+  border: 1px solid rgba(211, 47, 47, 0.4); /* Red tint border */
 }
 
-.page-subtitle {
-  font-size: 1.1rem;
-  color: var(--text-mute, #eacda3);
-  line-height: 1.6;
+.about-hero h1 {
+  font-size: 4rem;
+  color: #d32f2f; /* RED */
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
 
-/* Mission & Vision Cards */
-.mission-vision-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 6rem;
+.about-hero p {
+  font-size: 1.2rem;
+  color: #eee;
 }
 
-.mv-card {
-  background: rgba(0, 79, 38, 0.2); /* Dark Green Tint */
-  border: 1px solid var(--bg-sec, #004f26);
-  padding: 2.5rem;
+/* --- GLASS CARD SHARED STYLE --- */
+.glass-card {
+  background: rgba(0, 0, 0, 0.4); /* Darker glass for better contrast */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 16px;
-  text-align: center;
-  transition: transform 0.3s ease;
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-.mv-card:hover {
+.glass-card:hover {
   transform: translateY(-5px);
-  border-color: var(--head-main, #e36f04);
+  border-color: rgba(144, 238, 144, 0.5); /* Light Green on hover */
+  box-shadow: 0 10px 40px rgba(144, 238, 144, 0.1);
 }
 
-.mv-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+/* --- MISSION SECTION --- */
+.mission-section {
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem 4rem;
 }
 
-.mv-card h2 {
-  color: var(--head-main, #e36f04);
-  margin-bottom: 1rem;
-  font-size: 1.8rem;
-}
-
-.mv-card p {
-  color: var(--text-mute, #eacda3);
-  line-height: 1.7;
-}
-
-/* Executive Committee */
-.team-section {
-  margin-bottom: 6rem;
+.mission-card {
+  max-width: 800px;
   text-align: center;
+  padding: 3rem;
+  border-left: 4px solid #90ee90; /* Light Green Accent */
+}
+
+.mission-card h2 {
+  color: #90ee90; /* Light Green */
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+/* --- TEAM SECTION --- */
+.team-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .section-title {
+  text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
+  color: white;
+  border-bottom: 3px solid #d32f2f; /* RED underline */
+  display: inline-block;
+  padding-bottom: 0.5rem;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
+/* --- PRESIDENT CARD (BIGGER) --- */
+.president-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.president-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem;
+  max-width: 500px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(211, 47, 47, 0.5); /* Red Border */
+}
+
+.president-card .img-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border: 4px solid #d32f2f; /* Red Ring */
+  box-shadow: 0 0 25px rgba(211, 47, 47, 0.4);
+}
+
+.president-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Optional: grayscale until hover for style? */
+  /* filter: grayscale(100%); transition: 0.3s; */
+}
+/* .president-card:hover img { filter: grayscale(0%); } */
+
+.president-card h3 {
+  font-size: 2rem;
+  margin: 0.5rem 0;
+  color: white;
+}
+
+.president-card .role {
+  color: #d32f2f; /* RED Text */
+  font-weight: bold;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.president-card .bio {
+  margin-top: 1rem;
+  color: #ccc;
+  font-style: italic;
+}
+
+/* --- TEAM GRID --- */
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -92,117 +186,121 @@
 }
 
 .team-card {
-  background: #001313;
-  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.team-card .img-container {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
+  margin: 0 auto 1rem;
+  border: 3px solid rgba(144, 238, 144, 0.6); /* Light Green Border */
+  transition: transform 0.3s ease;
 }
 
-.team-card:hover {
-  border-color: var(--head-main, #e36f04);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+.team-card:hover .img-container {
+  transform: scale(1.05);
 }
 
-.team-img-wrapper {
-  width: 100%;
-  height: 280px;
-  overflow: hidden;
-}
-
-.team-img-wrapper img {
+.team-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
-  filter: grayscale(20%);
 }
 
-.team-card:hover img {
-  transform: scale(1.05);
-  filter: grayscale(0%);
+.team-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.2rem;
 }
 
-.team-info {
-  padding: 1.5rem;
+.team-card .role {
+  color: #90ee90; /* Light Green */
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
-.team-info h3 {
+/* --- STATS SECTION --- */
+.stats-section {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 5rem;
+  flex-wrap: wrap;
+  padding: 0 1rem;
+}
+
+.stat-item {
+  text-align: center;
+  min-width: 150px;
+}
+
+.stat-item h3 {
+  font-size: 3rem;
+  color: #d32f2f; /* RED */
   margin: 0;
-  font-size: 1.2rem;
-  color: var(--text-main);
 }
 
-.team-role {
-  display: block;
-  margin-top: 0.5rem;
-  color: var(--head-main, #e36f04);
-  font-size: 0.9rem;
-  font-weight: 600;
+.stat-item p {
+  color: #90ee90; /* Light Green */
+  font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* Join Us Section */
-.join-us-section {
-  background: linear-gradient(135deg, var(--bg-sec) 0%, #00251a 100%);
-  border-radius: 20px;
-  padding: 4rem 2rem;
-  text-align: center;
-  border: 1px solid rgba(227, 111, 4, 0.3);
+/* --- PAST COMMITTEE SECTION --- */
+.past-committee-section {
+  margin-top: 6rem;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
 }
 
-.join-content h2 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  color: #fff;
-}
-
-.benefits-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 auto 3rem auto;
+.past-card {
+  width: 100%;
   max-width: 600px;
-  text-align: left;
+  text-align: center;
+  padding: 3rem;
+  border-top: 4px solid #d32f2f; /* Red Top Border */
 }
 
-.benefits-list li {
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-  color: var(--text-mute);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding-bottom: 0.5rem;
-}
-
-.benefits-list strong {
-  color: var(--head-main, #e36f04);
-}
-
-.btn-join-large {
-  display: inline-block;
-  background-color: var(--btn-pri, #db280a);
+.past-card h2 {
   color: #fff;
-  padding: 1rem 3rem;
-  border-radius: 50px;
+  margin-bottom: 0.5rem;
+}
+
+.past-card p {
+  color: #aaa;
+  margin-bottom: 2rem;
+}
+
+.past-btn {
+  background: transparent;
+  border: 2px solid #90ee90; /* Green Border */
+  color: #90ee90;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
   font-weight: bold;
-  font-size: 1.1rem;
-  text-decoration: none;
-  transition: transform 0.2s, background-color 0.2s;
 }
 
-.btn-join-large:hover {
-  background-color: #ff3311;
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(219, 40, 10, 0.4);
+.past-btn:hover {
+  background: #90ee90;
+  color: #000; /* Black text on green hover */
+  box-shadow: 0 0 15px rgba(144, 238, 144, 0.4);
 }
 
-/* Mobile Responsiveness */
+/* Mobile Adjustments */
 @media (max-width: 768px) {
-  .mission-vision-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .page-title {
-    font-size: 2.5rem;
-  }
+  .about-hero h1 { font-size: 2.5rem; }
+  .president-card { padding: 2rem; }
+  .president-card .img-container { width: 150px; height: 150px; }
+  .stats-section { gap: 1rem; }
 }

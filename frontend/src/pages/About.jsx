@@ -1,80 +1,133 @@
 import React from 'react';
 import '../style/About.css';
 
-// Placeholder images for team members
-// You can replace these with local imports like: import president from '../assets/team/president.jpg'
-const TEAM_MEMBERS = [
-  { id: 1, name: "Name Here", role: "President", img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop" },
-  { id: 2, name: "Name Here", role: "VP - Internal", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop" },
-  { id: 3, name: "Name Here", role: "VP - External", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop" },
-  { id: 4, name: "Name Here", role: "General Secretary", img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=400&fit=crop" },
-  { id: 5, name: "Name Here", role: "Treasurer", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop" },
-  { id: 6, name: "Name Here", role: "Cultural Secretary", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop" },
+// Importing Images
+import PresidentImg from '../assets/Team/Rubana_Sayeda.png';
+import VPImg from '../assets/Team/Nusrat_Ahona.png';
+import FinanceImg from '../assets/Team/Mohammed_Khan.png';
+import EventDirImg from '../assets/Team/Rodoshy_Prithibi.png';
+import EventCoordImg from '../assets/Team/Ishrat_Maya.png';
+import OutreachImg from '../assets/Team/Rab_Ahmed_Rwna.png';
+import SocialImg from '../assets/Team/Abir_Khan.png';
+
+const teamMembers = [
+  {
+    name: "Nusrat Ahona",
+    role: "Vice President",
+    image: VPImg
+  },
+  {
+    name: "Mohammed Khan",
+    role: "Finance Director",
+    image: FinanceImg
+  },
+  {
+    name: "Rodoshy Prithibi",
+    role: "Event Director",
+    image: EventDirImg
+  },
+  {
+    name: "Ishrat_Maya", // Fixed spelling from filename if needed, or keep human name
+    role: "Event Coordinator",
+    image: EventCoordImg
+  },
+  {
+    name: "Rab Ahmed Rwna",
+    role: "Outreach Director",
+    image: OutreachImg
+  },
+  {
+    name: "Abir Khan",
+    role: "Social Director",
+    image: SocialImg
+  }
 ];
 
 export default function About() {
   return (
-    <div className="about-page">
+    <div className="about-container">
+      {/* Background Pseudo-element handled in CSS */}
       
-      {/* 1. HERO SECTION */}
-      <div className="about-hero">
-        <h1 className="page-title">Who <span className="text-highlight">We Are</span></h1>
-        <p className="page-subtitle">
-          The University of Saskatchewan Bangladeshi Students' Association (UBSA) is a non-profit organization dedicated to representing and supporting Bangladeshi students in Saskatoon.
-        </p>
-      </div>
+      {/* --- HERO SECTION --- */}
+      <section className="about-hero">
+        <div className="glass-card hero-card">
+          <h1>Who We Are</h1>
+          <p>The heartbeat of Bangladeshi culture at the University of Saskatchewan.</p>
+        </div>
+      </section>
 
-      {/* 2. MISSION & VISION */}
-      <div className="mission-vision-container">
-        <div className="mv-card">
-          <div className="mv-icon">🎯</div>
+      {/* --- MISSION SECTION --- */}
+      <section className="mission-section">
+        <div className="glass-card mission-card">
           <h2>Our Mission</h2>
           <p>
-            To foster a welcoming community for Bangladeshi students, promoting our rich cultural heritage while providing academic support, networking opportunities, and a home away from home.
+            Established in 2024, the UBSA is dedicated to fostering a home away from home. 
+            We bridge cultures, support academic success, and create unforgettable memories 
+            through festivals, socials, and community outreach.
           </p>
         </div>
-        <div className="mv-card">
-          <div className="mv-icon">🌟</div>
-          <h2>Our Vision</h2>
-          <p>
-            To be the leading student organization that empowers Bangladeshi students to excel academically and socially, bridging the gap between our culture and the diverse community of Saskatchewan.
-          </p>
-        </div>
-      </div>
+      </section>
 
-      {/* 3. EXECUTIVE COMMITTEE */}
-      <div className="team-section">
-        <h2 className="section-title">Meet the <span className="text-highlight">Executive Committee</span></h2>
+      {/* --- TEAM SECTION --- */}
+      <section className="team-section">
+        <h2 className="section-title">Meet the Executive Team</h2>
+        
+        {/* PRESIDENT (Featured Large) */}
+        <div className="president-wrapper">
+          <div className="glass-card president-card">
+            <div className="img-container">
+              <img src={PresidentImg} alt="Rubana Sayeda" />
+            </div>
+            <div className="info">
+              <h3>Rubana Sayeda</h3>
+              <span className="role">President</span>
+              <p className="bio">Leading with vision and passion to unite our community.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* REST OF TEAM (Grid) */}
         <div className="team-grid">
-          {TEAM_MEMBERS.map((member) => (
-            <div key={member.id} className="team-card">
-              <div className="team-img-wrapper">
-                <img src={member.img} alt={member.name} />
+          {teamMembers.map((member, index) => (
+            <div key={index} className="glass-card team-card">
+              <div className="img-container">
+                <img src={member.image} alt={member.name} />
               </div>
-              <div className="team-info">
+              <div className="info">
                 <h3>{member.name}</h3>
-                <span className="team-role">{member.role}</span>
+                <span className="role">{member.role}</span>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* 4. JOIN US SECTION */}
-      <div className="join-us-section">
-        <div className="join-content">
-          <h2>Why Join UBSA?</h2>
-          <ul className="benefits-list">
-            <li>🤝 <strong>Community:</strong> Connect with fellow students and alumni.</li>
-            <li>🎉 <strong>Events:</strong> Exclusive access to cultural festivals and parties.</li>
-            <li>📚 <strong>Support:</strong> Academic guidance and mentorship programs.</li>
-            <li>📢 <strong>Voice:</strong> Have a say in student affairs and representation.</li>
-          </ul>
-          <a href="mailto:ubsa.usask@gmail.com" className="btn-join-large">
-            Become a Member Today
-          </a>
+      {/* --- STATS SECTION --- */}
+      <section className="stats-section">
+        <div className="stat-item glass-card">
+          <h3>2024</h3>
+          <p>Founded</p>
         </div>
-      </div>
+        <div className="stat-item glass-card">
+          <h3>500+</h3>
+          <p>Members</p>
+        </div>
+        <div className="stat-item glass-card">
+          <h3>New</h3>
+          <p>Committee</p>
+        </div>
+      </section>
+
+      {/* --- PAST COMMITTEE SECTION --- */}
+      <section className="past-committee-section">
+        <div className="glass-card past-card">
+          <h2>Our Legacy</h2>
+          <p>Honoring the leaders who paved the way before us.</p>
+          <button className="past-btn" onClick={() => alert("Past Committee Page Coming Soon!")}>
+            View Past Committees
+          </button>
+        </div>
+      </section>
 
     </div>
   );
