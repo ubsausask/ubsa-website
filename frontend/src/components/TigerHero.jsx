@@ -7,7 +7,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function TigerHero() {
   const canvasRef = useRef(null);
-  const containerRef = useRef(null);
+  const wrapperRef = useRef(null); // The ScrollTrigger wrapper
+  const innerRef = useRef(null);   // The element getting pinned
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -15,30 +16,28 @@ export default function TigerHero() {
     
     // --- CONFIGURATION ---
     const frameCount = 91; 
-    
-    // Helper to generate paths
     const currentFrame = index => 
       `/tiger-frames/tiger_${(index + 1).toString().padStart(4, '0')}.jpg`;
 
     const images = [];
-    const tiger = { frame: 0 };
+    const tigerState = { frame: 0 };
+    const visuals = { blur: 10, brightness: 0.6 }; 
 
-    // 1. Preload Images
+    // Preload
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
       img.src = currentFrame(i);
       images.push(img);
     }
 
-    // Canvas settings
     canvas.width = 1920;
     canvas.height = 1080;
 
-    // Helper to render
     const render = () => {
       context.clearRect(0, 0, canvas.width, canvas.height);
-      // Ensure the image exists and is loaded before drawing
-      const img = images[tiger.frame];
+      // Apply filters via JS for smoothness
+      context.filter = `blur(${visuals.blur}px) brightness(${visuals.brightness})`;
+      const img = images[tigerState.frame];
       if (img && img.complete) {
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
       }
@@ -46,63 +45,105 @@ export default function TigerHero() {
 
     let ctx = gsap.context(() => {
       
-      // 2. SCROLL ANIMATION
-      gsap.to(tiger, {
+      // 1. PINNING BEHAVIOR
+      ScrollTrigger.create({
+        trigger: wrapperRef.current,
+        start: "top top",
+        end: "+=300%", 
+        pin: innerRef.current,
+        scrub: true,
+      });
+
+      // 2. ANIMATION TIMELINE
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: wrapperRef.current,
+          start: "top top",
+          end: "+=400%", 
+          scrub: 0.5,
+        }
+      });
+
+      // --- A. TIGER FRAMES ---
+      tl.to(tigerState, {
         frame: frameCount - 1,
         snap: "frame",
         ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.5, // Lowered slightly for more responsiveness
-        },
-        onUpdate: render
-      });
+        duration: 10,
+        onUpdate: render 
+      }, 0);
 
-      // 3. TEXT FADE OUT
-      gsap.to(".hero-overlay", {
-        opacity: 0,
-        y: -50,
+      // --- B. CLEAR BLUR ---
+      tl.to(visuals, {
+        blur: 0,
+        brightness: 1.0,
+        duration: 3, 
         ease: "power1.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "15% top", 
-          scrub: true,
-        }
-      });
-      
-      // 4. INITIAL RENDER (Fixes blank canvas on load)
-      if (images[0].complete) {
-        render();
-      } else {
-        images[0].onload = render;
-      }
+        onUpdate: render 
+      }, 0);
 
-    }, containerRef);
+      // --- C. TEXT ANIMATION ---
+      // 1. Fade out surrounding text
+      tl.to(".fade-part, .hero-subtitle, .scroll-indicator", { 
+        opacity: 0, 
+        scale: 1.1, 
+        duration: 2, 
+        ease: "power2.in"
+      }, 0);
+
+      // 2. Grow UBSA (Now targeting the SVG class)
+      tl.to(".text-ubsa-svg", { 
+        scale: 15,        
+        duration: 2,      
+        ease: "power2.inOut"
+      }, 0);
+
+      // 3. Infinite Zoom & Fade Out UBSA
+      tl.to(".text-ubsa-svg", {
+        scale: 150, // Massive zoom (clean because it's SVG)
+        opacity: 0,     
+        duration: 3,
+        ease: "power1.in"
+      }, 2); 
+
+      // Initial Render
+      if (images[0].complete) render();
+      else images[0].onload = render;
+
+    }, wrapperRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <div className="scroll-track" ref={containerRef}>
-      <div className="sticky-container">
+    <div className="tiger-hero-wrapper" ref={wrapperRef}>
+      <div className="hero-inner" ref={innerRef}>
         
-        {/* Text Overlay */}
         <div className="hero-overlay">
-          <div>
-            <h1 className="hero-title">The Spirit of Bengal<br />in Saskatchewan.</h1>
-            <p className="hero-subtitle">
-              Uniting students, celebrating culture.
-            </p>
-            <div className="scroll-indicator">
-              SCROLL TO EXPLORE ↓
+          <h1 className="hero-title">
+            <span className="fade-part">The Spirit of</span>
+            
+            {/* --- FIX: REPLACED SPAN WITH SVG FOR HD ZOOM --- */}
+            <div className="ubsa-wrapper">
+              <svg className="text-ubsa-svg" viewBox="0 0 400 120">
+                <text x="50%" y="50%">UBSA</text>
+              </svg>
             </div>
+
+            <span className="fade-part">in CANADA.</span>
+          </h1>
+          
+          <p className="hero-subtitle">
+            Uniting students, celebrating culture.
+          </p>
+          
+          <div className="scroll-indicator">
+            SCROLL TO EXPLORE ↓
           </div>
         </div>
 
         <canvas ref={canvasRef} />
+        <div className="bottom-fade"></div>
       </div>
     </div>
   );

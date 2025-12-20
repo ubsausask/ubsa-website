@@ -1,20 +1,31 @@
-/* The track dictates how long the scroll animation lasts */
-.scroll-track {
-  height: 400vh; /* Adjust this to make the animation slower/longer */
-  background-color: #000;
-  position: relative;
+/* src/style/TigerHero.css */
+
+/* --- 1. GLOBAL SAFETY (The Nuclear Fix) --- */
+/* This ensures NO horizontal scrollbars appear on the page. */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden !important;
+  margin: 0;
+  padding: 0;
 }
 
-/* The container stays fixed on screen while you scroll through the track */
-.sticky-container {
-  position: sticky;
-  top: 0;
+/* --- 2. MAIN WRAPPER --- */
+.tiger-hero-wrapper {
+  width: 100%;
+  position: relative;
+  background-color: #000;
+  overflow: hidden; /* Clips anything growing too big */
+}
+
+/* The pinned container */
+.hero-inner {
   height: 100vh;
   width: 100%;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden; /* Crucial: Clips the text and canvas */
 }
 
 canvas {
@@ -23,37 +34,83 @@ canvas {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensures image covers screen without stretching */
+  object-fit: cover;
   z-index: 1;
 }
 
-/* Overlay Text Styling */
+/* --- OVERLAY TEXT --- */
 .hero-overlay {
   position: relative;
-  z-index: 10; /* Above the canvas */
-  text-align: center;
-  color: var(--text-main, #ffeac8);
-  padding: 0 1rem;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none; /* Allows clicks to pass through */
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 6vw, 5rem); /* Responsive font size */
-  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; 
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
   line-height: 1.1;
-  color: var(--head-main, #e36f04);
-  margin-bottom: 1rem;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+  width: 100%;
+  max-width: 100%;
 }
 
+/* --- HD SVG TEXT STYLES (Replaces .text-ubsa) --- */
+/* This container ensures the layout stays stable while SVG zooms */
+.ubsa-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.2em; /* Roughly matches the height of the font */
+  width: 100%;
+  overflow: visible; /* Allows the SVG to explode outside the box */
+}
+
+.text-ubsa-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible; /* Allows the zoom to go beyond the SVG borders */
+}
+
+/* The actual text inside the SVG */
+.text-ubsa-svg text {
+  fill: #d32f2f; /* RED */
+  font-weight: 900;
+  font-family: inherit; /* Uses the same font as the rest of the page */
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-size: 120px; /* High res start size */
+}
+
+.fade-part { color: #fff; }
+
 .hero-subtitle {
+  margin-top: 2rem;
   font-size: clamp(1rem, 2vw, 1.5rem);
-  color: var(--text-mute, #eacda3);
+  color: #eee; 
+  text-align: center;
+  opacity: 0.9;
 }
 
 .scroll-indicator {
-  margin-top: 3rem;
-  font-size: 0.8rem;
-  opacity: 0.7;
+  position: absolute;
+  bottom: 5vh;
+  font-size: 0.9rem;
+  font-weight: bold;
   letter-spacing: 2px;
+  color: #d32f2f; 
   animation: bounce 2s infinite;
 }
 
@@ -61,4 +118,15 @@ canvas {
   0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
   40% {transform: translateY(-10px);}
   60% {transform: translateY(-5px);}
+}
+
+.bottom-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20vh;
+  background: linear-gradient(to bottom, transparent, #001d1d);
+  z-index: 5;
+  pointer-events: none;
 }
