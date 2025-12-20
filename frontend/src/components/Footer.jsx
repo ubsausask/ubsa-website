@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaFacebook, FaInstagram, FaWhatsapp } from 'react-icons/fa'; // Import Icons
+import { FaFacebook, FaInstagram, FaWhatsapp, FaUserShield } from 'react-icons/fa'; 
+import { Link } from 'react-router-dom'; // Use Link for internal routing
 import '../style/Footer.css';
 
 export default function Footer() {
@@ -20,9 +21,11 @@ export default function Footer() {
           <div className="footer-links">
             <h3>Explore</h3>
             <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/events">Events</a></li>
-              <li><a href="/about">About Us</a></li>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/events">Events</Link></li>
+              <li><Link to="/about">About Us</Link></li>
+              {/* Added discrete admin link here as well */}
+              <li><Link to="/admin/login" className="admin-discrete-link">Admin Portal</Link></li>
             </ul>
           </div>
 
@@ -31,49 +34,33 @@ export default function Footer() {
             <p>Email: <a href="mailto:ubsa.usask@gmail.com">ubsa.usask@gmail.com</a></p>
             <p className="address">Place Riel Student Centre<br/>Saskatoon, SK, Canada</p>
             
-            {/* --- SOCIAL ICONS SECTION --- */}
             <div className="social-icons">
-              {/* Facebook */}
-              <a 
-                href="https://www.facebook.com/profile.php?id=61569283955219" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="icon-link fb"
-                aria-label="Facebook"
-              >
+              <a href="https://www.facebook.com/profile.php?id=61569283955219" target="_blank" rel="noopener noreferrer" className="icon-link fb" aria-label="Facebook">
                 <FaFacebook />
               </a>
-
-              {/* Instagram */}
-              <a 
-                href="https://www.instagram.com/ubsa.usask/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="icon-link insta"
-                aria-label="Instagram"
-              >
+              <a href="https://www.instagram.com/ubsa.usask/" target="_blank" rel="noopener noreferrer" className="icon-link insta" aria-label="Instagram">
                 <FaInstagram />
               </a>
-
-              {/* WhatsApp (Add link if you have a group/number) */}
-              <a 
-                href="https://chat.whatsapp.com/your-invite-link" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="icon-link wp"
-                aria-label="WhatsApp"
-              >
+              <a href="https://chat.whatsapp.com/your-invite-link" target="_blank" rel="noopener noreferrer" className="icon-link wp" aria-label="WhatsApp">
                 <FaWhatsapp />
               </a>
             </div>
-
           </div>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <p>© 2025 UBSA. All rights reserved.</p>
-        <p className="designer-credit">Designed by SHAHED</p>
+        <div className="footer-bottom-left">
+          <p>© 2025 UBSA. All rights reserved.</p>
+          <p className="designer-credit">Designed by SHAHED</p>
+        </div>
+        
+        {/* --- ADMIN LOGIN BUTTON --- */}
+        <div className="footer-bottom-right">
+          <Link to="/admin/login" className="admin-login-btn">
+            <FaUserShield /> Admin Login
+          </Link>
+        </div>
       </div>
     </footer>
   );

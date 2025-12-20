@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 
 // --- COMPONENTS ---
 import Navbar from './components/Navbar';
@@ -25,15 +25,16 @@ function App() {
   const location = useLocation();
 
   // Logic: True if URL starts with "/admin", False otherwise
+  // This hides the main site Navbar and Footer from the Admin portal
   const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
     <>
-      {/* 1. Show Navbar if NOT Admin */}
+      {/* 1. Show Global Navbar only on public pages */}
       {!isAdminRoute && <Navbar />}
 
       <Routes>
-        {/* Public Routes */}
+        {/* --- PUBLIC ROUTES --- */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/events" element={<Events />} />
@@ -42,14 +43,32 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/join" element={<Join />} />
 
-        {/* Admin Routes */}
-        <Route path="/admin" element={<Login />} />
-        <Route path="/admin/dashboard" element={<ProtectedAdminRoute><Dashboard /></ProtectedAdminRoute>} />
-        <Route path="/admin/add-event" element={<ProtectedAdminRoute><AddEvent /></ProtectedAdminRoute>} />
-        <Route path="/admin/manage-gallery" element={<ProtectedAdminRoute><ManageGallery /></ProtectedAdminRoute>} />
+        {/* --- ADMIN ROUTES --- */}
+        {/* Fix: Explicitly define the login path */}
+        <Route path="/admin/login" element={<Login />} />
+        
+        {/* Redirect /admin to /admin/login for convenience */}
+        <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
+
+        {/* Wrap Protected Routes in the Auth Guard */}
+        <Route element={<ProtectedAdminRoute />}>
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/add-event" element={<AddEvent />} />
+          <Route path="/admin/manage-gallery" element={<ManageGallery />} />
+        </Route>
+
+        {/* --- 404 CATCH-ALL --- */}
+        {/* Prevents blank screens for mistyped URLs */}
+        <Route path="*" element={
+          <div style={{ textAlign: 'center', padding: '150px 20px', color: 'white' }}>
+            <h1>404 - Page Not Found</h1>
+            <p>The page you are looking for does not exist.</p>
+            <a href="/" style={{ color: '#e36f04' }}>Return Home</a>
+          </div>
+        } />
       </Routes>
 
-      {/* 2. Show Footer if NOT Admin */}
+      {/* 2. Show Global Footer only on public pages */}
       {!isAdminRoute && <Footer />}
     </>
   );
