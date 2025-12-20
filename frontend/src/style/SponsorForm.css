@@ -1,0 +1,202 @@
+/* --- MODAL OVERLAY --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85); /* Deep dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  backdrop-filter: blur(8px); /* Blur the content behind the modal */
+}
+
+/* --- GLASS CONTAINER --- */
+.sponsor-form-glass {
+  background: rgba(20, 20, 20, 0.95); /* Darker glass for better contrast */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 3rem;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  color: white;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* --- HEADER & INDICATORS --- */
+.sponsor-form-glass h2 {
+  color: #e36f04; /* UBSA Orange */
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.step-indicator {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+  margin-top: -1.5rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.payment-instruction {
+  margin-bottom: 1.5rem;
+  color: #ccc;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* --- FORM FIELDS --- */
+.form-group-modal {
+  margin-bottom: 1.2rem;
+}
+
+.form-group-modal label {
+  display: block;
+  font-size: 0.75rem;
+  color: #e36f04;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-steps input, 
+.form-steps select {
+  width: 100%;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-steps input:focus, 
+.form-steps select:focus {
+  outline: none;
+  border-color: #e36f04;
+}
+
+/* --- PAYMENT OPTIONS --- */
+.payment-steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.pay-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.pay-option:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.pay-option.selected {
+  border: 2px solid #e36f04;
+  background: rgba(227, 111, 4, 0.1);
+}
+
+.pay-icon {
+  color: #e36f04;
+  font-size: 1.5rem;
+}
+
+.pay-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.pay-text span {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.pay-text small {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+/* --- BUTTONS --- */
+.btn-next, 
+.btn-final {
+  width: 100%;
+  padding: 1rem;
+  background: #e36f04;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.btn-next:hover, 
+.btn-final:hover {
+  background: #ff7e07;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(227, 111, 4, 0.3);
+}
+
+.btn-back {
+  background: transparent;
+  color: #aaa;
+  border: none;
+  margin-top: 1rem;
+  width: 100%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+.btn-back:hover {
+  color: #fff;
+}
+
+.close-x {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  line-height: 1;
+}
+
+.close-x:hover {
+  color: #fff;
+}
+
+/* --- SCROLLBAR FOR MODAL (If content overflows) --- */
+.sponsor-form-glass::-webkit-scrollbar {
+  width: 5px;
+}
+.sponsor-form-glass::-webkit-scrollbar-thumb {
+  background: #e36f04;
+  border-radius: 10px;
+}

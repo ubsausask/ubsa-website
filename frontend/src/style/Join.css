@@ -1,5 +1,4 @@
-/* src/style/Join.css */
-
+/* --- PAGE LAYOUT & BACKGROUND --- */
 .join-page {
   position: relative;
   min-height: 100vh;
@@ -9,9 +8,9 @@
   justify-content: center;
   align-items: center;
   z-index: 1;
+  overflow-x: hidden;
 }
 
-/* TIGER BACKGROUND WITH 5% BLUR */
 .join-page::before {
   content: "";
   position: fixed;
@@ -22,7 +21,7 @@
     url('../assets/TigerGalleryPageBG.jpg');
   background-size: cover;
   background-position: center;
-  filter: blur(5px);
+  filter: blur(8px); /* Increased blur for better legibility */
   transform: scale(1.05);
   z-index: -1;
 }
@@ -36,140 +35,163 @@
   align-items: center;
 }
 
-/* --- LEFT COLUMN --- */
-.join-title {
-  font-size: 3.5rem;
-  font-weight: 900;
-  margin-bottom: 1rem;
-}
+/* --- LEFT COLUMN: BRANDING --- */
+.join-title { font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem; line-height: 1.1; }
+.text-highlight { color: #e36f04; }
+.join-subtitle { font-size: 1.2rem; color: #ccc; margin-bottom: 3rem; line-height: 1.6; }
 
-.join-subtitle {
-  font-size: 1.2rem;
-  color: #ccc;
-  margin-bottom: 3rem;
-  line-height: 1.6;
-}
+.benefit-item { display: flex; gap: 1.5rem; margin-bottom: 2rem; }
+.b-icon { font-size: 2.2rem; color: #e36f04; flex-shrink: 0; }
+.benefit-item h3 { margin-bottom: 0.3rem; color: #fff; font-size: 1.3rem; }
+.benefit-item p { color: #aaa; font-size: 0.95rem; line-height: 1.4; }
 
-.benefit-item {
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.b-icon {
-  font-size: 2rem;
-  color: #e36f04;
-  flex-shrink: 0;
-}
-
-.benefit-item h3 {
-  margin-bottom: 0.3rem;
-  color: #fff;
-}
-
-.benefit-item p {
-  color: #aaa;
-  font-size: 0.95rem;
-}
-
-/* --- RIGHT COLUMN (FORM) --- */
+/* --- RIGHT COLUMN: GLASS FORM --- */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 3rem;
-  border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  border-radius: 24px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.6);
 }
 
 .join-form-card h2 {
   margin-bottom: 2rem;
   font-size: 1.8rem;
-  border-bottom: 2px solid #e36f04;
+  border-bottom: 3px solid #e36f04;
   display: inline-block;
   padding-bottom: 0.5rem;
 }
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+/* Validation Error Banner */
+.error-banner {
+  background: rgba(211, 47, 47, 0.15);
+  border: 1px solid rgba(211, 47, 47, 0.5);
+  color: #ff8a80;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  animation: slideDown 0.3s ease-out;
 }
 
-.form-group {
-  margin-bottom: 1.2rem;
-}
-
+.form-group { margin-bottom: 1.5rem; }
 .form-group label {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   color: #e36f04;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
+  margin-bottom: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
-.form-group input {
-  width: 100%;
-  padding: 0.8rem;
-  background: rgba(0,0,0,0.3);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 6px;
-  color: #fff;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: #d32f2f;
-}
-
-.fee-notice {
-  font-size: 0.85rem;
-  color: #ffb74d;
-  margin: 1rem 0;
-  font-style: italic;
-}
-
-.btn-join-submit {
+.form-group input, .form-group select {
   width: 100%;
   padding: 1rem;
-  background: #d32f2f;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
   color: #fff;
-  border: none;
-  border-radius: 50px;
-  font-weight: 800;
-  text-transform: uppercase;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus, .form-group select:focus {
+  outline: none;
+  border-color: #e36f04;
+  background: rgba(0,0,0,0.6);
+  box-shadow: 0 0 15px rgba(227, 111, 4, 0.2);
+}
+
+.form-group select {
   cursor: pointer;
-  transition: 0.3s;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='orange' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
 }
 
-.btn-join-submit:hover {
+.fee-notice { font-size: 0.85rem; color: #ffb74d; margin: 1.5rem 0; font-style: italic; opacity: 0.9; }
+
+.btn-join-submit {
+  width: 100%; padding: 1.2rem;
+  background: #e36f04;
+  color: #fff; border: none; border-radius: 50px;
+  font-weight: 900; text-transform: uppercase; cursor: pointer; 
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  letter-spacing: 1px;
+}
+
+.btn-join-submit:hover:not(:disabled) {
   background: #fff;
-  color: #d32f2f;
-  transform: scale(1.02);
+  color: #e36f04;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(227, 111, 4, 0.3);
 }
 
-/* Success View */
-.success-card {
-  text-align: center;
-  max-width: 500px;
-}
-.success-icon {
-  font-size: 4rem;
-  color: #4caf50;
-  margin-bottom: 1rem;
+.btn-join-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* --- EXISTING MEMBER MODAL (Digital ID Style) --- */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 4000;
+  backdrop-filter: blur(12px);
 }
 
-/* Mobile */
+.member-card-modal {
+  max-width: 480px; width: 90%;
+  border: 1px solid rgba(227, 111, 4, 0.6);
+  box-shadow: 0 0 40px rgba(227, 111, 4, 0.25);
+  background: linear-gradient(145deg, rgba(25, 25, 25, 0.98), rgba(40, 20, 0, 0.95));
+  padding: 3rem; position: relative;
+  border-radius: 24px;
+}
+
+.card-header-modal {
+  display: flex; align-items: center; gap: 1.5rem;
+  margin-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1.5rem;
+}
+
+.card-badge-icon { font-size: 3rem; color: #e36f04; }
+
+.status-badge {
+  background: #e36f04; color: #fff; padding: 5px 15px;
+  border-radius: 50px; font-size: 0.7rem; font-weight: 900; text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.card-body-info { display: grid; gap: 1.5rem; }
+.info-row { display: flex; align-items: flex-start; gap: 1rem; }
+.info-icon { font-size: 1.2rem; color: #e36f04; margin-top: 0.2rem; }
+
+.info-row span { display: block; font-size: 0.65rem; color: #e36f04; font-weight: 900; letter-spacing: 1.5px; margin-bottom: 0.2rem; }
+.info-row p { font-size: 1.2rem; margin: 0; font-family: 'Courier New', monospace; color: #fff; font-weight: 600; }
+
+.card-footer-note { font-size: 0.85rem; color: #777; margin-top: 2.5rem; text-align: center; font-style: italic; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; }
+
+.close-x {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  background: transparent; border: none; color: #555; font-size: 1.8rem; cursor: pointer;
+  transition: color 0.3s;
+}
+.close-x:hover { color: #fff; }
+
+/* --- ANIMATIONS --- */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- RESPONSIVE --- */
 @media (max-width: 900px) {
-  .join-container {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .benefit-item {
-    text-align: left;
-  }
-  .form-row {
-    grid-template-columns: 1fr;
-  }
+  .join-page { padding-top: 120px; }
+  .join-container { grid-template-columns: 1fr; text-align: center; }
+  .benefit-item { text-align: left; max-width: 500px; margin: 0 auto 2rem; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .join-title { font-size: 2.8rem; }
 }

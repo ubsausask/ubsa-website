@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # --- 1. FRONTEND (React) ---
   frontend:
@@ -30,31 +28,41 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
-      # PERSIST UPLOADS: Maps local backend/uploads folder to container
       - ./backend/uploads:/app/uploads 
     environment:
-      # Docker Networking: Host is the service name 'db', not 'localhost'
       - DB_HOST=db
       - DB_USER=root
       - DB_PASSWORD=rootpassword
       - DB_NAME=ubsa_db
       - PORT=5000
+      # EMAIL SETTINGS
+      - EMAIL_USER=ubsa.usask@gmail.com
+      - EMAIL_PASS=abcd-efgh-ijkl-mnop # <-- Replace with your Gmail App Password
     depends_on:
-      - db
+      db:
+        condition: service_healthy 
 
   # --- 3. DATABASE (MySQL) ---
   db:
     image: mysql:8.0
     container_name: ubsa-db
     cap_add:
-      - SYS_NICE # Suppresses some harmless MySQL warnings in Docker
+      - SYS_NICE
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: ubsa_db
     ports:
-      - "3306:3306" # Allows you to connect via MySQL Workbench on localhost:3306
+      - "3306:3306"
     volumes:
-      - db_data:/var/lib/mysql # Persists data even if container stops
+      - db_data:/var/lib/mysql
+      # Map your SQL schema file to the auto-init directory
+      - ./backend/database.sql:/docker-entrypoint-initdb.d/setup.sql
+    healthcheck:
+      # Password here must match MYSQL_ROOT_PASSWORD
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   db_data:

@@ -2,7 +2,6 @@ CREATE DATABASE IF NOT EXISTS ubsa_db;
 USE ubsa_db;
 
 -- 1. Events Table
--- Matches frontend usage: event.image_url
 CREATE TABLE IF NOT EXISTS events (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
@@ -16,7 +15,6 @@ CREATE TABLE IF NOT EXISTS events (
 );
 
 -- 2. Gallery Table
--- FIX: Renamed 'image_url' to 'src' to match ManageGallery.jsx & galleryRoutes.js
 CREATE TABLE IF NOT EXISTS gallery (
     id INT AUTO_INCREMENT PRIMARY KEY,
     src TEXT NOT NULL, 
@@ -25,12 +23,16 @@ CREATE TABLE IF NOT EXISTS gallery (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 3. Sponsors Table
+-- 3. Public Sponsors Table (What is shown on the website)
 CREATE TABLE IF NOT EXISTS sponsors (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     tier ENUM('Platinum', 'Gold', 'Silver', 'Bronze') NOT NULL,
-    logo_url VARCHAR(255),
+    image_url VARCHAR(255), -- Keep this consistent with your getImageUrl helper
+    contribution VARCHAR(255),
+    description TEXT,
+    discount_title VARCHAR(255),
+    discount_desc TEXT,
     website_url VARCHAR(255)
 );
 
@@ -42,4 +44,31 @@ CREATE TABLE IF NOT EXISTS executives (
     image_url VARCHAR(255),
     email VARCHAR(255),
     display_order INT DEFAULT 0
+);
+
+-- ==========================================
+-- NEW TABLES FOR USER SUBMISSIONS
+-- ==========================================
+
+-- 5. Membership Table (Data from /join page)
+CREATE TABLE IF NOT EXISTS members (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    student_id VARCHAR(50) NOT NULL,
+    department VARCHAR(150),
+    status ENUM('Pending', 'Paid', 'Expired') DEFAULT 'Pending',
+    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 6. Sponsor Applications Table (Data from Sponsor Modal)
+CREATE TABLE IF NOT EXISTS sponsor_applications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    business_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    tier ENUM('Silver', 'Gold', 'Platinum') NOT NULL,
+    payment_type ENUM('E-Transfer', 'Cheque') NOT NULL,
+    status ENUM('Pending', 'Reviewed', 'Approved', 'Rejected') DEFAULT 'Pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
