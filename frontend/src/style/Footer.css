@@ -1,55 +1,73 @@
-/* Footer Layout */
-.ubsa-footer {
-  background-color: #001313; /* Darker than main bg */
-  border-top: 1px solid var(--bg-sec, #004f26);
-  color: var(--text-mute, #eacda3);
+/* src/style/Footer.css */
+
+/* --- FOOTER LAYOUT --- */
+.footer-container {
+  background-color: #001313; /* Dark background */
+  border-top: 1px solid #004f26;
+  color: #eacda3; /* Muted Text */
   padding: 4rem 2rem 1rem;
   margin-top: auto;
   font-family: 'Inter', sans-serif;
+
+  /* --- FIX VISIBILITY ISSUES (Added) --- */
+  position: relative; /* Allows z-index to work */
+  z-index: 100;       /* Forces footer above fixed backgrounds (like About page) */
 }
 
-.footer-container {
+.footer-content {
   max-width: 1200px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr; /* Brand is wider */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 3rem;
   padding-bottom: 3rem;
 }
 
-/* Columns */
+/* --- COLUMNS --- */
+.footer-left {
+  flex: 1;
+  min-width: 280px;
+}
+
 .footer-logo {
-  color: var(--head-main, #e36f04);
+  color: #e36f04; /* UBSA Orange */
   font-size: 2.5rem;
   font-weight: 800;
   margin: 0 0 0.5rem 0;
   letter-spacing: -1px;
+  text-transform: uppercase;
 }
 
-.footer-org-name {
-  color: var(--text-main, #ffeac8);
+.footer-association {
+  color: #ffeac8;
   font-weight: 600;
   margin-bottom: 1rem;
   line-height: 1.4;
 }
 
-.footer-mission {
+.footer-university {
   font-size: 0.9rem;
-  line-height: 1.6;
   opacity: 0.8;
-  max-width: 300px;
+  margin-bottom: 0.2rem;
 }
 
-.footer-heading {
-  color: var(--text-main, #ffeac8);
+/* --- LINKS SECTION --- */
+.footer-right {
+  display: flex;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.footer-links h3, .footer-contact h3 {
+  color: #ffeac8; /* Main Text */
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* Links List */
-.footer-links {
+.footer-links ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -60,54 +78,73 @@
 }
 
 .footer-links a {
-  color: var(--text-mute, #eacda3);
+  color: #eacda3;
   transition: color 0.2s ease, padding-left 0.2s ease;
   text-decoration: none;
 }
 
 .footer-links a:hover {
-  color: var(--head-main, #e36f04);
+  color: #e36f04; /* Orange Hover */
   padding-left: 5px;
 }
 
-/* Contact Section */
-.contact-item {
+/* --- CONTACT SECTION --- */
+.footer-contact p {
   font-size: 0.9rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   line-height: 1.5;
 }
 
-.contact-item a {
-  color: var(--text-main);
+.footer-contact a {
+  color: #ffeac8;
   text-decoration: underline;
   text-decoration-thickness: 1px;
 }
 
+/* --- SOCIAL ICONS (UPDATED FOR OFFICIAL LOGOS) --- */
 .social-icons {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
 }
 
-.social-icons a {
-  width: 40px;
-  height: 40px;
-  background: var(--bg-sec, #004f26);
-  color: var(--text-main, #ffeac8);
+/* Common style for the icon links */
+.icon-link {
+  font-size: 2rem; /* Make icons nice and big */
+  transition: transform 0.3s ease, filter 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  font-weight: bold;
-  font-size: 0.8rem;
-  transition: all 0.3s ease;
 }
 
-.social-icons a:hover {
-  background: var(--head-main, #e36f04);
-  transform: translateY(-3px);
+/* Hover Effect: Pop up slightly */
+.icon-link:hover {
+  transform: translateY(-5px);
+  filter: brightness(1.2);
 }
 
-/* Bottom Bar */
+/* --- OFFICIAL BRAND COLORS --- */
+
+/* Facebook Blue */
+.fb {
+  color: #1877F2; 
+}
+
+/* Instagram Gradient */
+.insta {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #E1306C; /* Fallback for browsers that don't support clip */
+}
+
+/* WhatsApp Green */
+.wp {
+  color: #25D366;
+}
+
+/* --- BOTTOM BAR --- */
 .footer-bottom {
   border-top: 1px solid rgba(255, 234, 200, 0.1);
   padding-top: 1.5rem;
@@ -116,18 +153,21 @@
   align-items: center;
   font-size: 0.85rem;
   opacity: 0.6;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Mobile Responsiveness */
+/* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 768px) {
-  .footer-container {
-    grid-template-columns: 1fr; /* Stack vertically */
+  .footer-content {
+    flex-direction: column;
     gap: 2.5rem;
     text-align: center;
   }
-  
-  .footer-mission {
-    margin: 0 auto;
+
+  .footer-right {
+    justify-content: center;
+    gap: 2rem;
   }
   
   .social-icons {
@@ -137,5 +177,6 @@
   .footer-bottom {
     flex-direction: column;
     gap: 1rem;
+    text-align: center;
   }
 }

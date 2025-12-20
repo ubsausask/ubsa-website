@@ -1,61 +1,79 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { FaFacebook, FaInstagram, FaWhatsapp } from 'react-icons/fa'; // Import Icons
 import '../style/Footer.css';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="ubsa-footer">
-      <div className="footer-container">
+    <footer className="footer-container">
+      <div className="footer-content">
         
-        {/* Column 1: Brand & Mission */}
-        <div className="footer-col brand-col">
+        {/* Left Side: Logo & Copyright */}
+        <div className="footer-left">
           <h2 className="footer-logo">UBSA</h2>
-          <p className="footer-org-name">University of Saskatchewan<br/>Bangladeshi Students' Association</p>
-          <p className="footer-mission">
-            Fostering community, celebrating culture, and supporting students in Saskatoon since 2013.
-          </p>
+          <p className="footer-university">University of Saskatchewan</p>
+          <p className="footer-association">Bangladeshi Students' Association</p>
         </div>
 
-        {/* Column 2: Quick Links */}
-        <div className="footer-col links-col">
-          <h3 className="footer-heading">Explore</h3>
-          <ul className="footer-links">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/events">Events</Link></li>
-            <li><Link to="/contest">Design Contest</Link></li>
-            <li><Link to="/about">About Us</Link></li>
-          </ul>
-        </div>
-
-        {/* Column 3: Contact & Connect */}
-        <div className="footer-col contact-col">
-          <h3 className="footer-heading">Connect</h3>
-          <p className="contact-item">
-            <strong>Email:</strong><br/>
-            <a href="mailto:ubsa.usask@gmail.com">ubsa.usask@gmail.com</a>
-          </p>
-          <p className="contact-item">
-            <strong>Address:</strong><br/>
-            Place Riel Student Centre<br/>
-            Saskatoon, SK, Canada
-          </p>
+        {/* Right Side: Links & Contact */}
+        <div className="footer-right">
           
-          <div className="social-icons">
-            {/* Replace # with actual links */}
-            <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">FB</a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">IG</a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn">IN</a>
+          <div className="footer-links">
+            <h3>Explore</h3>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/events">Events</a></li>
+              <li><a href="/about">About Us</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-contact">
+            <h3>Connect</h3>
+            <p>Email: <a href="mailto:ubsa.usask@gmail.com">ubsa.usask@gmail.com</a></p>
+            <p className="address">Place Riel Student Centre<br/>Saskatoon, SK, Canada</p>
+            
+            {/* --- SOCIAL ICONS SECTION --- */}
+            <div className="social-icons">
+              {/* Facebook */}
+              <a 
+                href="https://www.facebook.com/profile.php?id=61569283955219" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="icon-link fb"
+                aria-label="Facebook"
+              >
+                <FaFacebook />
+              </a>
+
+              {/* Instagram */}
+              <a 
+                href="https://www.instagram.com/ubsa.usask/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="icon-link insta"
+                aria-label="Instagram"
+              >
+                <FaInstagram />
+              </a>
+
+              {/* WhatsApp (Add link if you have a group/number) */}
+              <a 
+                href="https://chat.whatsapp.com/your-invite-link" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="icon-link wp"
+                aria-label="WhatsApp"
+              >
+                <FaWhatsapp />
+              </a>
+            </div>
+
           </div>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {currentYear} UBSA. All rights reserved.</p>
-        <div className="legal-links">
-          <span>Designed with Pride in Saskatchewan</span>
-        </div>
+        <p>© 2025 UBSA. All rights reserved.</p>
+        <p className="designer-credit">Designed with Pride in Saskatchewan</p>
       </div>
     </footer>
   );

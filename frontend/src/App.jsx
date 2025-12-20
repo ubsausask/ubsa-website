@@ -1,40 +1,80 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+
+// --- COMPONENTS ---
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ProtectedAdminRoute from './components/ProtectedAdminRoute';
+
+// --- PUBLIC PAGES ---
 import Home from './pages/Home';
 import Events from './pages/Events';
 import Gallery from './pages/Gallery';
-import About from './pages/About';
-import Contact from './pages/Contact';
 import Sponsors from './pages/Sponsors';
+import Contact from './pages/Contact';
+import About from './pages/About';
 
-// Admin Pages
+// --- ADMIN PAGES ---
 import Login from './pages/adminpages/Login';
 import Dashboard from './pages/adminpages/Dashboard';
 import AddEvent from './pages/adminpages/AddEvent';
 import ManageGallery from './pages/adminpages/ManageGallery';
 
 function App() {
+  const location = useLocation();
+
+  // Check if the current route is an admin route
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
   return (
-    <Router>
-      <Navbar />
+    <>
+      {/* Only show Navbar if NOT on admin pages (optional, remove check if you want Nav on admin) */}
+      {!isAdminRoute && <Navbar />}
+
       <Routes>
+        {/* --- PUBLIC ROUTES --- */}
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/events" element={<Events />} />
         <Route path="/gallery" element={<Gallery />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
         <Route path="/sponsors" element={<Sponsors />} />
+        <Route path="/contact" element={<Contact />} />
 
-        // Admin Routes
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin/dashboard" element={<Dashboard />} />
-        <Route path="/admin/add-event" element={<AddEvent />} />
-        <Route path="/admin/manage-gallery" element={<ManageGallery />} />
+        {/* --- ADMIN ROUTES --- */}
+        {/* Login Page */}
+        <Route path="/admin" element={<Login />} />
+
+        {/* Protected Dashboard Pages */}
+        <Route 
+          path="/admin/dashboard" 
+          element={
+            <ProtectedAdminRoute>
+              <Dashboard />
+            </ProtectedAdminRoute>
+          } 
+        />
+        <Route 
+          path="/admin/add-event" 
+          element={
+            <ProtectedAdminRoute>
+              <AddEvent />
+            </ProtectedAdminRoute>
+          } 
+        />
+        <Route 
+          path="/admin/manage-gallery" 
+          element={
+            <ProtectedAdminRoute>
+              <ManageGallery />
+            </ProtectedAdminRoute>
+          } 
+        />
       </Routes>
-      <Footer />
-    </Router>
+
+      {/* --- CONDITIONAL FOOTER --- */}
+      {/* Hide Footer if we are on any admin route */}
+      {!isAdminRoute && <Footer />}
+    </>
   );
 }
 
