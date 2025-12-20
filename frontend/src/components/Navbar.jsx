@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa'; // Import icons for mobile menu
+import { FaBars, FaTimes } from 'react-icons/fa'; 
 import logo from '../assets/UBSA_Logo.png'; 
 import '../style/Navbar.css';
 
@@ -36,10 +36,10 @@ export default function Navbar() {
 
         {/* --- RIGHT: Actions --- */}
         <div className="nav-right">
-          {/* Member+ Button */}
-          <a href="mailto:ubsa.usask@gmail.com" className="btn-member">
+          {/* UPDATED: Link to the new Join Page */}
+          <Link to="/join" className="btn-member" onClick={closeMenu}>
             Member<span className="plus">+</span>
-          </a>
+          </Link>
 
           {/* Mobile Hamburger Icon */}
           <div className="mobile-toggle" onClick={toggleMenu}>
@@ -55,6 +55,8 @@ export default function Navbar() {
         <Link to="/gallery" onClick={closeMenu}>Gallery</Link>
         <Link to="/sponsors" onClick={closeMenu}>Sponsors</Link>
         <Link to="/contact" onClick={closeMenu}>Contact</Link>
+        {/* Added Join to mobile menu for better UX */}
+        <Link to="/join" className="mobile-join-link" onClick={closeMenu}>Become a Member+</Link>
       </div>
 
     </header>

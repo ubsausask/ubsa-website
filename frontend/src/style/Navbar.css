@@ -8,27 +8,30 @@
   width: 100%;
   z-index: 1000;
   
-  /* User's Gradient Style */
-  background: linear-gradient(to bottom, #001d1d 10%, transparent);
+  /* Subtle Green Gradient from Top */
+  background: linear-gradient(
+    to bottom, 
+    rgba(0, 29, 29, 0.9) 0%, 
+    rgba(0, 29, 29, 0.4) 60%, 
+    transparent 100%
+  );
   
   padding: 0 2rem;
   font-family: 'Inter', sans-serif;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
   box-sizing: border-box; 
-  
-  /* Optional: Add a slight blur to make text readable over images */
-  backdrop-filter: blur(2px); 
+  backdrop-filter: blur(4px); /* Increased blur for better legibility */
 }
 
 /* --- FLEX CONTAINER --- */
 .nav-container {
-  max-width: 1400px; /* Increased slightly to fit all links */
+  max-width: 1400px;
   height: 90px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative; /* Crucial for centering the menu */
+  position: relative;
 }
 
 /* --- LEFT SIDE (Logo) --- */
@@ -39,28 +42,18 @@
   align-items: center;
 }
 
-.nav-logo {
-  display: flex;
-  align-items: center;
-  transition: transform 0.2s ease, filter 0.2s ease;
-  cursor: pointer;
-  flex-shrink: 0; 
-}
-
-.nav-logo:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 0 8px rgba(227, 111, 4, 0.4));
-}
-
 .logo-img {
   height: 70px;
   width: auto;
   object-fit: contain;
-  display: block;
+  transition: transform 0.2s ease;
+}
+
+.nav-logo:hover .logo-img {
+  transform: scale(1.05);
 }
 
 /* --- CENTER (Desktop Menu) --- */
-/* Absolute positioning ensures it is DEAD CENTER regardless of logo/button widths */
 .nav-menu-desktop {
   position: absolute;
   left: 50%;
@@ -72,7 +65,7 @@
 
 .nav-link {
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #ffeac8;
   text-decoration: none;
   transition: color 0.3s ease;
@@ -81,8 +74,7 @@
   letter-spacing: 0.5px;
 }
 
-.nav-link:hover,
-.nav-link.active {
+.nav-link:hover, .nav-link.active {
   color: #e36f04;
 }
 
@@ -96,7 +88,7 @@
   background-color: #e36f04;
 }
 
-/* --- RIGHT SIDE (Button & Toggle) --- */
+/* --- RIGHT SIDE --- */
 .nav-right {
   flex: 1;
   display: flex;
@@ -105,44 +97,32 @@
   gap: 1.5rem;
 }
 
-/* Member+ Button (Using .btn-join styles) */
 .btn-member {
-  background-color: #db280a; /* Red */
+  background-color: #db280a;
   color: #fff;
   padding: 0.7rem 1.5rem;
   border-radius: 4px;
   font-weight: bold;
   text-decoration: none;
-  transition: background-color 0.3s ease, transform 0.2s;
+  transition: all 0.3s ease;
   white-space: nowrap;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 .btn-member:hover {
   background-color: #b01f07;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(219, 40, 10, 0.3);
+  box-shadow: 0 4px 15px rgba(219, 40, 10, 0.4);
 }
 
-.plus {
-  margin-left: 2px;
-  font-size: 1.1em;
-}
-
-/* --- MOBILE TOGGLE ICON --- */
+/* --- MOBILE TOGGLE --- */
 .mobile-toggle {
-  display: none; /* Hidden on desktop */
+  display: none;
   font-size: 1.8rem;
   color: #ffeac8;
   cursor: pointer;
   z-index: 1001;
-  transition: color 0.3s ease;
-}
-
-.mobile-toggle:hover {
-  color: #e36f04;
 }
 
 /* --- MOBILE MENU OVERLAY --- */
@@ -152,7 +132,7 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 29, 29, 0.98); /* Deep dark background */
+  background-color: rgba(0, 20, 10, 0.98);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -175,34 +155,45 @@
   font-weight: bold;
 }
 
-.mobile-menu a:hover {
-  color: #e36f04;
+/* Special Styling for the Join link in Mobile Menu */
+.mobile-join-link {
+  color: #e36f04 !important;
+  border: 2px solid #e36f04;
+  padding: 0.6rem 2.5rem;
+  border-radius: 50px;
+  margin-top: 1rem;
+  font-size: 1.2rem !important;
+  transition: all 0.3s ease;
+}
+
+.mobile-join-link:hover {
+  background-color: #e36f04;
+  color: #fff !important;
 }
 
 /* --- RESPONSIVENESS --- */
 @media (max-width: 900px) {
-  .ubsa-navbar {
-    padding: 0 1rem;
-  }
-  
   .nav-menu-desktop {
-    display: none; /* Hide center links */
+    display: none;
   }
   
   .mobile-toggle {
-    display: block; /* Show hamburger */
+    display: block;
   }
 
   .logo-img {
     height: 50px;
   }
 
-  .btn-member {
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
-  }
-  
   .nav-container {
-    height: 70px;
+    height: 75px;
+  }
+
+  /* Hide the Member+ button on very small screens to prevent overlap, 
+     as it's now in the mobile menu */
+  @media (max-width: 480px) {
+    .btn-member {
+      display: none;
+    }
   }
 }

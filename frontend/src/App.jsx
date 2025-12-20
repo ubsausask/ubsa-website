@@ -13,6 +13,7 @@ import Gallery from './pages/Gallery';
 import Sponsors from './pages/Sponsors';
 import Contact from './pages/Contact';
 import About from './pages/About';
+import Join from './pages/Join';
 
 // --- ADMIN PAGES ---
 import Login from './pages/adminpages/Login';
@@ -39,6 +40,7 @@ function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/sponsors" element={<Sponsors />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/join" element={<Join />} />
 
         {/* Admin Routes */}
         <Route path="/admin" element={<Login />} />
