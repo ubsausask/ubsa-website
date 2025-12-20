@@ -8,6 +8,9 @@ import Gallery from './pages/Gallery';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Sponsors from './pages/Sponsors';
+
+// Admin Pages
+import Dashboard from './pages/adminpages/Dashboard';
 import AddEvent from './pages/adminpages/AddEvent';
 import ManageGallery from './pages/adminpages/ManageGallery';
 
@@ -22,6 +25,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/sponsors" element={<Sponsors />} />
+
+        // Admin Routes
+        <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/add-event" element={<AddEvent />} />
         <Route path="/admin/manage-gallery" element={<ManageGallery />} />
       </Routes>

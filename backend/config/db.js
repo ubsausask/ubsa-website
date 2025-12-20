@@ -1,37 +1,28 @@
-const mysql = require('mysql2');
+// FIX: Use 'mysql2/promise' to allow async/await in your routes
+const mysql = require('mysql2/promise'); 
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-const dbConfig = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-};
+const pool = mysql.createPool({
+    host: process.env.DB_HOST || 'ubsa-db',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || 'rootpassword',
+    database: process.env.DB_NAME || 'ubsa_db',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
 
-let pool;
-
-try {
-  pool = mysql.createPool(dbConfig);
-  // Convert pool to promise-based
-  const promisePool = pool.promise();
-  
-  // Test connection
-  pool.getConnection((err, connection) => {
-    if (err) {
-      console.error('❌ DB Connection Failed:', err.code);
-      console.error('   (The server will restart automatically via Docker)');
-    } else {
-      console.log(`✅ Connected to MySQL Database: ${process.env.DB_NAME}`);
-      connection.release();
+// Optional: Test the connection on startup
+(async () => {
+    try {
+        const connection = await pool.getConnection();
+        console.log('✅ Connected to MySQL Database via Promise Pool');
+        connection.release();
+    } catch (err) {
+        console.error('❌ Database connection failed:', err.code);
     }
-  });
+})();
 
-  module.exports = promisePool;
-} catch (error) {
-  console.error('DB Config Error:', error);
-}
+module.exports = pool;
