@@ -73,7 +73,7 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <p>© 2025 UBSA. All rights reserved.</p>
-        <p className="designer-credit">Designed with Pride in Saskatchewan</p>
+        <p className="designer-credit">Designed by SHAHED</p>
       </div>
     </footer>
   );

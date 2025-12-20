@@ -1,208 +1,199 @@
-/* --- PAGE LAYOUT & BACKGROUND --- */
+/* src/style/Sponsors.css */
+
+/* --- PAGE CONTAINER --- */
 .sponsors-page {
-  padding-top: 140px;
-  padding-bottom: 4rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
   min-height: 100vh;
-  position: relative;
-  overflow: hidden; /* Contains the blurred orbs */
+  padding: 140px 2rem 4rem;
+  background-color: #001313; /* Deep Dark Green Base */
+  
+  /* Subtle Background Gradient */
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(0, 50, 30, 0.4), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(211, 47, 47, 0.15), transparent 40%);
   color: #fff;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Abstract Background Orbs to enhance Glass Effect */
-.bg-orb {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(80px);
-  z-index: -1;
-  opacity: 0.4;
-}
-
-.orb-1 {
-  width: 400px;
-  height: 400px;
-  background: var(--head-main, #e36f04);
-  top: 10%;
-  left: -10%;
-}
-
-.orb-2 {
-  width: 500px;
-  height: 500px;
-  background: var(--bg-sec, #004f26);
-  bottom: 10%;
-  right: -10%;
-}
-
-/* Text Styling */
-.page-header {
+/* --- HERO SECTION --- */
+.sponsors-hero {
   text-align: center;
-  margin-bottom: 4rem;
-}
-
-.glass-text {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
-  margin-bottom: 1rem;
-  text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-.text-highlight { color: var(--head-main, #e36f04); }
-.section-title { font-size: 2rem; margin-bottom: 1.5rem; text-align: center; }
-
-/* --- GLASS CONTAINER (iPhone Style Panel) --- */
-.glass-container {
-  background: rgba(255, 255, 255, 0.05); /* Extremely subtle fill */
-  backdrop-filter: blur(16px);            /* The iPhone Blur */
-  -webkit-backdrop-filter: blur(16px);    /* Safari support */
-  border: 1px solid rgba(255, 255, 255, 0.15); /* Thin white border */
-  border-radius: 24px;                    /* iOS style rounding */
-  padding: 3rem;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   margin-bottom: 5rem;
 }
 
-/* --- SPONSORS GRID --- */
-.sponsors-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  justify-items: center;
+.page-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
 }
 
-.sponsor-card {
+.text-highlight {
+  color: #e36f04; /* UBSA Orange */
+  text-shadow: 0 0 20px rgba(227, 111, 4, 0.4);
+}
+
+.page-subtitle {
+  font-size: 1.2rem;
+  color: #ccc;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* --- GRID LAYOUT --- */
+.sponsors-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- GLASS CARD --- */
+.glass-sponsor-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1rem;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.sponsor-card:hover { transform: translateY(-5px); }
-
-.logo-wrapper {
-  width: 120px;
-  height: 120px;
-  background: rgba(255, 255, 255, 0.1); /* Inner glass */
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: hidden;
+.glass-sponsor-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  border-color: rgba(227, 111, 4, 0.3);
 }
 
-.logo-wrapper img { width: 80%; height: auto; opacity: 0.8; }
-
-.tier-badge {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 4px 12px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* --- DONATION CARDS --- */
-.donation-wrapper { display: flex; flex-direction: column; gap: 3rem; }
-
-.donation-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-}
-
-.donation-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 2rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
+/* --- 1. CARD HEADER (Image) --- */
+.card-header {
   position: relative;
-  overflow: hidden;
+  height: 180px;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 }
 
-.donation-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--head-main);
-  transform: scale(1.02);
+.sponsor-logo-wrapper img {
+  max-height: 120px;
+  max-width: 80%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
 }
 
-.donation-card .amount {
-  font-size: 2.5rem;
+.sponsor-tier-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #ffd700, #ffb700); /* Gold Gradient Default */
+  color: #000;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* --- 2. CARD BODY --- */
+.card-body {
+  padding: 1.5rem;
+  flex: 1; /* Pushes footer down */
+}
+
+.sponsor-name {
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--head-main);
+  color: #fff;
   margin-bottom: 0.5rem;
 }
 
-.donation-card h4 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-.donation-card p { font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 1.5rem; }
-
-/* Buttons */
-.btn-glass {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 0.5rem 1.5rem;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: 0.3s;
+.sponsor-contribution {
+  font-size: 0.9rem;
+  color: #e36f04; /* Orange text */
+  margin-bottom: 1rem;
+  font-weight: 600;
 }
 
-.donation-card:hover .btn-glass {
-  background: white;
-  color: black;
+.sponsor-contribution .label {
+  color: #888;
+  font-weight: 400;
+  margin-right: 5px;
 }
 
-/* --- CUSTOM INPUT SECTION --- */
-.custom-donation {
-  text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  padding-top: 2rem;
+.sponsor-desc {
+  font-size: 0.95rem;
+  color: #bbb;
+  line-height: 1.5;
 }
 
-.input-group {
+/* --- 3. EXCLUSIVE DISCOUNT SECTION --- */
+.card-footer-discount {
+  background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(0, 0, 0, 0.4));
+  border-top: 1px solid rgba(211, 47, 47, 0.3); /* Red Accent Border */
+  padding: 1rem 1.5rem;
+}
+
+.discount-header {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ff6b6b; /* Soft Red */
+  font-weight: bold;
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.input-group input {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 1rem;
-  color: white;
+.discount-details h3 {
   font-size: 1.2rem;
-  width: 150px;
-  text-align: center;
+  color: #fff;
+  margin: 0;
+  font-weight: 800;
 }
 
-.input-group input:focus { outline: none; border-color: var(--head-main); }
+.discount-details p {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin: 0.2rem 0 0 0;
+}
 
-.btn-glass-filled {
-  background: var(--head-main, #e36f04);
-  border: none;
+/* --- CTA SECTION --- */
+.sponsor-cta {
+  text-align: center;
+  margin-top: 6rem;
+  padding: 3rem;
+  background: rgba(255,255,255,0.02);
+  border-radius: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sponsor-cta h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-partner {
+  display: inline-block;
+  background: #e36f04;
   color: white;
-  padding: 0 2rem;
-  border-radius: 12px;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  text-decoration: none;
   font-weight: bold;
   font-size: 1.1rem;
-  cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
-.btn-glass-filled:hover { background: #ff4500; }
-
-/* Mobile */
-@media (max-width: 768px) {
-  .glass-container { padding: 1.5rem; }
-  .logo-wrapper { width: 80px; height: 80px; }
+.btn-partner:hover {
+  background: #c25e00;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(227, 111, 4, 0.4);
 }
