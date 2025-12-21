@@ -39,9 +39,9 @@ export default function Dashboard() {
       );
 
       setStats({
-        members: members.length,
-        sponsors: sponsors.length,
-        events: events.length
+        members: Array.isArray(members) ? members.length : 0,
+        sponsors: Array.isArray(sponsors) ? sponsors.length : 0,
+        events: Array.isArray(events) ? events.length : 0
       });
     } catch (err) {
       console.error("Dashboard Load Error:", err);
@@ -73,8 +73,9 @@ export default function Dashboard() {
         </button>
       </div>
 
-      {/* STATS STRIP - Members is now a clickable Link */}
+      {/* STATS STRIP */}
       <div className="stats-grid">
+        {/* Total Members - Functional Link to Directory */}
         <Link to="/admin/members" className="stat-card glass orange-glow" style={{ textDecoration: 'none' }}>
           <div className="stat-icon-wrapper"><FaUsers /></div>
           <div className="stat-info">
@@ -84,21 +85,25 @@ export default function Dashboard() {
           </div>
         </Link>
 
+        {/* Treasury - Based on Member count */}
         <div className="stat-card glass green-glow">
           <div className="stat-icon-wrapper"><FaMoneyBillWave /></div>
           <div className="stat-info">
             <h3>Treasury</h3>
             <p className="stat-number">${stats.members * 5}</p>
+            <span className="click-hint">Funds Overview</span>
           </div>
         </div>
 
-        <div className="stat-card glass gold-glow">
+        {/* Sponsors - Functional Link to Manage Sponsors */}
+        <Link to="/admin/manage-sponsors" className="stat-card glass gold-glow" style={{ textDecoration: 'none' }}>
           <div className="stat-icon-wrapper"><FaHandshake /></div>
           <div className="stat-info">
             <h3>Sponsors</h3>
             <p className="stat-number">{stats.sponsors}</p>
+            <span className="click-hint">Manage Apps →</span>
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* MANAGEMENT TOOLS */}

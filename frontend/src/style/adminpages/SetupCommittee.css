@@ -1,0 +1,113 @@
+.setup-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem;
+}
+
+.setup-warning {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(227, 111, 4, 0.1);
+    border-left: 4px solid #e36f04;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2.5rem;
+    color: #ffd1a9;
+}
+
+.setup-warning svg {
+    font-size: 2rem;
+    color: #e36f04;
+}
+
+.setup-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.setup-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 1.2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+}
+
+.role-badge {
+    min-width: 160px;
+    font-weight: 800;
+    color: #e36f04;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.input-field {
+    flex: 1;
+}
+
+.input-field input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 0;
+    color: white;
+    font-size: 1.1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-field input:focus {
+    border-color: #e36f04;
+}
+
+.photo-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ccc;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+.photo-btn:hover {
+    background: #e36f04;
+    color: white;
+}
+
+.confirm-transition-btn {
+    width: 100%;
+    margin-top: 3rem;
+    padding: 1.2rem;
+    background: #e36f04;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.confirm-transition-btn:hover:not(:disabled) {
+    background: white;
+    color: #e36f04;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(227, 111, 4, 0.3);
+}
+
+.confirm-transition-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
