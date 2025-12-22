@@ -31,7 +31,7 @@ export default function Dashboard() {
     try {
       const urls = [
         'http://localhost:5000/api/members',
-        'http://localhost:5000/api/sponsor-applications',
+        'http://localhost:5000/api/sponsors',
         'http://localhost:5000/api/events',
         'http://localhost:5000/api/contact-messages' // New endpoint
       ];

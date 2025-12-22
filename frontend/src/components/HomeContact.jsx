@@ -2,16 +2,46 @@ import React, { useState } from 'react';
 import '../style/HomeContact.css';
 
 export default function HomeContact() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ 
+    name: '', 
+    email: '', 
+    subject: 'General Inquiry', // Default subject for DB consistency
+    message: '' 
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert('Thank you! We will be in touch shortly.');
-    setFormData({ name: '', email: '', message: '' });
+    setIsSubmitting(true);
+
+    try {
+      // Direct fetch call to your backend
+      const response = await fetch('http://localhost:5000/api/contact-messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('Thank you! Your message has been sent to our team.');
+        // Reset form after success
+        setFormData({ name: '', email: '', subject: 'General Inquiry', message: '' });
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to send: ${errorData.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Could not connect to the server. Please check if the backend is running.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -62,7 +92,13 @@ export default function HomeContact() {
                   required 
                 ></textarea>
               </div>
-              <button type="submit" className="btn-send-home">Send Message</button>
+              <button 
+                type="submit" 
+                className="btn-send-home" 
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+              </button>
             </form>
           </div>
         </div>

@@ -3,7 +3,7 @@
     position: relative;
     min-height: 100vh;
     padding: 140px 2rem 4rem;
-    color: #fff;
+    color: #fdfaf5; /* Cream White */
     max-width: 1400px;
     margin: 0 auto;
     z-index: 1;
@@ -14,12 +14,13 @@
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
+    /* Darker, more neutral background to make colors pop */
     background: 
-        linear-gradient(rgba(0, 15, 10, 0.95), rgba(0, 0, 0, 0.98)),
+        linear-gradient(rgba(10, 15, 12, 0.96), rgba(5, 5, 5, 0.98)),
         url('../../assets/TigerGalleryPageBG.jpg');
     background-size: cover;
     background-position: center;
-    filter: blur(8px);
+    filter: blur(10px);
     z-index: -1;
 }
 
@@ -33,7 +34,7 @@
     position: fixed;
     top: 0; left: 0;
     z-index: 2000;
-    background: linear-gradient(rgba(0, 15, 10, 0.95), rgba(0, 0, 0, 0.98)),
+    background: linear-gradient(rgba(10, 15, 12, 0.96), rgba(5, 5, 5, 0.98)),
                 url('../../assets/TigerGalleryPageBG.jpg');
     background-size: cover;
 }
@@ -43,8 +44,10 @@
     width: 100%;
     max-width: 400px;
     text-align: center;
+    background: rgba(253, 250, 245, 0.05); /* Cream Glass */
+    backdrop-filter: blur(20px);
     border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(253, 250, 245, 0.15);
 }
 
 /* --- 3. DASHBOARD HEADER --- */
@@ -53,7 +56,7 @@
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 3.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(144, 238, 144, 0.2); /* Light Green Border */
     padding-bottom: 2rem;
 }
 
@@ -64,13 +67,16 @@
     display: flex;
     align-items: center;
     gap: 15px;
+    color: #fdfaf5; /* Cream */
 }
 
-.header-icon-main { color: #e36f04; }
+.text-highlight { color: #e36f04; } /* Orange */
+
+.header-icon-main { color: #90ee90; } /* Light Green */
 
 .logout-pill {
-    background: rgba(211, 47, 47, 0.1);
-    border: 1px solid rgba(211, 47, 47, 0.4);
+    background: rgba(244, 67, 54, 0.1); /* Red Transparent */
+    border: 1px solid rgba(244, 67, 54, 0.5);
     color: #ff5252;
     padding: 10px 24px;
     border-radius: 50px;
@@ -82,7 +88,11 @@
     transition: 0.3s;
 }
 
-.logout-pill:hover { background: #d32f2f; color: white; }
+.logout-pill:hover { 
+    background: #f44336; /* Red Solid */
+    color: #fdfaf5; 
+    box-shadow: 0 0 15px rgba(244, 67, 54, 0.4);
+}
 
 /* --- 4. STATS GRID (Command Cards) --- */
 .stats-grid {
@@ -97,7 +107,6 @@
     align-items: center;
     padding: 2.5rem 2rem;
     gap: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     overflow: hidden;
@@ -105,40 +114,47 @@
 
 .stat-icon-wrapper {
     font-size: 2.5rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(253, 250, 245, 0.08); /* Cream Tint */
     width: 80px; height: 80px;
     display: flex; justify-content: center; align-items: center;
     border-radius: 20px;
+    color: #fdfaf5;
 }
 
 /* Stat-Card Glows & Hover States */
-.gold-glow:hover { border-color: #ffd700; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.15); transform: translateY(-5px); }
-.orange-glow:hover { border-color: #e36f04; box-shadow: 0 10px 30px rgba(227, 111, 4, 0.15); transform: translateY(-5px); }
-.green-glow:hover { border-color: #4caf50; box-shadow: 0 10px 30px rgba(76, 175, 80, 0.15); transform: translateY(-5px); }
+.orange-glow:hover { 
+    border-color: #e36f04; 
+    box-shadow: 0 10px 30px rgba(227, 111, 4, 0.2); 
+    transform: translateY(-5px); 
+}
+.green-glow:hover { 
+    border-color: #90ee90; 
+    box-shadow: 0 10px 30px rgba(144, 238, 144, 0.2); 
+    transform: translateY(-5px); 
+}
+.gold-glow:hover { 
+    border-color: #ffd700; 
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2); 
+    transform: translateY(-5px); 
+}
 
 .stat-number { 
-    font-size: 3rem; 
+    font-size: 3.2rem; 
     font-weight: 800; 
     font-family: 'Courier New', monospace; 
+    color: #fdfaf5;
     line-height: 1;
-    margin-top: 5px;
 }
 
 .click-hint {
     font-size: 0.75rem;
-    color: #e36f04;
+    color: #90ee90; /* Light Green */
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     margin-top: 10px;
     opacity: 0.7;
     transition: 0.3s;
-}
-
-.stat-card:hover .click-hint {
-    opacity: 1;
-    transform: translateX(8px);
-    color: #fff;
 }
 
 /* --- 5. MANAGEMENT TOOLS (Actions Grid) --- */
@@ -148,9 +164,9 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #e36f04;
+    color: #90ee90; /* Light Green */
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
 .actions-grid {
@@ -166,61 +182,70 @@
     text-align: center;
     align-items: center;
     text-decoration: none;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #fdfaf5;
+    border: 1px solid rgba(253, 250, 245, 0.1);
     transition: 0.3s ease;
-}
-
-.action-card h3 {
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-}
-
-.action-card p {
-    font-size: 0.9rem;
-    opacity: 0.6;
 }
 
 .action-icon-premium { 
     font-size: 3.5rem; 
-    color: #e36f04; 
+    color: #90ee90; /* Green icons for growth/tools */
     margin-bottom: 1.5rem; 
     transition: 0.4s; 
 }
 
 .action-card:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: #e36f04;
+    background: rgba(144, 238, 144, 0.05); /* Soft Green Background */
+    border-color: #90ee90;
     transform: translateY(-8px);
 }
 
-.action-card:hover .action-icon-premium {
-    transform: scale(1.1) rotate(5deg);
-}
+.action-card h3 { color: #fdfaf5; }
 
+/* Dashboard Specific Overrides */
 .danger-btn:hover {
-    border-color: #f44336 !important;
+    border-color: #f44336 !important; /* Red */
     background: rgba(244, 67, 54, 0.08) !important;
 }
+.danger-btn:hover .action-icon-premium { color: #f44336; }
 
-.danger-btn:hover .action-icon-premium {
-    color: #f44336;
+.inbox-card:hover .action-icon-premium { color: #2196f3; } /* Blue for messages */
+
+/* --- 6. UTILITIES & NOTIFICATIONS --- */
+.glass {
+    background: rgba(253, 250, 245, 0.03);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: 24px;
+    border: 1px solid rgba(253, 250, 245, 0.1);
 }
 
-/* --- 6. UTILITIES & MISC --- */
-.glass {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-radius: 24px;
+.notification-badge {
+    position: absolute;
+    top: -5px; right: -10px;
+    background: #e36f04; /* Orange */
+    color: white;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 50px;
+    border: 2px solid #0a0f0c;
+    box-shadow: 0 0 15px rgba(227, 111, 4, 0.6);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0px rgba(227, 111, 4, 0.7); }
+    50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(227, 111, 4, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0px rgba(227, 111, 4, 0); }
 }
 
 .disabled {
-    opacity: 0.3;
-    cursor: not-allowed !important;
+    opacity: 0.2;
     filter: grayscale(1);
+    cursor: not-allowed !important;
 }
 
+/* --- 7. RESPONSIVENESS --- */
 @media (max-width: 900px) {
     .dashboard-header { 
         flex-direction: column; 
@@ -229,32 +254,5 @@
         gap: 2rem; 
     }
     .header-text h1 { font-size: 2.2rem; }
-}.badge-container {
-    position: relative;
-    display: inline-block;
-}
-
-.notification-badge {
-    position: absolute;
-    top: -5px;
-    right: -10px;
-    background: #ff5252;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: bold;
-    padding: 4px 8px;
-    border-radius: 50%;
-    border: 2px solid #000;
-    box-shadow: 0 0 10px rgba(255, 82, 82, 0.5);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-.inbox-card:hover .action-icon-premium {
-    color: #2196f3; /* Changes icon to blue on hover for inbox */
+    .stat-number { font-size: 2.5rem; }
 }
