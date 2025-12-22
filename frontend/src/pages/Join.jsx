@@ -4,7 +4,6 @@ import {
   FaTimes, FaUniversity, FaIdBadge, FaEnvelopeOpenText, 
   FaUserGraduate, FaExclamationTriangle 
 } from 'react-icons/fa';
-import logo from '../assets/UBSA_Logo.png'; 
 import '../style/Join.css';
 
 export default function Join() {
@@ -34,9 +33,7 @@ export default function Join() {
   };
 
   const validateUSask = () => {
-    // Regex for: abc123@mail.usask.ca or abc123@usask.ca
     const emailRegex = /^[a-z]{3}\d{3}@(mail\.)?usask\.ca$/i;
-    // Regex for: exactly 8 digits
     const sidRegex = /^\d{8}$/;
 
     if (!emailRegex.test(formData.email)) {
@@ -44,7 +41,7 @@ export default function Join() {
       return false;
     }
     if (!sidRegex.test(formData.studentId)) {
-      setValidationError("Student Number must be exactly 8 digits (e.g., 11360945)");
+      setValidationError("Student Number must be exactly 8 digits.");
       return false;
     }
     return true;
@@ -56,10 +53,19 @@ export default function Join() {
 
     setLoading(true);
     try {
+      // 🚀 Mapping frontend names to backend snake_case names
+      const payload = {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        student_id: formData.studentId,
+        department: formData.department
+      };
+
       const response = await fetch('http://localhost:5000/api/members', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -70,10 +76,11 @@ export default function Join() {
       } else if (response.ok) {
         setSubmitted(true);
       } else {
-        setValidationError(data.message || "Something went wrong.");
+        // This will show the actual SQL error if the backend sends it
+        setValidationError(data.error || data.message || "Something went wrong.");
       }
     } catch (error) {
-      setValidationError("Could not connect to the server. Please check your connection.");
+      setValidationError("Could not connect to the server. Is the backend running?");
     } finally {
       setLoading(false);
     }
@@ -217,7 +224,7 @@ export default function Join() {
                 <FaEnvelopeOpenText className="info-icon" />
                 <div>
                   <span>JOINED DATE</span>
-                  <p>{new Date(memberInfo.applied_at).toLocaleDateString()}</p>
+                  <p>{new Date(memberInfo.applied_at || memberInfo.joined_at).toLocaleDateString()}</p>
                 </div>
               </div>
             </div>

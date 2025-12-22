@@ -6,46 +6,51 @@ export default function SponsorFormModal({ onClose }) {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    businessName: '',
+    business_name: '',  // Match backend column name
     email: '',
     tier: 'Silver',
-    paymentType: 'E-Transfer'
+    paymentType: 'E-Transfer',
+    contact_person: 'Web Submission', // Added to satisfy potential DB requirements
+    message: ''
   });
 
-  // Handle Input Changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Logic to send to backend
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // If on Step 1, just move to Step 2
     if (step === 1) {
       return setStep(2);
     }
 
-    // If on Step 2, submit to Backend
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/sponsor-applications', {
+      // FIX: Changed URL to /api/sponsors to match your server.js route mapping
+      const response = await fetch('http://localhost:5000/api/sponsors', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
+      // Safely check content type before parsing
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Server did not return JSON. Check backend routes.");
+      }
+
       const data = await response.json();
 
-      if (data.success || response.ok) {
+      if (response.ok) {
         alert("Application submitted! Our team will contact you shortly.");
         onClose();
       } else {
-        alert("Error: " + (data.message || "Something went wrong"));
+        alert("Error: " + (data.error || "Something went wrong"));
       }
     } catch (error) {
       console.error("Submission error:", error);
-      alert("Could not connect to the server. Please ensure the backend is running.");
+      alert("Submission failed. Ensure the backend is running and the route /api/sponsors exists.");
     } finally {
       setLoading(false);
     }
@@ -54,7 +59,6 @@ export default function SponsorFormModal({ onClose }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="sponsor-form-glass" onClick={(e) => e.stopPropagation()}>
-        {/* Close Button */}
         <button className="close-x" onClick={onClose} aria-label="Close">
           <FaTimes />
         </button>
@@ -64,16 +68,15 @@ export default function SponsorFormModal({ onClose }) {
 
         <form onSubmit={handleSubmit}>
           {step === 1 ? (
-            /* STEP 1: BUSINESS DETAILS */
             <div className="form-steps">
               <div className="form-group-modal">
                 <label>Business Name</label>
                 <input 
                   type="text" 
-                  name="businessName"
+                  name="business_name" // Match state key
                   placeholder="e.g. Deshi Bazaar" 
                   required 
-                  value={formData.businessName}
+                  value={formData.business_name}
                   onChange={handleChange} 
                 />
               </div>
@@ -104,7 +107,6 @@ export default function SponsorFormModal({ onClose }) {
               </button>
             </div>
           ) : (
-            /* STEP 2: PAYMENT METHOD */
             <div className="payment-steps">
               <p className="payment-instruction">How would you like to provide your contribution?</p>
               
