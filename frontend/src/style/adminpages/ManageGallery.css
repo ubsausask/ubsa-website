@@ -1,173 +1,243 @@
-/* Container */
-.admin-gallery-container {
-    padding: 140px 2rem 4rem;
-    min-height: 100vh;
-    background-color: #001d1d;
-    color: #fff;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.admin-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    border-bottom: 3px solid #e36f04;
-    display: inline-block;
-}
-
-/* Glass Card */
-.admin-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 2rem;
-    margin-bottom: 3rem;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-}
-
-.admin-card h2 {
-    color: #e36f04;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 0.5rem;
-}
-
-/* Form Layout */
-.admin-form {
-    display: grid;
-    grid-template-columns: 1fr; /* Stack vertically for better mobile view */
-    gap: 1.5rem;
-}
-
-.form-group {
+/* --- 1. COMPONENT INTEGRATION --- */
+.gallery-integrated-view {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    gap: 20px;
+    animation: fadeIn 0.4s ease-out;
 }
 
-.form-group label {
-    margin-bottom: 0.5rem;
-    color: #ccc;
-    font-size: 0.9rem;
-    font-weight: bold;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Glass Inputs */
-.form-group input[type="text"], 
-.form-group select, 
-.form-group textarea {
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff;
-    font-size: 1rem;
-    font-family: inherit;
-    transition: border 0.3s ease;
-}
-
-.form-group input:focus, 
-.form-group select:focus, 
-.form-group textarea:focus {
-    outline: none;
-    border-color: #e36f04;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-/* Custom File Input Styling */
-.file-input-glass {
-    padding: 0.8rem;
-    border: 1px dashed rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    color: #ccc;
-    cursor: pointer;
-}
-
-.file-input-glass:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: #e36f04;
-}
-
-/* Buttons */
-.admin-btn {
-    padding: 1rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    font-size: 1rem;
-}
-
-.add-btn {
-    background: linear-gradient(45deg, #e36f04, #d32f2f);
-    color: white;
-    margin-top: 1rem;
-    box-shadow: 0 4px 15px rgba(227, 111, 4, 0.4);
-}
-
-.add-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(227, 111, 4, 0.6);
-}
-
-.delete-btn {
-    background: #d32f2f;
-    color: white;
-    width: 100%;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    padding: 0.5rem;
-}
-
-.delete-btn:hover { background: #b71c1c; }
-
-.status-msg {
-    text-align: center;
-    margin-top: 1rem;
-    color: #e36f04;
-    font-weight: bold;
-}
-
-/* Grid for Photos */
-.admin-gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-}
-
-.admin-photo-card {
-    background: rgba(0,0,0,0.3);
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.1);
+/* --- 2. HEADER SECTION --- */
+.gallery-page-header {
     display: flex;
-    flex-direction: column;
-}
-
-.admin-photo-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-}
-
-.admin-photo-info {
-    padding: 1rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
 }
 
-.badge {
-    background: #e36f04;
+.gallery-page-header h2 {
+    color: #FF8C00; /* Tiger Orange */
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.gallery-page-header p {
+    margin: 5px 0 0 0;
+    font-size: 0.95rem;
+    color: #F5F5F3; /* Cream White */
+    font-weight: 600;
+}
+
+/* --- 3. CATEGORY STATS GRID --- */
+.gallery-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+.category-stat-card {
+    background: #1A1A1A; /* Dark Ash */
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--dark-shadow);
+}
+
+.cat-label { 
+    font-size: 0.7rem; 
+    color: #999; 
+    text-transform: uppercase; 
+    font-weight: 800; 
+    letter-spacing: 1px;
+}
+
+.cat-value { 
+    font-size: 1.8rem; 
+    font-weight: 900; 
+    color: #FF8C00; 
+    margin: 5px 0; 
+}
+
+.cat-progress-bg { height: 4px; background: #333; border-radius: 10px; overflow: hidden; }
+.cat-progress-fill { height: 100%; background: #FF8C00; transition: 0.5s ease; }
+
+/* --- 4. MAIN LAYOUT GRID --- */
+.gallery-main-layout {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 25px;
+    flex: 1;
+    min-height: 0; /* Critical for flex scrolling */
+}
+
+/* UPLOAD CARD */
+.upload-section {
+    background: #1A1A1A;
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.upload-section h3 {
+    color: #FF8C00;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group label { font-size: 0.75rem; font-weight: 800; color: #999; text-transform: uppercase; }
+
+.form-group select {
+    background: #000;
+    border: 2px solid #333;
+    color: #fff;
+    padding: 12px;
+    border-radius: 10px;
+    outline: none;
+}
+
+.file-drop-area {
+    border: 2px dashed #333;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s;
+    background: #121212;
+}
+
+.file-drop-area:hover { border-color: #FF8C00; background: rgba(255,140,0,0.05); }
+.file-drop-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.file-drop-area p { font-size: 0.85rem; color: #777; margin: 0; }
+
+/* --- 5. PREVIEW GRID (Internal Scroll) --- */
+.gallery-list-viewport {
+    background: #1A1A1A;
+    border-radius: 20px;
+    padding: 20px;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.gallery-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+}
+
+.gallery-item-card {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.gallery-item-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; }
+
+.gallery-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 12px;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.gallery-item-card:hover .gallery-item-overlay { opacity: 1; }
+.gallery-item-card:hover img { transform: scale(1.1); }
+
+.badge-mini { 
+    background: #FF8C00; 
+    color: #000; 
+    font-size: 0.6rem; 
+    padding: 4px 8px; 
+    border-radius: 4px; 
+    font-weight: 900; 
+    text-transform: uppercase;
+}
+
+.delete-icon-btn {
+    background: #FF4D4D;
     color: white;
-    padding: 0.2rem 0.6rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    align-self: flex-start;
-    margin-bottom: 0.5rem;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.delete-icon-btn:hover { background: #fff; color: #FF4D4D; transform: scale(1.1); }
+
+.status-msg-gallery {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+    color: #FF8C00;
+}/* --- CUSTOM TIGER SCROLLBAR --- */
+
+/* 1. The scrollbar width */
+.gallery-list-viewport::-webkit-scrollbar {
+    width: 8px;               /* Vertical scroll thickness */
+    height: 8px;              /* Horizontal scroll thickness */
+}
+
+/* 2. The background track */
+.gallery-list-viewport::-webkit-scrollbar-track {
+    background: #121212;      /* Deep Sidebar Ash */
+    border-radius: 10px;
+}
+
+/* 3. The draggable handle (Thumb) */
+.gallery-list-viewport::-webkit-scrollbar-thumb {
+    background: #333333;      /* Dark Grey handle */
+    border-radius: 10px;
+    border: 2px solid #121212; /* Creates a padding effect around the thumb */
+    transition: 0.3s;
+}
+
+/* 4. Handle on Hover */
+.gallery-list-viewport::-webkit-scrollbar-thumb:hover {
+    background: #444444;
+}
+
+/* 5. Handle when active/dragging (Tiger Glow) */
+.gallery-list-viewport::-webkit-scrollbar-thumb:active {
+    background: var(--tiger-orange); /* #FF8C00 */
+    box-shadow: 0 0 10px var(--tiger-orange);
+}
+
+/* For Firefox support */
+.gallery-list-viewport {
+    scrollbar-width: thin;
+    scrollbar-color: #333333 #121212;
 }

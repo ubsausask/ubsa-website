@@ -1,228 +1,413 @@
-/* --- Color Palette & Variables --- */
+/* --- 1. CORE VARIABLES --- */
 :root {
-  --page-bg: #f4f4f7;           /* Premium Light Grey */
-  --card-ash: #1a1a1a;          /* Dark Components */
-  --sidebar-ash: #121212;       /* Deep Sidebar */
-  --cream-white: #f5f5f3;
-  --tiger-orange: #FF8C00;      /* Fixed Branding Color to UBSA Orange */
-  --member-red: #ff4d4d;
+  /* Dimensions */
+  --sidebar-width: 270px;
+  --topbar-height: 85px;
+  
+  /* Brand Colors */
+  --tiger-orange: #ff8c00;
+  --tiger-orange-glow: rgba(255, 140, 0, 0.15);
+  
+  /* Interface Grays */
+  --bg-deep: #0a0a0a;           /* Deep background */
+  --bg-sidebar: #121212;        /* Sidebar neutral */
+  --bg-card: #1c1c1c;           /* Card surface */
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  
+  /* Typography */
+  --text-primary: #f8f8f2;
+  --text-muted: #888888;
+  
+  /* Status Colors */
   --event-green: #2ecc71;
+  --member-red: #ff4d4d;
   --sponsor-orange: #f39c12;
   --student-blue: #3498db;
-  --text-dim: #999999;
-  --dark-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
+
+  /* Elevation */
+  --shadow-dark: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
-/* --- 1. GLOBAL RESET (SCROLL ENABLED) --- */
-html, body {
-  margin: 0; 
-  padding: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: var(--page-bg);
-  /* DO NOT use overflow: hidden here so public pages can scroll */
-  scroll-behavior: smooth;
-}
-
-/* --- 2. ADMIN VIEWPORT (FIXED & LOCKED) --- */
+/* --- 2. GLOBAL VIEWPORT (NO SCROLL) --- */
 .admin-viewport {
   display: flex;
-  position: fixed; /* Locks the dashboard over the screen */
-  inset: 0;
-  background-color: var(--page-bg);
-  z-index: 9999;
-  overflow: hidden; /* Only the admin panel is locked */
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow: hidden; /* Critical: Keeps the shell static */
 }
 
 /* --- 3. SIDEBAR --- */
 .admin-sidebar {
-  width: 260px;
-  background-color: var(--sidebar-ash);
+  width: var(--sidebar-width);
+  background-color: var(--bg-sidebar);
   display: flex;
   flex-direction: column;
-  padding: 30px 0;
-  box-sizing: border-box;
+  padding: 2.5rem 0;
+  border-right: 1px solid var(--border-subtle);
   flex-shrink: 0;
 }
 
 .sidebar-brand {
-  padding: 0 25px;
-  margin-bottom: 30px;
+  padding: 0 2.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .sidebar-brand span {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 900;
   color: var(--tiger-orange);
-  letter-spacing: -1px;
+  letter-spacing: -1.5px;
+  display: block;
 }
 
 .sidebar-brand::after {
-  content: "COMMAND CENTER";
-  display: block;
+  content: 'COMMAND CENTER';
   font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--text-dim);
   letter-spacing: 2px;
-  margin-top: 4px;
+  color: var(--text-muted);
+  font-weight: 700;
 }
 
-/* --- 4. NAVIGATION --- */
+/* Navigation Group Labels */
+.nav-group-label {
+  padding: 1.5rem 2.5rem 0.5rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  font-weight: 800;
+}
+
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 15px 25px;
-  color: var(--text-dim);
+  gap: 14px;
+  padding: 0.9rem 2.5rem;
+  color: var(--text-muted);
   text-decoration: none;
-  transition: 0.3s ease;
-  border-left: 5px solid transparent;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
 }
 
-.nav-item.active {
-  background: linear-gradient(90deg, rgba(255, 140, 0, 0.1) 0%, transparent 100%);
-  color: var(--cream-white);
-  border-left: 5px solid var(--tiger-orange);
+.nav-item:hover, .nav-item.active {
+  color: var(--text-primary);
+  background: linear-gradient(90deg, var(--tiger-orange-glow) 0%, transparent 100%);
+  border-left-color: var(--tiger-orange);
 }
 
-.go-ubsa-home {
+.nav-badge {
+  background: var(--tiger-orange);
+  color: #000;
+  font-size: 0.65rem;
+  font-weight: 900;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: auto;
+}
+
+.sidebar-logout {
+  margin: auto 1.5rem 0; /* Pushes to bottom */
+  background: transparent;
+  border: 1px solid #333;
+  color: var(--member-red);
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 12px;
-  color: var(--tiger-orange);
-  text-decoration: none;
-  font-size: 0.85rem;
+  justify-content: center;
+  gap: 10px;
   font-weight: 700;
-  padding: 12px 20px;
-  border: 1px solid var(--tiger-orange);
-  border-radius: 10px;
-  margin: 0 20px 25px 20px;
-  transition: 0.3s ease;
+  transition: 0.3s;
 }
 
-.go-ubsa-home:hover {
-  background: var(--tiger-orange);
-  color: white;
+.sidebar-logout:hover {
+  background: rgba(255, 77, 77, 0.1);
+  border-color: var(--member-red);
 }
 
-/* --- 5. MAIN CONTENT & TOPBAR --- */
+/* --- 4. MAIN LAYOUT & TOPBAR --- */
 .admin-main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 0 35px 25px 35px;
-  box-sizing: border-box;
-  height: 100%; /* Relative to admin-viewport */
+  min-width: 0; /* Prevents flex-child overflow */
 }
 
 .admin-topbar {
-  height: 90px;
+  height: var(--topbar-height);
+  padding: 0 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--bg-sidebar);
+  border-bottom: 1px solid var(--border-subtle);
   flex-shrink: 0;
 }
 
-.welcome-text h1 { 
-  margin: 0; 
-  color: var(--tiger-orange); 
-  font-size: 1.8rem; 
-  font-weight: 900; 
+.welcome-text h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0;
 }
 
-/* --- 6. SCROLLABLE DATA AREA --- */
+.welcome-text p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* --- 5. ACTION BUTTONS --- */
+.header-action-btn {
+  padding: 0.7rem 1.4rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-btn.event-green {
+  background: var(--event-green);
+  color: #fff;
+}
+
+.inbox-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 0.7rem;
+  width: 45px;
+  justify-content: center;
+}
+
+.inbox-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--member-red);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-sidebar);
+}
+
+/* --- 6. SCROLLABLE CONTENT --- */
 .dashboard-scroll-container {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0; /* Critical for internal scrolling to work */
-  overflow-y: auto; /* Allow sub-pages to scroll if content is long */
-  padding-right: 10px;
+  overflow-y: auto;
+  padding: 2.5rem 3rem;
+  min-height: 0; /* Allows the container to be the scrollable boundary */
 }
 
-/* Custom Scrollbar for the Internal Container */
-.dashboard-scroll-container::-webkit-scrollbar { width: 6px; }
-.dashboard-scroll-container::-webkit-scrollbar-thumb { 
-  background: #ccc; 
-  border-radius: 10px; 
+/* Scrollbar Styling */
+.dashboard-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+.dashboard-scroll-container::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+.dashboard-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: var(--tiger-orange);
 }
 
-/* --- 7. DASHBOARD GRIDS --- */
+/* --- 7. DASHBOARD GRIDS & CARDS --- */
 .overview-fill-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 2.5rem;
 }
 
 .dashboard-stats-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
 }
 
+.mini-stat {
+  background: var(--bg-card);
+  padding: 1.8rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-dark);
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.mini-stat:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Stat color bars */
+.mini-stat.event-green { border-bottom: 4px solid var(--event-green); }
+.mini-stat.member-red { border-bottom: 4px solid var(--member-red); }
+.mini-stat.sponsor-orange { border-bottom: 4px solid var(--sponsor-orange); }
+.mini-stat.student-blue { border-bottom: 4px solid var(--student-blue); }
+
+.mini-stat .label { color: var(--text-muted); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
+.mini-stat .value { font-size: 2.4rem; font-weight: 900; color: #fff; line-height: 1.2; display: block; }
+
+/* Middle Grid (Charts) */
 .dashboard-middle-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.8fr;
-  gap: 25px;
+  grid-template-columns: 1.2fr 1fr 0.8fr; /* Weighted columns */
+  gap: 1.5rem;
 }
 
 .chart-card {
-  background: var(--card-ash);
+  background: var(--bg-card);
+  padding: 1.8rem;
   border-radius: 20px;
-  padding: 25px;
-  box-shadow: var(--dark-shadow);
-  color: var(--cream-white);
+  border: 1px solid var(--border-subtle);
+  min-height: 350px;
 }
 
-/* --- 8. MINI STAT CARDS --- */
-.mini-stat {
-  background: var(--card-ash);
-  padding: 22px;
-  border-radius: 16px;
-  text-decoration: none;
-  border-left: 6px solid transparent;
-  box-shadow: var(--dark-shadow);
-  transition: 0.3s;
+/* --- 8. UTILITY LISTS --- */
+.util-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.mini-stat.event-green { border-left-color: var(--event-green); }
-.mini-stat.member-red { border-left-color: var(--member-red); }
-.mini-stat.sponsor-orange { border-left-color: var(--sponsor-orange); }
-.mini-stat.student-blue { border-left-color: var(--student-blue); }
+.status-dot { color: var(--event-green); font-weight: 800; font-size: 0.75rem; }
+.count-tag { background: var(--tiger-orange); padding: 3px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 900; color: #000; }
 
-.mini-stat .value {
-  font-size: 2.2rem;
+/* --- 9. LOADING SCREEN --- */
+.admin-loading-screen {
+  height: 100vh;
+  background: var(--bg-deep);
+  color: var(--tiger-orange);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
   font-weight: 900;
-  color: var(--cream-white);
-  display: block;
+  letter-spacing: 4px;
+}
+/* --- 1. SIDEBAR NAVIGATION GROUPS --- */
+.nav-group-label {
+  padding: 20px 25px 8px;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  font-weight: 800;
+  opacity: 0.5;
+  margin-top: 10px;
 }
 
-/* --- 9. TOP RIGHT ACTIONS --- */
-.top-right-actions {
+/* --- 2. PUBLIC SITE / GO HOME BUTTON --- */
+.go-ubsa-home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--tiger-orange);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 14px;
+  border: 2px solid var(--tiger-orange);
+  border-radius: 12px;
+  margin: 0 20px 20px 20px;
+  text-transform: uppercase;
+  background: rgba(255, 140, 0, 0.03);
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.go-ubsa-home:hover {
+  background: var(--tiger-orange);
+  color: #000;
+  box-shadow: 0 0 20px rgba(255, 140, 0, 0.2);
+}
+
+/* --- 3. SIDEBAR BADGES (For Inbox/Notifications) --- */
+.nav-badge {
+  background: var(--tiger-orange);
+  color: #000;
+  font-size: 0.65rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: auto; /* Pushes to the far right of the nav item */
+}
+
+/* --- 4. QUICK ACTION FOOTER BUTTONS --- */
+.dashboard-quick-actions {
   display: flex;
   gap: 15px;
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
 }
 
-.header-action-btn {
-  height: 45px;
-  padding: 0 20px;
+.quick-btn {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 12px 20px;
   border-radius: 12px;
   display: flex;
   align-items: center;
-  text-decoration: none;
+  gap: 10px;
+  font-size: 0.85rem;
   font-weight: 700;
+  border: 1px solid var(--border-subtle);
+  transition: 0.3s;
 }
 
-.add-btn.event-green { background: var(--event-green); color: white; }
-.inbox-btn { background: var(--card-ash); color: var(--cream-white); font-size: 1.2rem; border: 1px solid #333; }
+.quick-btn svg {
+  color: var(--tiger-orange);
+  font-size: 1.1rem;
+}
 
-/* LOGOUT */
-.sidebar-logout {
-  margin: auto 20px 20px 20px;
-  background: transparent;
-  border: 1px solid var(--member-red);
-  color: var(--member-red);
-  padding: 14px;
+.quick-btn:hover {
+  transform: translateY(-3px);
+  border-color: var(--tiger-orange);
+  background: #252525;
+}
+
+/* --- 5. TOPBAR ADD EVENT BUTTON --- */
+.add-btn.event-green {
+  background: var(--event-green);
+  color: #fff;
+  padding: 12px 24px;
   border-radius: 12px;
-  font-weight: 700;
-  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(46, 204, 113, 0.2);
+  transition: 0.3s;
+}
+
+.add-btn.event-green:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(46, 204, 113, 0.3);
+}
+
+/* --- 6. PLACEHOLDER VIEWS --- */
+.placeholder-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 400px;
+  background: var(--bg-card);
+  border-radius: 20px;
+  border: 2px dashed var(--border-subtle);
+  color: var(--text-muted);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }

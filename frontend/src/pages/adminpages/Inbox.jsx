@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaReply, FaTrash, FaEnvelopeOpenText, FaPaperPlane, FaTimes, FaUser } from 'react-icons/fa';
+import { FaReply, FaTrash, FaEnvelopeOpenText, FaPaperPlane, FaTimes, FaUser, FaCircle } from 'react-icons/fa';
 import '../../style/adminpages/Inbox.css';
 
 export default function Inbox() {
@@ -25,7 +25,6 @@ export default function Inbox() {
 
   const handleReply = async () => {
     if (!replyModal.text) return alert("Please type a reply.");
-    
     try {
       const res = await fetch('http://localhost:5000/api/contact-messages/reply', {
         method: 'POST',
@@ -70,7 +69,7 @@ export default function Inbox() {
         </div>
       </div>
 
-      {/* MESSAGE VIEWPORT (Internal Scroll) */}
+      {/* MESSAGE VIEWPORT */}
       <div className="inbox-table-viewport">
         <div className="message-list">
           {messages.map((msg) => (
@@ -79,26 +78,32 @@ export default function Inbox() {
                 <div className="msg-header-row">
                    <div className="user-info">
                       <div className="avatar-circle"><FaUser /></div>
-                      <div>
-                         <h4>{msg.subject || "General Inquiry"}</h4>
+                      <div className="sender-details">
+                         <div className="subject-line">
+                            <h4>{msg.subject || "General Inquiry"}</h4>
+                            <span className={`status-pill ${msg.status}`}>
+                               <FaCircle className="dot" /> {msg.status}
+                            </span>
+                         </div>
                          <span className="sender-meta">From: <strong>{msg.name}</strong> • {msg.email}</span>
                       </div>
                    </div>
-                   <span className={`status-pill ${msg.status}`}>{msg.status}</span>
                 </div>
                 
-                <div className="msg-body-container">
+                {/* INSET DARK MESSAGE BODY */}
+                <div className="msg-body-dark">
                   {msg.message}
                 </div>
               </div>
 
+              {/* ACTION SIDEBAR */}
               <div className="msg-actions-sidebar">
                 {msg.status !== 'replied' && (
-                  <button className="reply-btn-action" onClick={() => setReplyModal({ open: true, msg, text: '' })}>
+                  <button className="reply-btn-action" title="Reply" onClick={() => setReplyModal({ open: true, msg, text: '' })}>
                     <FaReply />
                   </button>
                 )}
-                <button className="delete-btn-action" onClick={() => handleDelete(msg.id)}>
+                <button className="delete-btn-action" title="Delete" onClick={() => handleDelete(msg.id)}>
                   <FaTrash />
                 </button>
               </div>
@@ -114,7 +119,7 @@ export default function Inbox() {
         </div>
       </div>
 
-      {/* REPLY MODAL SYSTEM */}
+      {/* MODAL - Standardized Tiger Dark Theme */}
       {replyModal.open && (
         <div className="modal-overlay" onClick={() => setReplyModal({ open: false, msg: null, text: '' })}>
           <div className="inbox-modal-card" onClick={e => e.stopPropagation()}>
@@ -123,16 +128,17 @@ export default function Inbox() {
             </button>
             
             <div className="modal-top">
-               <span className="reply-label">Replying to inquiry</span>
+               <span className="reply-label">Direct Email Reply</span>
                <h3>{replyModal.msg.subject}</h3>
-               <p className="target-email">To: {replyModal.msg.email}</p>
+               <p className="target-email">To: <strong>{replyModal.msg.name}</strong> ({replyModal.msg.email})</p>
             </div>
 
             <textarea 
               className="reply-textarea"
-              placeholder="Write your professional response..."
+              placeholder="Write your professional response here..."
               value={replyModal.text}
               onChange={(e) => setReplyModal({...replyModal, text: e.target.value})}
+              autoFocus
             />
 
             <div className="modal-footer-actions">

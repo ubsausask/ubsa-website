@@ -4,9 +4,9 @@ import {
   FaUsers, FaHandshake, FaSignOutAlt, 
   FaHome, FaEnvelopeOpenText, 
   FaPlusCircle, FaUserFriends, FaTicketAlt, FaExternalLinkAlt,
-  FaCameraRetro, FaBriefcase
+  FaCameraRetro, FaBriefcase, FaSitemap, FaTools
 } from 'react-icons/fa';
-import { MdDashboardCustomize, MdEventAvailable } from 'react-icons/md';
+import { MdDashboardCustomize, MdCollections } from 'react-icons/md';
 import { 
   XAxis, Tooltip, ResponsiveContainer, 
   AreaChart, Area, BarChart, Bar 
@@ -29,7 +29,6 @@ export default function Dashboard() {
     members: 0, sponsors: 0, liveEvents: 0, messages: 0, helpedStudents: 0
   });
 
-  // Determine if we are on the base dashboard route
   const isBaseDashboard = location.pathname === '/admin/dashboard' || location.pathname === '/admin/dashboard/';
 
   useEffect(() => {
@@ -69,7 +68,12 @@ export default function Dashboard() {
     navigate('/', { replace: true });
   };
 
-  if (loading) return <div className="admin-loading-screen">Authenticating Command Center...</div>;
+  if (loading) return (
+    <div className="admin-loading-screen">
+      <div className="loader-pulse"></div>
+      <span>AUTHENTICATING COMMAND CENTER...</span>
+    </div>
+  );
 
   return (
     <div className="admin-viewport">
@@ -80,21 +84,41 @@ export default function Dashboard() {
         </div>
 
         <Link to="/" className="go-ubsa-home">
-          <FaExternalLinkAlt /> <span>Go UBSA Home</span>
+          <FaExternalLinkAlt /> <span>Public Site</span>
         </Link>
 
         <nav className="sidebar-nav">
+          <div className="nav-group-label">Core</div>
           <Link to="/admin/dashboard" className={`nav-item ${isBaseDashboard ? 'active' : ''}`}>
-            <FaHome /> <span>Dashboard</span>
+            <FaHome /> <span>Overview</span>
           </Link>
+          <Link to="/admin/dashboard/inbox" className={`nav-item ${location.pathname.includes('inbox') ? 'active' : ''}`}>
+            <FaEnvelopeOpenText /> <span>Inbox</span>
+            {stats.messages > 0 && <span className="nav-badge">{stats.messages}</span>}
+          </Link>
+
+          <div className="nav-group-label">Management</div>
           <Link to="/admin/dashboard/members" className={`nav-item ${location.pathname.includes('members') ? 'active' : ''}`}>
             <FaUsers /> <span>Members</span>
           </Link>
           <Link to="/admin/dashboard/sponsors" className={`nav-item ${location.pathname.includes('sponsors') ? 'active' : ''}`}>
             <FaHandshake /> <span>Sponsors</span>
           </Link>
-          <Link to="/admin/dashboard/inbox" className={`nav-item ${location.pathname.includes('inbox') ? 'active' : ''}`}>
-            <FaEnvelopeOpenText /> <span>Inbox</span>
+          
+          <div className="nav-group-label">Content</div>
+          <Link to="/admin/dashboard/add-event" className={`nav-item ${location.pathname.includes('add-event') ? 'active' : ''}`}>
+            <FaPlusCircle /> <span>Add Event</span>
+          </Link>
+          <Link to="/admin/dashboard/gallery" className={`nav-item ${location.pathname.includes('gallery') ? 'active' : ''}`}>
+            <MdCollections /> <span>Manage Gallery</span>
+          </Link>
+
+          <div className="nav-group-label">Organization</div>
+          <Link to="/admin/dashboard/committee" className={`nav-item ${location.pathname.includes('committee') ? 'active' : ''}`}>
+            <FaSitemap /> <span>Committee Reform</span>
+          </Link>
+          <Link to="/admin/dashboard/settings" className={`nav-item ${location.pathname.includes('settings') ? 'active' : ''}`}>
+            <FaTools /> <span>System Settings</span>
           </Link>
         </nav>
 
@@ -108,13 +132,10 @@ export default function Dashboard() {
         <header className="admin-topbar">
           <div className="welcome-text">
             <h1>Command Center</h1>
-            <p>Academic Session 2025-2026</p>
+            <p>Admin Control Panel • Academic Session 2025</p>
           </div>
 
           <div className="top-right-actions">
-            <Link to="/admin/dashboard/add-event" className="header-action-btn add-btn event-green">
-              <FaPlusCircle /> <span>Add Event</span>
-            </Link>
             <Link to="/admin/dashboard/inbox" className="header-action-btn inbox-btn">
               <FaEnvelopeOpenText />
               {stats.messages > 0 && <span className="inbox-badge">{stats.messages}</span>}
@@ -131,6 +152,8 @@ export default function Dashboard() {
             <Route path="sponsors" element={<ManageSponsors />} />
             <Route path="add-event" element={<AddEvent />} />
             <Route path="gallery" element={<ManageGallery />} />
+            <Route path="committee" element={<div className="placeholder-view">Committee Reform Module</div>} />
+            <Route path="settings" element={<div className="placeholder-view">System Settings Module</div>} />
           </Routes>
         </div>
       </main>
@@ -138,10 +161,6 @@ export default function Dashboard() {
   );
 }
 
-/**
- * INTERNAL COMPONENT: OverviewGrid
- * Renders the Home Dashboard View (Stats + 2 Graphs + Utility)
- */
 function OverviewGrid({ stats }) {
   const memberGrowthData = [
     { month: 'Oct', count: 45 }, { month: 'Nov', count: 120 }, { month: 'Dec', count: 210 }, { month: 'Jan', count: 350 }
@@ -159,10 +178,10 @@ function OverviewGrid({ stats }) {
           <span className="label">Live Events</span>
           <span className="value">{stats.liveEvents}</span>
         </Link>
-        <div className="mini-stat member-red">
+        <Link to="/admin/dashboard/members" className="mini-stat member-red">
           <span className="label">Member Count</span>
           <span className="value">{stats.members}</span>
-        </div>
+        </Link>
         <Link to="/admin/dashboard/sponsors" className="mini-stat sponsor-orange">
           <span className="label">Sponsors</span>
           <span className="value">{stats.sponsors}</span>
@@ -180,7 +199,8 @@ function OverviewGrid({ stats }) {
             <AreaChart data={memberGrowthData}>
               <defs>
                 <linearGradient id="colorRed" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#ff4d4d" stopOpacity={0.3}/><stop offset="95%" stopColor="#ff4d4d" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#ff4d4d" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="#ff4d4d" stopOpacity={0}/>
                 </linearGradient>
               </defs>
               <XAxis dataKey="month" stroke="#888" fontSize={10} axisLine={false} tickLine={false} />
@@ -213,9 +233,9 @@ function OverviewGrid({ stats }) {
       </section>
 
       <footer className="dashboard-quick-actions">
-         <Link to="/admin/dashboard/gallery" className="quick-btn"><FaCameraRetro /> Gallery</Link>
-         <Link to="/admin/dashboard/sponsors" className="quick-btn"><FaBriefcase /> Sponsors</Link>
-         <Link to="/admin/dashboard/add-event" className="quick-btn"><FaPlusCircle /> Add Event</Link>
+          <Link to="/admin/dashboard/gallery" className="quick-btn"><FaCameraRetro /> Gallery</Link>
+          <Link to="/admin/dashboard/sponsors" className="quick-btn"><FaBriefcase /> Sponsors</Link>
+          <Link to="/admin/dashboard/add-event" className="quick-btn"><FaPlusCircle /> Add Event</Link>
       </footer>
     </div>
   );
