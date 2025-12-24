@@ -20,3 +20,13 @@ Primary Button (CTA),BG: #db280a (Crimson Red)Text: #ffeac8 (Cream),This red-ora
 Secondary Button,BG: #047338 (Kelly Green)Text: #ffeac8 (Cream),A solid green button for secondary actions.
 Borders/Dividers,#004f26 (Forest Green),Subtle lines to separate content sections without being distracting.
 Accents/Icons,#e36f04 (Tiger Orange),"Use for icons, checkmarks, or active navigation states."
+
+Element,Description,Hex Code
+Tiger Orange,Primary Accent / Home Button,#FF8C00
+Dark Ash,Component Backgrounds,#1A1A1A
+Deep Sidebar,Sidebar Background,#121212
+Cream White,Primary Typography,#F5F5F3
+Member Red,Danger / Member Stats,#FF4D4D
+Event Green,Success / Event Stats,#2ECC71
+Sponsor Orange,Sponsor Stats,#F39C12
+Student Blue,Info / Student Stats,#3498DB

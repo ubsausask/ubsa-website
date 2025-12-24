@@ -13,7 +13,6 @@ import {
 } from 'recharts';
 import '../../style/adminpages/Dashboard.css';
 
-// Sample Data for Charts
 const registrationData = [
   { event: 'Gala', attendees: 120 },
   { event: 'Seminar', attendees: 85 },
@@ -35,6 +34,17 @@ export default function Dashboard() {
     members: 0, sponsors: 0, liveEvents: 0, totalRaised: 0, messages: 0, helpedStudents: 0
   });
 
+  // CRITICAL FIX: Conditional Scroll Lock for Homepage
+  useEffect(() => {
+    // Lock scroll on mount
+    document.body.style.overflow = 'hidden';
+
+    // Cleanup: Unlock scroll when leaving Dashboard
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   useEffect(() => {
     const fetchDashboardStats = async () => {
       try {
@@ -54,7 +64,7 @@ export default function Dashboard() {
           helpedStudents: Array.isArray(messages) ? messages.filter(m => m.status === 'resolved').length : 0
         });
       } catch (err) { 
-        console.error("Dashboard Stats Fetch Error:", err); 
+        console.error("Fetch Error:", err); 
       } finally { 
         setLoading(false); 
       }
@@ -76,10 +86,9 @@ export default function Dashboard() {
 
   return (
     <div className="admin-viewport">
-      {/* SIDEBAR PANEL (ASH) */}
       <aside className="admin-sidebar">
         <div className="sidebar-top-section">
-          {/* TIGER ORANGE HOME LINK */}
+          {/* TIGER ORANGE LINK */}
           <Link to="/" className="website-link go-ubsa-home">
             <FaExternalLinkAlt /> <span>Go UBSA Home</span>
           </Link>
@@ -100,33 +109,31 @@ export default function Dashboard() {
           </nav>
         </div>
 
-        {/* ISOLATED LOGOUT BUTTON */}
         <button className="sidebar-logout" onClick={handleLogout}>
           <FaSignOutAlt /> Logout
         </button>
       </aside>
 
-      {/* MAIN CONTENT AREA */}
       <main className="admin-main">
         <header className="admin-topbar">
           <div className="welcome-text">
             <h1>Command Center</h1>
-            <p>Academic Session 2025-2026</p>
+            <p>Session 2025-2026</p>
           </div>
 
-          {/* TOP RIGHT ACTIONS (INBOX MOST RIGHT) */}
           <div className="top-right-actions">
             <Link to="/admin/inbox" className="header-action-btn inbox-btn">
                <FaEnvelopeOpenText />
                {stats.messages > 0 && <span className="inbox-badge">{stats.messages}</span>}
             </Link>
+            {/* GREEN ADD BUTTON */}
             <Link to="/admin/add-event" className="header-action-btn add-btn event-green">
               <FaPlusCircle /> Add Event
             </Link>
           </div>
         </header>
 
-        {/* COLOR CODED STATS CARDS */}
+        {/* COLOR CODED STATS */}
         <section className="dashboard-stats-row">
           <Link to="/admin/event-tracking" className="mini-stat event-green">
             <span className="label">Live Events</span>
@@ -146,7 +153,6 @@ export default function Dashboard() {
           </Link>
         </section>
 
-        {/* MIDDLE SECTION: 2 SQUARE GRAPHS + SYSTEM OVERVIEW */}
         <section className="dashboard-middle-grid">
           <div className="chart-card square">
             <h3><FaUserFriends /> Member Growth</h3>
@@ -176,7 +182,6 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </div>
 
-          {/* FIXED SYSTEM OVERVIEW (CONTENT FITTED) */}
           <div className="chart-card system-utility">
             <h3><MdDashboardCustomize /> System Overview</h3>
             <div className="utility-list">
@@ -189,7 +194,6 @@ export default function Dashboard() {
           </div>
         </section>
 
-        {/* BOTTOM QUICK ACTIONS FOOTER */}
         <footer className="dashboard-quick-actions">
            <Link to="/admin/manage-gallery" className="quick-btn"><FaCameraRetro /> Add Photo</Link>
            <Link to="/admin/manage-sponsors" className="quick-btn"><FaBriefcase /> Sponsors</Link>
