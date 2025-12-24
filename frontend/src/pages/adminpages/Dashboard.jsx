@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, Routes, Route, useLocation } from 'react-router-dom';
 import { 
   FaUsers, FaHandshake, FaSignOutAlt, 
   FaHome, FaEnvelopeOpenText, 
@@ -11,39 +11,26 @@ import {
   XAxis, Tooltip, ResponsiveContainer, 
   AreaChart, Area, BarChart, Bar 
 } from 'recharts';
+
+// Sub-Component Imports
+import MembersPage from './MembersPage';
+import Inbox from './Inbox';
+import ManageSponsors from './ManageSponsors';
+import AddEvent from './AddEvent';
+import ManageGallery from './ManageGallery';
+
 import '../../style/adminpages/Dashboard.css';
-
-const registrationData = [
-  { event: 'Gala', attendees: 120 },
-  { event: 'Seminar', attendees: 85 },
-  { event: 'Social', attendees: 200 },
-  { event: 'Other', attendees: 50 },
-];
-
-const memberGrowthData = [
-  { month: 'Oct', count: 45 },
-  { month: 'Nov', count: 120 },
-  { month: 'Dec', count: 210 },
-  { month: 'Jan', count: 350 },
-];
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
-    members: 0, sponsors: 0, liveEvents: 0, totalRaised: 0, messages: 0, helpedStudents: 0
+    members: 0, sponsors: 0, liveEvents: 0, messages: 0, helpedStudents: 0
   });
 
-  // CRITICAL FIX: Conditional Scroll Lock for Homepage
-  useEffect(() => {
-    // Lock scroll on mount
-    document.body.style.overflow = 'hidden';
-
-    // Cleanup: Unlock scroll when leaving Dashboard
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, []);
+  // Determine if we are on the base dashboard route
+  const isBaseDashboard = location.pathname === '/admin/dashboard' || location.pathname === '/admin/dashboard/';
 
   useEffect(() => {
     const fetchDashboardStats = async () => {
@@ -64,7 +51,7 @@ export default function Dashboard() {
           helpedStudents: Array.isArray(messages) ? messages.filter(m => m.status === 'resolved').length : 0
         });
       } catch (err) { 
-        console.error("Fetch Error:", err); 
+        console.error("Dashboard Fetch Error:", err); 
       } finally { 
         setLoading(false); 
       }
@@ -86,120 +73,150 @@ export default function Dashboard() {
 
   return (
     <div className="admin-viewport">
+      {/* --- 1. SIDEBAR --- */}
       <aside className="admin-sidebar">
-        <div className="sidebar-top-section">
-          {/* TIGER ORANGE LINK */}
-          <Link to="/" className="website-link go-ubsa-home">
-            <FaExternalLinkAlt /> <span>Go UBSA Home</span>
-          </Link>
-          
-          <div className="sidebar-brand">
-            <MdDashboardCustomize /> <span>ADMIN PANEL</span>
-          </div>
-
-          <nav className="sidebar-nav">
-            {/* FULL WIDTH FILL ACTIVE BUTTON */}
-            <button onClick={() => window.location.reload()} className="nav-item active">
-              <FaHome /> Dashboard
-            </button>
-            <Link to="/admin/members" className="nav-item"><FaUsers /> Members</Link>
-            <Link to="/admin/event-tracking" className="nav-item"><MdEventAvailable /> Events</Link>
-            <Link to="/admin/manage-sponsors" className="nav-item"><FaHandshake /> Sponsors</Link>
-            <Link to="/admin/inbox" className="nav-item"><FaEnvelopeOpenText /> Inbox</Link>
-          </nav>
+        <div className="sidebar-brand">
+          <span>UBSA</span>
         </div>
 
+        <Link to="/" className="go-ubsa-home">
+          <FaExternalLinkAlt /> <span>Go UBSA Home</span>
+        </Link>
+
+        <nav className="sidebar-nav">
+          <Link to="/admin/dashboard" className={`nav-item ${isBaseDashboard ? 'active' : ''}`}>
+            <FaHome /> <span>Dashboard</span>
+          </Link>
+          <Link to="/admin/dashboard/members" className={`nav-item ${location.pathname.includes('members') ? 'active' : ''}`}>
+            <FaUsers /> <span>Members</span>
+          </Link>
+          <Link to="/admin/dashboard/sponsors" className={`nav-item ${location.pathname.includes('sponsors') ? 'active' : ''}`}>
+            <FaHandshake /> <span>Sponsors</span>
+          </Link>
+          <Link to="/admin/dashboard/inbox" className={`nav-item ${location.pathname.includes('inbox') ? 'active' : ''}`}>
+            <FaEnvelopeOpenText /> <span>Inbox</span>
+          </Link>
+        </nav>
+
         <button className="sidebar-logout" onClick={handleLogout}>
-          <FaSignOutAlt /> Logout
+          <FaSignOutAlt /> <span>Logout</span>
         </button>
       </aside>
 
+      {/* --- 2. MAIN PANEL --- */}
       <main className="admin-main">
         <header className="admin-topbar">
           <div className="welcome-text">
             <h1>Command Center</h1>
-            <p>Session 2025-2026</p>
+            <p>Academic Session 2025-2026</p>
           </div>
 
           <div className="top-right-actions">
-            <Link to="/admin/inbox" className="header-action-btn inbox-btn">
-               <FaEnvelopeOpenText />
-               {stats.messages > 0 && <span className="inbox-badge">{stats.messages}</span>}
+            <Link to="/admin/dashboard/add-event" className="header-action-btn add-btn event-green">
+              <FaPlusCircle /> <span>Add Event</span>
             </Link>
-            {/* GREEN ADD BUTTON */}
-            <Link to="/admin/add-event" className="header-action-btn add-btn event-green">
-              <FaPlusCircle /> Add Event
+            <Link to="/admin/dashboard/inbox" className="header-action-btn inbox-btn">
+              <FaEnvelopeOpenText />
+              {stats.messages > 0 && <span className="inbox-badge">{stats.messages}</span>}
             </Link>
           </div>
         </header>
 
-        {/* COLOR CODED STATS */}
-        <section className="dashboard-stats-row">
-          <Link to="/admin/event-tracking" className="mini-stat event-green">
-            <span className="label">Live Events</span>
-            <span className="value">{stats.liveEvents}</span>
-          </Link>
-          <Link to="/admin/members" className="mini-stat member-red">
-            <span className="label">Member Count</span>
-            <span className="value">{stats.members}</span>
-          </Link>
-          <Link to="/admin/manage-sponsors" className="mini-stat sponsor-orange">
-            <span className="label">Sponsors</span>
-            <span className="value">{stats.sponsors}</span>
-          </Link>
-          <Link to="/admin/inbox" className="mini-stat student-blue">
-            <span className="label">Helped Students</span>
-            <span className="value">{stats.helpedStudents}</span>
-          </Link>
-        </section>
-
-        <section className="dashboard-middle-grid">
-          <div className="chart-card square">
-            <h3><FaUserFriends /> Member Growth</h3>
-            <ResponsiveContainer width="100%" height="85%">
-              <AreaChart data={memberGrowthData}>
-                <defs>
-                  <linearGradient id="colorRed" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#ff4d4d" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#ff4d4d" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="month" stroke="#888" fontSize={10} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{backgroundColor: '#1a1a1a', border: '1px solid #333', color: '#f5f5f3'}} />
-                <Area type="monotone" dataKey="count" stroke="#ff4d4d" fill="url(#colorRed)" strokeWidth={2} />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-
-          <div className="chart-card square">
-            <h3><FaTicketAlt /> Registrations</h3>
-            <ResponsiveContainer width="100%" height="85%">
-              <BarChart data={registrationData}>
-                <XAxis dataKey="event" stroke="#f5f5f3" fontSize={10} axisLine={false} tickLine={false} />
-                <Tooltip cursor={{fill: '#252525'}} contentStyle={{backgroundColor: '#1a1a1a', border: 'none', color: '#f5f5f3'}} />
-                <Bar dataKey="attendees" fill="#f5f5f3" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          <div className="chart-card system-utility">
-            <h3><MdDashboardCustomize /> System Overview</h3>
-            <div className="utility-list">
-                <div className="util-item"><span>Server Status</span><span className="status-dot online">Online</span></div>
-                <div className="util-item"><span>Database</span><span className="status-dot online">Connected</span></div>
-                <div className="util-item"><span>Inbox Alert</span><span className="count-tag">{stats.messages}</span></div>
-                <div className="util-item"><span>Admin Uptime</span><span>99.98%</span></div>
-                <div className="util-item"><span>Session</span><span>Active</span></div>
-            </div>
-          </div>
-        </section>
-
-        <footer className="dashboard-quick-actions">
-           <Link to="/admin/manage-gallery" className="quick-btn"><FaCameraRetro /> Add Photo</Link>
-           <Link to="/admin/manage-sponsors" className="quick-btn"><FaBriefcase /> Sponsors</Link>
-           <Link to="/admin/add-event" className="quick-btn event-green"><FaPlusCircle /> Add Event</Link>
-        </footer>
+        {/* --- 3. DYNAMIC CONTENT AREA --- */}
+        <div className="dashboard-scroll-container">
+          <Routes>
+            <Route index element={<OverviewGrid stats={stats} />} />
+            <Route path="members" element={<MembersPage />} />
+            <Route path="inbox" element={<Inbox />} />
+            <Route path="sponsors" element={<ManageSponsors />} />
+            <Route path="add-event" element={<AddEvent />} />
+            <Route path="gallery" element={<ManageGallery />} />
+          </Routes>
+        </div>
       </main>
+    </div>
+  );
+}
+
+/**
+ * INTERNAL COMPONENT: OverviewGrid
+ * Renders the Home Dashboard View (Stats + 2 Graphs + Utility)
+ */
+function OverviewGrid({ stats }) {
+  const memberGrowthData = [
+    { month: 'Oct', count: 45 }, { month: 'Nov', count: 120 }, { month: 'Dec', count: 210 }, { month: 'Jan', count: 350 }
+  ];
+
+  const registrationData = [
+    { event: 'Gala', attendees: 120 }, { event: 'Seminar', attendees: 85 },
+    { event: 'Social', attendees: 200 }, { event: 'Other', attendees: 50 },
+  ];
+
+  return (
+    <div className="overview-fill-wrapper">
+      <section className="dashboard-stats-row">
+        <Link to="/admin/dashboard/add-event" className="mini-stat event-green">
+          <span className="label">Live Events</span>
+          <span className="value">{stats.liveEvents}</span>
+        </Link>
+        <div className="mini-stat member-red">
+          <span className="label">Member Count</span>
+          <span className="value">{stats.members}</span>
+        </div>
+        <Link to="/admin/dashboard/sponsors" className="mini-stat sponsor-orange">
+          <span className="label">Sponsors</span>
+          <span className="value">{stats.sponsors}</span>
+        </Link>
+        <div className="mini-stat student-blue">
+          <span className="label">Helped Students</span>
+          <span className="value">{stats.helpedStudents}</span>
+        </div>
+      </section>
+
+      <section className="dashboard-middle-grid">
+        <div className="chart-card">
+          <h3><FaUserFriends /> Member Growth</h3>
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={memberGrowthData}>
+              <defs>
+                <linearGradient id="colorRed" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#ff4d4d" stopOpacity={0.3}/><stop offset="95%" stopColor="#ff4d4d" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="month" stroke="#888" fontSize={10} axisLine={false} tickLine={false} />
+              <Tooltip contentStyle={{backgroundColor: '#1a1a1a', border: 'none', borderRadius: '10px', color: '#fff'}} />
+              <Area type="monotone" dataKey="count" stroke="#ff4d4d" fill="url(#colorRed)" strokeWidth={3} />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="chart-card">
+          <h3><FaTicketAlt /> Registrations</h3>
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={registrationData}>
+              <XAxis dataKey="event" stroke="#888" fontSize={10} axisLine={false} tickLine={false} />
+              <Tooltip cursor={{fill: 'rgba(255,255,255,0.05)'}} contentStyle={{backgroundColor: '#1a1a1a', border: 'none', borderRadius: '10px', color: '#fff'}} />
+              <Bar dataKey="attendees" fill="#ff8c00" radius={[6, 6, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="chart-card system-utility">
+          <h3><MdDashboardCustomize /> System Overview</h3>
+          <div className="utility-list">
+            <div className="util-item"><span>Server Status</span><span className="status-dot">Online</span></div>
+            <div className="util-item"><span>Database</span><span className="status-dot">Connected</span></div>
+            <div className="util-item"><span>Inbox Alert</span><span className="count-tag">{stats.messages} New</span></div>
+            <div className="util-item"><span>API Health</span><span className="status-dot">Stable</span></div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="dashboard-quick-actions">
+         <Link to="/admin/dashboard/gallery" className="quick-btn"><FaCameraRetro /> Gallery</Link>
+         <Link to="/admin/dashboard/sponsors" className="quick-btn"><FaBriefcase /> Sponsors</Link>
+         <Link to="/admin/dashboard/add-event" className="quick-btn"><FaPlusCircle /> Add Event</Link>
+      </footer>
     </div>
   );
 }

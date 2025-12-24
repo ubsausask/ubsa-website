@@ -1,47 +1,38 @@
 /* --- Color Palette & Variables --- */
 :root {
-  --page-bg: #ffffff;
-  --card-ash: #1a1a1a;
-  --sidebar-ash: #121212;
+  --page-bg: #f4f4f7;           /* Premium Light Grey */
+  --card-ash: #1a1a1a;          /* Dark Components */
+  --sidebar-ash: #121212;       /* Deep Sidebar */
   --cream-white: #f5f5f3;
-  --tiger-orange: #ff8c00;
+  --tiger-orange: #ed2525;      /* Branding Color */
   --member-red: #ff4d4d;
   --event-green: #2ecc71;
   --sponsor-orange: #f39c12;
   --student-blue: #3498db;
   --text-dim: #999999;
-  --deep-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), 0 5px 15px rgba(0, 0, 0, 0.2);
+  /* Deep, Multi-layered Shadow for Dark Mode Cards */
+  --dark-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* --- 1. GLOBAL LAYOUT (FIXED) --- */
-/* We removed height: 100vh and overflow: hidden from here 
-   so that the Homepage and other pages can scroll freely. */
+/* --- 1. VIEWPORT & RESET (NO SCROLLING) --- */
 html, body {
-  margin: 0;
+  margin: 0; 
   padding: 0;
-  min-height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-  /* Allow vertical scrolling by default */
-  overflow-y: auto; 
-  background: linear-gradient(to bottom, #2a2a2a 0%, var(--page-bg) 5%);
+  height: 100vh; 
+  width: 100vw;
+  overflow: hidden; 
   font-family: 'Inter', sans-serif;
 }
 
-/* --- 2. DASHBOARD VIEWPORT (FIXED) --- */
-/* This container now handles the "One Page" effect locally. */
 .admin-viewport {
   display: flex;
-  position: fixed; /* Pins the dashboard to the screen */
-  inset: 0;        /* Covers the whole screen */
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden; /* Prevents the dashboard layer from scrolling the body */
+  position: fixed;
+  inset: 0;
   background-color: var(--page-bg);
-  z-index: 9999;    /* Stays above homepage content */
+  z-index: 9999;
 }
 
-/* --- 3. SIDEBAR --- */
+/* --- 2. SIDEBAR & BRANDING --- */
 .admin-sidebar {
   width: 260px;
   background-color: var(--sidebar-ash);
@@ -52,35 +43,33 @@ html, body {
   flex-shrink: 0;
 }
 
-.go-ubsa-home {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--tiger-orange);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 700;
-  padding: 12px 20px;
-  border: 1px solid var(--tiger-orange);
-  border-radius: 8px;
-  background: rgba(255, 140, 0, 0.05);
-  margin: 0 20px 30px 20px;
-  transition: 0.3s;
-}
-
-.go-ubsa-home:hover {
-  background: var(--tiger-orange);
-  color: white;
-}
-
+/* UBSA TOP LEFT LOGO */
 .sidebar-brand {
-  padding: 0 20px;
-  font-size: 1rem;
-  font-weight: 900;
-  color: var(--member-red);
+  padding: 0 25px;
   margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
+.sidebar-brand span {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--tiger-orange);
+  letter-spacing: -1px;
+}
+
+.sidebar-brand::after {
+  content: "COMMAND CENTER";
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+/* --- 3. NAVIGATION & BUTTONS --- */
+
+/* Sidebar Tiger-themed Nav Items */
 .nav-item {
   display: flex;
   align-items: center;
@@ -88,34 +77,128 @@ html, body {
   padding: 15px 25px;
   color: var(--text-dim);
   text-decoration: none;
-  width: 100%;
-  transition: 0.3s;
+  transition: 0.3s ease;
+  box-sizing: border-box;
+  border-left: 5px solid transparent;
 }
 
 .nav-item.active {
-  background: var(--card-ash);
+  background: linear-gradient(90deg, rgba(255, 140, 0, 0.1) 0%, transparent 100%);
   color: var(--cream-white);
   border-left: 5px solid var(--tiger-orange);
 }
 
+/* GO UBSA HOME BUTTON (TIGER THEME) */
+.go-ubsa-home {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--tiger-orange);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 12px 20px;
+  border: 1px solid var(--tiger-orange);
+  border-radius: 10px;
+  background: rgba(255, 140, 0, 0.05);
+  margin: 0 20px 25px 20px;
+  transition: 0.3s ease;
+}
+
+.go-ubsa-home:hover {
+  background: var(--tiger-orange);
+  color: white;
+  box-shadow: 0 5px 15px rgba(255, 140, 0, 0.3);
+}
+
+/* TOP RIGHT ACTIONS (ADD EVENT & INBOX) */
+.top-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-action-btn {
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
+}
+
+/* ADD EVENT BUTTON */
+.add-btn.event-green {
+  padding: 0 20px;
+  background: var(--event-green);
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  gap: 8px;
+  box-shadow: 0 10px 20px rgba(46, 204, 113, 0.2);
+}
+
+.add-btn.event-green:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 15px 25px rgba(46, 204, 113, 0.3);
+}
+
+/* INBOX ICON BUTTON */
+.inbox-btn {
+  width: 45px;
+  background: var(--card-ash);
+  color: var(--cream-white);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 1.9rem;
+  position: relative;
+  box-shadow: var(--dark-shadow);
+}
+
+.inbox-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--member-red);
+  color: white;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--sidebar-ash);
+}
+
+/* LOGOUT BUTTON */
 .sidebar-logout {
   margin: auto 20px 20px 20px;
-  background: #1e1e1e;
+  background: transparent;
   border: 1px solid var(--member-red);
   color: var(--member-red);
   padding: 14px;
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 700;
   cursor: pointer;
+  transition: 0.3s;
 }
 
-/* --- 4. MAIN CONTENT --- */
+.sidebar-logout:hover {
+  background: var(--member-red);
+  color: white;
+}
+
+/* --- 4. MAIN CONTENT AREA --- */
 .admin-main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 0 40px;
-  overflow: hidden; /* Local control */
+  padding: 0 35px 25px 35px;
+  box-sizing: border-box;
+  height: 100vh;
 }
 
 .admin-topbar {
@@ -123,141 +206,166 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 }
 
-.top-right-actions {
+.welcome-text h1 { 
+  margin: 0; 
+  color: var(--tiger-orange); 
+  font-size: 1.8rem; 
+  font-weight: 900; 
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+}
+
+.welcome-text p { margin: 0; color: #777; font-size: 0.9rem; }
+
+/* --- 5. GRIDS & SYSTEM OVERVIEW --- */
+.dashboard-scroll-container {
+  flex: 1;
   display: flex;
-  gap: 20px;
-  flex-direction: row-reverse;
+  flex-direction: column;
+  min-height: 0;
 }
 
-.inbox-btn {
-  background: var(--card-ash);
-  color: var(--cream-white);
-  padding: 12px;
-  border-radius: 50%;
-  position: relative;
-  box-shadow: var(--deep-shadow);
-}
-
-.inbox-badge {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  background: var(--member-red);
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  font-size: 0.6rem;
+.overview-fill-wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid var(--card-ash);
+  flex-direction: column;
+  height: 100%;
+  gap: 25px;
 }
 
-.add-btn.event-green {
-  background: var(--event-green);
-  color: white;
-  padding: 12px 22px;
-  border-radius: 8px;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-/* --- 5. STATS CARDS --- */
 .dashboard-stats-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 25px;
-  margin-bottom: 30px;
+  flex-shrink: 0;
 }
 
-.mini-stat {
-  background: var(--card-ash);
-  color: var(--cream-white);
-  padding: 20px;
-  border-radius: 12px;
-  text-decoration: none;
-  box-shadow: var(--deep-shadow);
-  border-left: 6px solid transparent;
-}
-
-.mini-stat.event-green { border-left-color: var(--event-green); }
-.mini-stat.member-red { border-left-color: var(--member-red); }
-.mini-stat.sponsor-orange { border-left-color: var(--sponsor-orange); }
-.mini-stat.student-blue { border-left-color: var(--student-blue); }
-
-.mini-stat .value { font-size: 1.8rem; font-weight: 800; margin-top: 5px; display: block;}
-
-/* --- 6. MIDDLE GRID & SYSTEM OVERVIEW --- */
 .dashboard-middle-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 0.8fr;
-  gap: 30px;
+  gap: 25px;
   flex: 1;
   min-height: 0;
-  padding-bottom: 30px;
 }
 
 .chart-card {
   background: var(--card-ash);
   border-radius: 20px;
   padding: 25px;
-  box-shadow: var(--deep-shadow);
-}
-
-.system-utility {
+  box-shadow: var(--dark-shadow);
   display: flex;
   flex-direction: column;
-  padding: 25px !important;
-  box-sizing: border-box;
 }
 
-.util-item {
+/* SYSTEM OVERVIEW DETAILS */
+.system-utility .util-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #333;
-  font-size: 0.85rem;
-  color: var(--cream-white);
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: 0.2s ease;
+}
+
+.util-item:hover {
+  padding-left: 5px;
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .status-dot {
-  font-weight: bold;
-  padding-right: 20px;
+  font-weight: 800;
+  font-size: 0.75rem;
   color: var(--event-green);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .count-tag {
   background: var(--member-red);
   padding: 2px 10px;
-  border-radius: 4px;
-  margin-right: 20px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
 }
 
-/* --- 7. BOTTOM QUICK ACTIONS --- */
+/* --- 6. FOOTER (FLOATING QUICK ACTIONS) --- */
 .dashboard-quick-actions {
   background: var(--card-ash);
-  height: 90px;
-  margin-bottom: 30px;
-  border-radius: 15px;
-  box-shadow: var(--deep-shadow);
+  height: 85px;
+  border-radius: 16px;
+  box-shadow: var(--dark-shadow);
   display: flex;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 25px;
   gap: 20px;
   flex-shrink: 0;
+  margin-top: 5px;
 }
 
 .quick-btn {
   background: #252525;
   color: var(--cream-white);
-  padding: 12px 20px;
+  padding: 12px 22px;
   border-radius: 10px;
   text-decoration: none;
   font-weight: 600;
-  transition: 0.3s;
+  font-size: 0.85rem;
+  transition: 0.3s ease;
 }
 
-.quick-btn:hover { background: #333; transform: translateY(-2px); }
+.quick-btn:hover {
+  background: #333;
+  transform: translateY(-2px);
+}
+
+/* --- 7. STATS ROW (TOP) --- */
+.dashboard-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+  gap: 25px;
+  flex-shrink: 0; /* Prevents cards from squishing */
+  margin-bottom: 10px;
+}
+
+/* Base Mini Stat Card */
+.mini-stat {
+  background: var(--card-ash);
+  color: var(--cream-white);
+  padding: 22px;
+  border-radius: 16px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: var(--dark-shadow);
+  border-left: 6px solid transparent; /* Placeholder for the color bar */
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mini-stat:hover {
+  transform: translateY(-5px);
+}
+
+/* Color Coding for the left border */
+.mini-stat.event-green { border-left-color: var(--event-green); }
+.mini-stat.member-red { border-left-color: var(--member-red); }
+.mini-stat.sponsor-orange { border-left-color: var(--sponsor-orange); }
+.mini-stat.student-blue { border-left-color: var(--student-blue); }
+
+.mini-stat .label {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.mini-stat .value {
+  font-size: 2.2rem; /* Larger font for primary data */
+  font-weight: 900;
+  color: var(--cream-white);
+  line-height: 1;
+}

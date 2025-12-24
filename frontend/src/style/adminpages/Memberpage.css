@@ -1,156 +1,205 @@
-/* --- 1. PAGE LAYOUT --- */
+/* --- 1. COMPONENT WRAPPER --- */
+.members-integrated-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Fill the available right-side space */
+    gap: 20px;
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 2. HEADER SECTION --- */
 .members-page-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 3.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 2rem;
-}
-
-/* --- 2. CHART SECTION (Glassmorphism) --- */
-.chart-container {
-    padding: 3rem;
-    margin-bottom: 3rem;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(15px);
-    border-radius: 24px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
 }
 
-.chart-title {
+.members-page-header h2 {
+    color: var(--tiger-orange);
+    margin: 0;
     font-size: 1.6rem;
     font-weight: 800;
-    color: #e36f04;
-    margin-bottom: 2rem;
     display: flex;
     align-items: center;
     gap: 12px;
+}
+
+.members-page-header p {
+    margin: 5px 0 0 0;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+}
+
+/* --- 3. TOP GRID (Chart & Search) --- */
+.members-top-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Side by side */
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+.glass-card {
+    background: var(--card-ash);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: var(--dark-shadow);
+}
+
+.integrated-pie-container {
+    height: 180px; /* Compact height for dashboard use */
+    width: 100%;
+}
+
+.chart-title {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-bottom: 15px;
     text-transform: uppercase;
     letter-spacing: 1px;
-}
-
-/* Recharts Tooltip Customization */
-.recharts-default-tooltip {
-    background-color: #000f0a !important;
-    border: 1px solid #e36f04 !important;
-    border-radius: 12px !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-/* --- 3. TOOLBAR (Search & Actions) --- */
-.members-toolbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 2rem;
+    gap: 8px;
+}
+
+/* --- 4. TOOLBAR & SEARCH --- */
+.search-filter-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .search-wrapper {
     position: relative;
-    flex: 1;
-    max-width: 500px;
-}
-
-.search-wrapper .search-icon {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #e36f04;
-    font-size: 1.2rem;
+    width: 100%;
 }
 
 .search-wrapper input {
     width: 100%;
-    padding: 15px 15px 15px 55px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50px;
-    color: #fff;
-    font-size: 1rem;
-    outline: none;
-    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 14px 15px 14px 45px;
+    background: #252525;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: white;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+.search-wrapper .search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--tiger-orange);
 }
 
 .search-wrapper input:focus {
-    border-color: #e36f04;
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 20px rgba(227, 111, 4, 0.2);
+    border-color: var(--tiger-orange);
+    outline: none;
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.15);
 }
 
-/* --- 4. BROADCAST BUTTON --- */
+/* --- 5. DIRECTORY TABLE (Internal Scroll) --- */
+.members-table-viewport {
+    flex: 1; /* Grow to fill bottom space */
+    background: var(--card-ash);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: var(--dark-shadow);
+    overflow-y: auto; /* Internal scrolling for the table only */
+    min-height: 0; /* Critical for flex scrolling to work */
+}
+
+/* Custom Scrollbar for the table */
+.members-table-viewport::-webkit-scrollbar { width: 6px; }
+.members-table-viewport::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th {
+    position: sticky;
+    top: 0;
+    background: #252525;
+    padding: 15px 20px;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    z-index: 10;
+}
+
+.admin-table td {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    color: var(--cream-white);
+    font-size: 0.9rem;
+}
+
+.admin-table tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.selected-row {
+    background: rgba(255, 140, 0, 0.08) !important;
+}
+
+/* --- 6. BADGES & BUTTONS --- */
+.dept-badge {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: #ffd1a9;
+}
+
+.id-code {
+    color: var(--tiger-orange);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+}
+
 .broadcast-action-btn {
     background: #2196f3;
     color: white;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.85rem;
     border: none;
-    padding: 14px 32px;
-    border-radius: 50px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    gap: 12px;
     cursor: pointer;
     transition: 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.broadcast-action-btn:hover:not(:disabled) {
-    background: #fff;
-    color: #2196f3;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(33, 150, 243, 0.3);
+.broadcast-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
 }
 
-.broadcast-action-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    filter: grayscale(1);
-}
-
-/* --- 5. DIRECTORY TABLE --- */
-.member-checkbox {
-    width: 20px;
-    height: 20px;
+.delete-row-btn {
+    background: transparent;
+    border: none;
+    color: var(--member-red);
     cursor: pointer;
-    accent-color: #e36f04;
+    transition: 0.2s;
+    font-size: 1.1rem;
 }
 
-.admin-table tr.selected-row {
-    background: rgba(227, 111, 4, 0.1) !important;
-}
-
-.dept-tag {
-    background: rgba(255, 255, 255, 0.07);
-    padding: 6px 14px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    color: #ffd1a9;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: inline-block;
-}
-
-/* --- 6. RESPONSIVENESS --- */
-@media (max-width: 900px) {
-    .members-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .search-wrapper {
-        max-width: 100%;
-    }
-
-    .broadcast-action-btn {
-        justify-content: center;
-    }
-
-    .chart-container {
-        padding: 1.5rem;
-    }
+.delete-row-btn:hover {
+    color: #fff;
+    transform: scale(1.2);
 }
