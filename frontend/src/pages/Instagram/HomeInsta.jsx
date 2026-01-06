@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaInstagram, FaPlay, FaClone, FaHeart, FaComment, FaTimes, FaShareAlt } from 'react-icons/fa';
 import '../../style/HomeInsta.css';
-import TigerBG from '../../assets/TigerGalleryPageBG.jpg'; 
+import TigerBG from '../../assets/ContactPageBG.png'; 
 
 export default function HomeInsta() {
   const [posts, setPosts] = useState([]);

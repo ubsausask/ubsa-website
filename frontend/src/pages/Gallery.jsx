@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import '../style/Gallery.css';
-import galleryBg from '../assets/TigerGalleryPageBG.jpg';
+import galleryBg from '../assets/HomeGalleryBG.jpg';
 
 // 1. IMPORT THE VIDEO COMPONENT
 

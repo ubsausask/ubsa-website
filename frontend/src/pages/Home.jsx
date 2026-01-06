@@ -11,7 +11,6 @@ export default function Home() {
     <div className="home-container">
       <TigerHero />
 
-      // In Home.jsx, change the style of the wrapper div:
       <div style={{ position: 'relative', zIndex: 10, background: '#001a1a' }}>
         
         {/* 1. Events */}

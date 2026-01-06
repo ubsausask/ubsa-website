@@ -15,7 +15,7 @@ import '../style/Sponsors.css';
 import '../style/Events.css';
 
 // Local Asset for Background
-import sponsorPageBg from '../assets/Sponsors_page_bg.jpg';
+import sponsorPageBg from '../assets/HomeSponsorBG.png';
 
 export default function Sponsors() {
   const [sponsors, setSponsors] = useState([]);
