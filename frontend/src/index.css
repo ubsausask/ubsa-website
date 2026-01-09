@@ -17,14 +17,54 @@
   --btn-pri:   #db280a; /* Crimson Red - Primary CTA */
   --btn-sec:   #047338; /* Kelly Green - Secondary Buttons/Tags */
   --accent:    #e36f04; /* Tiger Orange - Icons/Highlights */
-} /* <--- CLOSE ROOT HERE */
+} 
 
-/* Global Reset */
+/* Global Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--bg-main);
   color: var(--text-main);
-  margin: 0;
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
 }
 
-a { text-decoration: none; }
+/* Typography Reset */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--head-sub);
+  margin-bottom: 1rem;
+}
+
+a { 
+  text-decoration: none; 
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Utility Class for Crimson Accent */
+.text-red {
+  color: var(--btn-pri);
+}
+
+/* Utility Class for Tiger Accent */
+.text-orange {
+  color: var(--accent);
+}

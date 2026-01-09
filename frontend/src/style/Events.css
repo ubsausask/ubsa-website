@@ -1,354 +1,326 @@
 /* ============================================================
-   --- SHARED ANIMATED BRIGHT BACKGROUND ---
+   --- ISOLATED EVENT PAGE STYLES (Prefix: evpg-) ---
    ============================================================ */
 
-.events-page {
+.evpg-page {
   position: relative;
   width: 100%;
   min-height: 100vh;
   padding: 120px 2rem 5rem;
-  color: #333;
   display: flex;
   flex-direction: column;
   align-items: center;
   background: transparent !important; 
+  overflow-x: hidden;
 }
 
-.events-bg-container {
+/* --- ANIMATED BACKGROUND --- */
+.evpg-bg-container {
   position: fixed; 
   inset: 0;
   z-index: -1;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
 }
 
-/* 3% Green Tint Overlay for Dimmed Feel */
-.events-bg-overlay-tint {
+.evpg-bg-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.44); 
+  background: linear-gradient(to bottom, 
+    rgba(0, 30, 15, 0.8) 0%, 
+    rgba(0, 0, 0, 0.6) 50%, 
+    rgba(0, 0, 0, 0.95) 100%);
   z-index: 1;
 }
 
-.bg-row {
+.evpg-bg-row {
   flex: 1;
   display: flex;
   height: 33.33vh;
   overflow: hidden;
-  filter: blur(3px); 
+  filter: blur(4px); 
+  opacity: 0.7;
 }
 
-.marquee-track {
+.evpg-marquee {
   display: flex;
   height: 100%;
 }
 
-.marquee-track img {
+.evpg-marquee img {
   width: 100vw;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* Hardware Accelerated Animation */
-.scroll-left { animation: scroll-left 50s linear infinite; }
-.scroll-right { animation: scroll-right 50s linear infinite; }
+.evpg-marquee.left { animation: evpgScrollL 60s linear infinite; }
+.evpg-marquee.right { animation: evpgScrollR 60s linear infinite; }
 
-@keyframes scroll-left { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-50%, 0, 0); } }
-@keyframes scroll-right { 0% { transform: translate3d(-50%, 0, 0); } 100% { transform: translate3d(0, 0, 0); } }
+@keyframes evpgScrollL { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-50%, 0, 0); } }
+@keyframes evpgScrollR { 0% { transform: translate3d(-50%, 0, 0); } 100% { transform: translate3d(0, 0, 0); } }
 
 /* ============================================================
    --- HEADERS & BRANDING ---
    ============================================================ */
 
-.events-content-wrapper {
+.evpg-content {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 1400px;
-}
-
-.events-page-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 900;
-  margin-bottom: 3rem;
-  text-transform: uppercase;
-  text-shadow: 2px 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.title-custom-icon {
-  width: 70px;
-  height: auto;
-  margin-right: 20px;
-}
-
-.events-page-title .latest { color: #ffeac8}
-.events-page-title .ubsa { color: #d32f2f; margin-left: 10px; }
-
-
-/* Container for the Glass Effect under the title */
-.title-glass-container {
-  display: inline-block; /* Fits the size of the title */
-  margin: 0 auto 4rem auto; /* Centers the card and adds space below */
-  padding: 0.1rem 4rem;
-  
-  /* Glassmorphism Logic */
-  background: rgba(255, 255, 255, 0.05); /* Very subtle white tint */
-  backdrop-filter: blur(5px); /* This provides the ~5% blur effect */
-  -webkit-backdrop-filter: blur(5px);
-  
-  /* Border and Radius */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 25px;
-  
-  /* Depth */
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  
-  /* Alignment */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Adjust the title margin so it doesn't conflict with the new container padding */
-.events-page-title {
-  margin-bottom: 0 !important; 
-  text-shadow: none; /* Let the glass handle the separation */
-}
-
-/* Ensure the wrapper centers the glass card */
-.events-content-wrapper {
+  max-width: 1350px; /* Wider to accommodate 3 columns */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.section-header {
+
+.evpg-title-container {
+  display: inline-block;
+  padding: 0.5rem 4rem;
+  margin-bottom: 4rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.evpg-main-title {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #ffeac8;
+  margin: 0;
+}
+
+.evpg-main-title .red { color: #d32f2f; }
+.evpg-title-icon { width: 60px; height: auto; }
+
+.evpg-section-header {
   font-size: 2rem;
   font-weight: 800;
   color: #ffeac8;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
+  width: 100%;
+  text-align: left;
 }
 
-.calendar-icon { color: #ff9800; }
-
 /* ============================================================
-   --- EVENT CARDS (GLASS STYLE) ---
+   --- EVENT GRIDS (3 IN A ROW) ---
    ============================================================ */
 
-.events-grid {
+
+
+.evpg-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2.5rem;
+  /* Desktop: Exactly 3 columns */
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 30px;
+  width: 100%;
   margin-bottom: 5rem;
 }
 
-.event-card-glass {
-  background: rgba(255, 255, 255, 0.2);
+.evpg-grid-small {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  width: 100%;
+}
+
+/* --- EVENT CARD STYLING --- */
+.evpg-card {
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(25px) saturate(180%);
-  -webkit-backdrop-filter: blur(25px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 30px;
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 32px;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
-  /* Enhanced Shadow for Depth */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
 }
 
-.event-card-glass:hover {
-  transform: translateY(-10px);
-  border-color: #ff9800;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+.evpg-card:hover {
+  transform: translateY(-12px);
+  border-color: #d32f2f;
+  box-shadow: 0 30px 60px rgba(211, 47, 47, 0.2);
 }
 
-.card-image-container {
-  height: 220px;
+.evpg-card-img {
+  height: 230px;
   position: relative;
+  overflow: hidden;
 }
 
-.card-image-container img {
+.evpg-card-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: 1.2s ease;
+  object-position: center;
+  transition: transform 1.2s ease;
 }
 
-.event-card-glass:hover .card-image-container img {
-  transform: scale(1.1);
-}
+.evpg-card:hover .evpg-card-img img { transform: scale(1.1); }
 
-.date-badge-glass {
+.evpg-card-badge {
   position: absolute;
   top: 15px;
   left: 15px;
-  background: rgba(46, 125, 50, 0.9);
+  background: #d32f2f;
   color: #fff;
   padding: 8px 12px;
-  border-radius: 12px;
+  border-radius: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-weight: 900;
   z-index: 2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-.card-details { padding: 2rem; }
-.card-event-title { font-size: 1.6rem; color: #2e7d32; font-weight: 800; margin-bottom: 0.8rem; }
-.card-meta { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
-.card-meta span { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; color: #444; }
+.evpg-card-badge .mo { font-size: 0.75rem; text-transform: uppercase; }
+.evpg-card-badge .dy { font-size: 1.2rem; }
 
-.icon-cyan { color: #00bcd4; }
-.icon-red { color: #ff5252; }
+.evpg-card-details { 
+  padding: 2rem; 
+  text-align: left;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
 
-.card-register-btn {
-  padding: 0.7rem 1.8rem;
-  background: rgba(46, 125, 50, 0.01); 
-  color: #d32f2f;
-  border: 2px solid #2e7d32;
+.evpg-card-title { font-size: 1.5rem; color: #ffeac8; font-weight: 800; margin-bottom: 1rem; }
+
+.evpg-card-meta { margin-bottom: 1.5rem; }
+.evpg-card-meta p { 
+  display: flex; 
+  align-items: center; 
+  gap: 0.8rem; 
+  font-weight: 600; 
+  color: rgba(255, 234, 200, 0.7); 
+  margin-bottom: 0.5rem;
+}
+
+.evpg-card-btn {
+  margin-top: auto;
+  padding: 0.8rem 2rem;
+  background: transparent;
+  color: #ffeac8;
+  border: 2px solid #d32f2f;
   border-radius: 50px;
   font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   cursor: pointer;
   transition: 0.3s ease;
+  width: 100%;
 }
 
-.card-register-btn:hover {
-  background: #2e7d32;
-  color: #d32f2f;
+.evpg-card:hover .evpg-card-btn {
+  background: #d32f2f;
+  color: #fff;
 }
 
 /* ============================================================
-   --- MODAL (HIGH CONTRAST GLASS STYLE) ---
+   --- MODAL VIEW ---
    ============================================================ */
 
-.event-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 20, 10, 0.65); /* Darker green backdrop for contrast */
+.evpg-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(15px);
   z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex; justify-content: center; align-items: center;
   padding: 20px;
-  animation: fadeIn 0.4s ease;
 }
 
-.event-modal-glass {
-  background: rgba(255, 255, 255, 0.25); /* More solid white for contrast */
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.5); /* Stronger border */
+.evpg-modal-glass {
+  background: rgba(15, 15, 15, 0.95);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 40px;
-  width: 100%;
-  max-width: 1100px;
-  max-height: 90vh;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+  width: 100%; max-width: 1050px; max-height: 90vh;
+  position: relative; overflow: hidden;
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
 }
 
-.modal-close-btn {
-  position: absolute;
-  top: 20px;
-  right: 25px;
-  background: rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10;
-  transition: 0.3s;
+.evpg-close-btn {
+  position: absolute; top: 20px; right: 25px;
+  background: rgba(255, 255, 255, 0.1); border: none;
+  color: #fff; width: 45px; height: 45px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 10; transition: 0.3s;
 }
 
-.modal-close-btn:hover { background: #d32f2f; transform: rotate(90deg); }
+.evpg-modal-layout { display: flex; height: 100%; }
+.evpg-modal-img-col { flex: 1.2; background: #000; }
+.evpg-modal-img-col img { width: 100%; height: 100%; object-fit: cover; }
 
-.modal-content-wrapper { display: flex; flex-direction: row; width: 100%; }
+.evpg-modal-info-col { flex: 1; padding: 50px; display: flex; flex-direction: column; text-align: left; }
+.evpg-modal-title { font-size: 2.6rem; color: #ffeac8; font-weight: 900; margin-bottom: 20px; }
 
-.modal-image-col { flex: 0 0 45%; min-height: 500px; }
-.modal-image-col img { width: 100%; height: 100%; object-fit: cover; border-right: 1px solid rgba(255, 255, 255, 0.2); }
-
-.modal-details { flex: 1; padding: 50px; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; }
-
-.modal-title {
-  font-size: 2.8rem;
-  color: #ffeac8; /* Darker Green for Title Contrast */
-  font-weight: 900;
-  margin-bottom: 20px;
-  text-shadow: 1px 1px 10px rgba(0,0,0,0.1);
+.evpg-modal-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
+.evpg-pill {
+  display: flex; align-items: center; gap: 8px; font-weight: 700;
+  color: #fff; background: rgba(255, 255, 255, 0.05);
+  padding: 8px 16px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);
 }
 
-.modal-meta-row { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 25px; }
-
-.meta-tag {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #ffeac8;
-  background: rgba(255, 255, 255, 0.5); /* Brighter tag */
-  padding: 8px 16px;
-  border-radius: 50px;
-  border: 1px solid #e370044b;
+.evpg-modal-desc {
+  flex: 1; overflow-y: auto;
+  color: #ccc; line-height: 1.8;
+  margin-bottom: 35px; font-size: 1.05rem;
 }
 
-.modal-description-scroll {
-  font-size: 1.15rem;
-  line-height: 1.7;
-  color: #222; /* Darker text for readability */
-  margin-bottom: 35px;
-  max-height: 200px;
-  overflow-y: auto;
-  padding-right: 10px;
-}
-
-.modal-actions { display: flex; align-items: center; gap: 20px; }
-
-.modal-register-btn {
-  display: inline-block;
-  background: rgba(46, 125, 50, 0.01);
-  color: #d32f2f;
-  border: 3px solid #2e7d32;
-  padding: 15px 40px;
-  border-radius: 100px;
-  font-weight: 900;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: 0.4s;
+.evpg-reg-btn { 
+  background: #d32f2f; color: #fff; 
+  padding: 15px 40px; border-radius: 100px; 
+  font-weight: 900; text-decoration: none; 
+  text-transform: uppercase; transition: 0.4s;
   text-align: center;
 }
 
-.modal-register-btn:hover { background: #2e7d32; color: #d32f2f; box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3); transform: translateY(-3px); }
-
-.ticket-price-badge {
-  color: #d32f2f;
-  border: 3px solid #d32f2f;
-  padding: 10px 20px;
-  border-radius: 15px;
-  font-weight: 900;
-  font-size: 1.4rem;
-  background: rgba(211, 47, 47, 0.05);
+.evpg-price-badge {
+  margin-left: 15px; color: #ffeac8; border: 2px solid #d32f2f;
+  padding: 10px 20px; border-radius: 15px;
+  font-weight: 900; font-size: 1.2rem;
+  background: rgba(211, 47, 47, 0.1);
 }
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* ============================================================
+   --- RESPONSIVE DESIGN ---
+   ============================================================ */
 
-@media (max-width: 900px) {
-  .modal-content-wrapper { flex-direction: column; }
-  .modal-image-col { flex: 0 0 250px; min-height: 250px; }
-  .modal-details { padding: 30px; }
-  .modal-title { font-size: 2rem; }
+/* Medium Screens (Laptops/Tablets): 2 in a row */
+@media (max-width: 1150px) {
+  .evpg-grid, .evpg-grid-small {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
+
+/* Tablets/Mobile: Modal adjustment */
+@media (max-width: 950px) {
+  .evpg-modal-layout { flex-direction: column; overflow-y: auto; }
+  .evpg-modal-img-col { height: 300px; flex: none; }
+  .evpg-modal-info-col { padding: 30px; }
+}
+
+/* Phones: 1 in a row */
+@media (max-width: 768px) {
+  .evpg-grid, .evpg-grid-small {
+    grid-template-columns: 1fr;
+  }
+  .evpg-main-title { font-size: 1.8rem; }
+  .evpg-title-container { padding: 0.5rem 2rem; }
+}
+
+.red { color: #d32f2f !important; }

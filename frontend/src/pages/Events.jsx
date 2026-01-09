@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  FaCalendarAlt,
-  FaHistory,
-  FaMapMarkerAlt,
-  FaClock,
-  FaTicketAlt,
-  FaTimes
-} from "react-icons/fa";
+import { FaCalendarAlt, FaHistory, FaMapMarkerAlt, FaClock, FaTimes, FaCamera } from "react-icons/fa";
 import "../style/Events.css";
 
-// Shared Assets
+// --- IMPORT YOUR NEW EVENT ASSETS ---
+import FirstMeeting from "../assets/Events/First Meeting.png";
+import IfterParty from "../assets/Events/Ifter.png";
+import MockWedding from "../assets/Events/Mock Weeding.jpg";
+
+// Shared Background Assets
 import EventBG1 from "../assets/BD_Cultural_Elements/Event_BG.png";
 import EventBG2 from "../assets/BD_Cultural_Elements/Event_BG_2.png";
 import EventBG3 from "../assets/BD_Cultural_Elements/Event_BG_3.png";
@@ -26,16 +24,24 @@ export default function Events() {
     fetch("http://localhost:5000/api/events")
       .then((res) => res.json())
       .then((data) => {
-        setEvents(data);
+        if (data && data.length > 0) {
+          setEvents(data);
+        } else {
+          setEvents(MOCK_EVENTS);
+        }
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        setEvents(MOCK_EVENTS);
+        setLoading(false);
+      });
   }, []);
 
   // Modal scroll lock
   useEffect(() => {
+    const originalStyle = window.getComputedStyle(document.body).overflow;
     document.body.style.overflow = selectedEvent ? "hidden" : "auto";
-    return () => { document.body.style.overflow = "auto"; };
+    return () => { document.body.style.overflow = originalStyle; };
   }, [selectedEvent]);
 
   const today = new Date();
@@ -44,8 +50,11 @@ export default function Events() {
   const upcomingEvents = events.filter((e) => new Date(e.date) >= today);
   const pastEvents = events.filter((e) => new Date(e.date) < today);
 
-  const getImageUrl = (url) =>
-    url ? (url.startsWith("http") ? url : `http://localhost:5000${url}`) : "https://placehold.co/800x600";
+  const getImageUrl = (event) => {
+    if (event.isLocal) return event.image_url;
+    if (!event.image_url) return "https://placehold.co/800x600?text=UBSA+Event";
+    return event.image_url.startsWith("http") ? event.image_url : `http://localhost:5000${event.image_url}`;
+  };
 
   const formatDate = (dateStr) => {
     const d = new Date(dateStr);
@@ -59,34 +68,24 @@ export default function Events() {
   };
 
   const EventModal = ({ event, onClose }) => (
-    <div className="event-modal-overlay" onClick={onClose}>
-      <div className="event-modal-glass" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-btn" onClick={onClose}><FaTimes /></button>
-        <div className="modal-content-wrapper">
-          <div className="modal-image-col">
-            <img src={getImageUrl(event.image_url)} alt={event.title} />
+    <div className="evpg-modal-overlay" onClick={onClose}>
+      <div className="evpg-modal-glass" onClick={(e) => e.stopPropagation()}>
+        <button className="evpg-close-btn" onClick={onClose}><FaTimes /></button>
+        <div className="evpg-modal-layout">
+          <div className="evpg-modal-img-col">
+            <img src={getImageUrl(event)} alt={event.title} />
           </div>
-          <div className="modal-details">
-            <h2 className="modal-title">{event.title}</h2>
-            <div className="modal-meta-row">
-              <span className="meta-tag">
-                <FaCalendarAlt className="icon-red" /> {formatDate(event.date).full}
-              </span>
-              {event.time && (
-                <span className="meta-tag">
-                  <FaClock className="icon-red" /> {event.time}
-                </span>
-              )}
-              {event.location && (
-                <span className="meta-tag">
-                  <FaMapMarkerAlt className="icon-red" /> {event.location}
-                </span>
-              )}
+          <div className="evpg-modal-info-col">
+            <h2 className="evpg-modal-title">{event.title}</h2>
+            <div className="evpg-modal-meta">
+              <span className="evpg-pill"><FaCalendarAlt /> {formatDate(event.date).full}</span>
+              {event.time && <span className="evpg-pill"><FaClock /> {event.time}</span>}
+              {event.location && <span className="evpg-pill"><FaMapMarkerAlt /> {event.location}</span>}
             </div>
-            <div className="modal-description-scroll">{event.description}</div>
-            <div className="modal-actions">
-              <Link to={`/events/${event.id}`} className="modal-register-btn">Register Now</Link>
-              <span className="modal-price-tag">{event.price ? `$${event.price}` : "FREE"}</span>
+            <div className="evpg-modal-desc">{event.description}</div>
+            <div className="evpg-modal-actions">
+              <Link to={`/events/${event.id}`} className="evpg-reg-btn">Register Now</Link>
+              <span className="evpg-price-badge">{event.price ? `$${event.price}` : "FREE"}</span>
             </div>
           </div>
         </div>
@@ -94,107 +93,68 @@ export default function Events() {
     </div>
   );
 
-  if (loading) return (
-    <div className="loading-container">
-      <p className="loading-text">Loading Gatherings...</p>
-    </div>
-  );
+  if (loading) return <div className="evpg-loading">Loading Gatherings...</div>;
 
   return (
-    <div className="events-page">
-      {/* ---------- ANIMATED BACKGROUND WITH GREEN TINT ---------- */}
-      <div className="events-bg-container">
-        <div className="events-bg-overlay-tint"></div>
-        <div className="bg-row">
-          <div className="marquee-track scroll-left">
-            <img src={EventBG1} alt="" /><img src={EventBG1} alt="" />
+    <div className="evpg-page">
+      <div className="evpg-bg-container">
+        <div className="evpg-bg-overlay"></div>
+        {[EventBG1, EventBG2, EventBG3].map((bg, idx) => (
+          <div key={idx} className="evpg-bg-row">
+            <div className={`evpg-marquee ${idx % 2 === 0 ? "left" : "right"}`}>
+              <img src={bg} alt="" /><img src={bg} alt="" />
+            </div>
           </div>
-        </div>
-        <div className="bg-row">
-          <div className="marquee-track scroll-right">
-            <img src={EventBG2} alt="" /><img src={EventBG2} alt="" />
-          </div>
-        </div>
-        <div className="bg-row">
-          <div className="marquee-track scroll-left">
-            <img src={EventBG3} alt="" /><img src={EventBG3} alt="" />
-          </div>
-        </div>
+        ))}
       </div>
 
-      <div className="events-content-wrapper">
-        <div className="title-glass-container">
-    <h1 className="events-page-title">
-      {/* Custom Logo Icon Separated from Text */}
-      <div className="title-icon-wrapper">
-        <img src={EventIcon} alt="" className="title-custom-icon" />
-      </div>
-      <div className="title-text-wrapper">
-        <span className="latest">Our </span>
-        <span className="ubsa">Gatherings</span>
-      </div>
-    </h1>
-  </div>
+      <div className="evpg-content">
+        <div className="evpg-title-container">
+          <h1 className="evpg-main-title">
+            <img src={EventIcon} alt="" className="evpg-title-icon" />
+            Our <span className="red">Gatherings</span>
+          </h1>
+        </div>
 
-        {/* UPCOMING SECTION */}
-        <section className="events-section">
-          <h2 className="section-header">
-            <FaCalendarAlt className="icon-red" /> Upcoming Events
-          </h2>
-          <div className="events-grid wide">
-            {upcomingEvents.length > 0 ? (
-              upcomingEvents.map((event) => {
-                const { month, day } = formatDate(event.date);
-                return (
-                  <div key={event.id} className="event-card-glass large" onClick={() => setSelectedEvent(event)}>
-                    <div className="card-image-container">
-                      <img src={getImageUrl(event.image_url)} alt={event.title} />
-                      <div className="date-badge-glass">
-                        <span className="month">{month}</span>
-                        <span className="day">{day}</span>
-                      </div>
-                    </div>
-                    <div className="card-details">
-                      <h3 className="card-event-title">{event.title}</h3>
-                      <div className="card-meta">
-                        <div className="meta-row">
-                          <FaClock className="icon-red" /> 
-                          <span>{event.time || "TBA"}</span>
-                        </div>
-                        <div className="meta-row">
-                          <FaMapMarkerAlt className="icon-red" /> 
-                          <span>{event.location || "TBA"}</span>
-                        </div>
-                      </div>
-                      <button className="card-register-btn">View Details</button>
+        <section className="evpg-section">
+          <h2 className="evpg-section-header"><FaCalendarAlt /> Upcoming Events</h2>
+          <div className="evpg-grid">
+            {upcomingEvents.map((event) => {
+              const { month, day } = formatDate(event.date);
+              return (
+                <div key={event.id} className="evpg-card" onClick={() => setSelectedEvent(event)}>
+                  <div className="evpg-card-img">
+                    <img src={getImageUrl(event)} alt={event.title} />
+                    <div className="evpg-card-badge">
+                      <span className="mo">{month}</span>
+                      <span className="dy">{day}</span>
                     </div>
                   </div>
-                );
-              })
-            ) : (
-              <p className="no-events">No upcoming events at the moment.</p>
-            )}
+                  <div className="evpg-card-details">
+                    <h3 className="evpg-card-title">{event.title}</h3>
+                    <div className="evpg-card-meta">
+                      <p><FaClock className="red" /> {event.time || "TBA"}</p>
+                      <p><FaMapMarkerAlt className="red" /> {event.location || "TBA"}</p>
+                    </div>
+                    <button className="evpg-card-btn">View Details</button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
-        {/* PAST SECTION */}
-        <section className="events-section past-section">
-          <h2 className="section-header">
-            <FaHistory className="icon-red" /> Past Events
-          </h2>
-          <div className="events-grid">
+        <section className="evpg-section evpg-past">
+          <h2 className="evpg-section-header"><FaHistory /> Past Events</h2>
+          <div className="evpg-grid evpg-grid-small">
             {pastEvents.map((event) => (
-              <div 
-                key={event.id} 
-                className="event-card-glass past-card" 
-                onClick={() => navigate(`/gallery`)}
-              >
-                <div className="card-image-container">
-                  <img src={getImageUrl(event.image_url)} alt={event.title} />
-                  <div className="past-overlay">View Gallery</div>
+              <div key={event.id} className="evpg-card evpg-dimmed" onClick={() => navigate(`/gallery`)}>
+                <div className="evpg-card-img">
+                  <img src={getImageUrl(event)} alt={event.title} />
+                  <div className="evpg-card-overlay"><FaCamera /> View Gallery</div>
                 </div>
-                <div className="card-details">
-                  <h3 className="card-event-title">{event.title}</h3>
+                <div className="evpg-card-details">
+                  <h3 className="evpg-card-title">{event.title}</h3>
                 </div>
               </div>
             ))}
@@ -206,3 +166,37 @@ export default function Events() {
     </div>
   );
 }
+
+// --- UPDATED MOCK DATA WITH YOUR PHOTOS ---
+const MOCK_EVENTS = [
+  {
+    id: "m1",
+    title: "UBSA Mock Wedding 2026",
+    date: "2026-03-20",
+    time: "6:00 PM - 11:00 PM",
+    location: "USask Ballroom",
+    description: "Experience the grandeur of a traditional Bengali wedding! Join us for a night of dance, music, and an authentic multi-course wedding feast.",
+    price: "20",
+    image_url: MockWedding,
+    isLocal: true
+  },
+  {
+    id: "m2",
+    title: "Community Ifter Party",
+    date: "2026-03-28",
+    time: "7:00 PM - 9:30 PM",
+    location: "Place Riel",
+    description: "Join your fellow students for a community Ifter during the holy month of Ramadan. All are welcome to share in this meal and gathering.",
+    price: "0",
+    image_url: IfterParty,
+    isLocal: true
+  },
+  {
+    id: "p1",
+    title: "Annual General Meeting",
+    date: "2025-09-15",
+    description: "Our first meeting of the academic year where we discuss the roadmap for UBSA.",
+    image_url: FirstMeeting,
+    isLocal: true
+  }
+];

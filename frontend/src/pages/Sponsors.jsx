@@ -1,21 +1,62 @@
 import React, { useState, useEffect } from 'react';
-import {
-  FaMapMarkerAlt,
-  FaHandshake,
-  FaLock,
-  FaExternalLinkAlt,
-  FaInfoCircle,
-  FaPercentage,
-  FaRibbon,
-  FaGlobe,
-  FaPhoneAlt
+import { 
+  FaHandshake, 
+  FaGlobe, 
+  FaPhoneAlt, 
+  FaMapMarkerAlt, 
+  FaInfoCircle, 
+  FaPercentage, 
+  FaRibbon, 
+  FaTimes,
+  FaArrowRight
 } from 'react-icons/fa';
 import SponsorFormModal from '../components/SponsorFormModal';
 import '../style/Sponsors.css';
-import '../style/Events.css';
 
-// Local Asset for Background
+// Local Assets
 import sponsorPageBg from '../assets/HomeSponsorBG.png';
+import ShahedBite from '../assets/Shahed/Shahed_bite.jpg';
+import ShahedTech from '../assets/Shahed/Shahed_Tech.jpg';
+import ShahedTravels from '../assets/Shahed/Shahed_Travels.jpg';
+
+const MOCK_DATA = [
+  { 
+    id: 'm1', 
+    name: "Shahed Travels", 
+    tier: "Platinum", 
+    discount_title: "$50 OFF International Flights", 
+    description: "Your local travel partner specializing in student bookings and group travel back to Bangladesh. We ensure the best rates for the UBSA community.", 
+    image_url: ShahedTravels, 
+    isLocal: true, 
+    location: "Saskatoon, SK", 
+    website_url: "https://example.com", 
+    phone: "306-000-0000" 
+  },
+  { 
+    id: 'm2', 
+    name: "Shahed Tech", 
+    tier: "Gold", 
+    discount_title: "15% OFF All Repair Services", 
+    description: "Expert tech support, hardware repairs, and software troubleshooting for the USask student community. Fast and reliable service.", 
+    image_url: ShahedTech, 
+    isLocal: true, 
+    location: "Saskatoon, SK", 
+    website_url: "https://example.com", 
+    phone: "306-000-0000" 
+  },
+  { 
+    id: 'm3', 
+    name: "Shahed Bite", 
+    tier: "Silver", 
+    discount_title: "Free Soft Drink with any Meal", 
+    description: "Authentic Bengali street food and traditional snacks. Experience the true flavors of home right here in Saskatoon.", 
+    image_url: ShahedBite, 
+    isLocal: true, 
+    location: "Saskatoon, SK", 
+    website_url: "https://example.com", 
+    phone: "306-000-0000" 
+  },
+];
 
 export default function Sponsors() {
   const [sponsors, setSponsors] = useState([]);
@@ -23,70 +64,71 @@ export default function Sponsors() {
   const [selectedSponsor, setSelectedSponsor] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  // Fetch Approved Sponsors
   useEffect(() => {
     fetch('http://localhost:5000/api/sponsors')
       .then((res) => res.json())
       .then((data) => {
-        setSponsors(Array.isArray(data) ? data : []);
+        setSponsors(data && data.length > 0 ? data : MOCK_DATA);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error('Error fetching sponsors:', err);
+      .catch(() => {
+        setSponsors(MOCK_DATA);
         setLoading(false);
       });
   }, []);
 
-  // Helper to handle dynamic image paths from the backend uploads folder
-  const getImageUrl = (url) => {
-    if (!url) return '';
-    // If it's a full URL (like a placeholder), use it; otherwise, prefix with backend domain
-    return url.startsWith('http') ? url : `http://localhost:5000${url}`;
+  const getImageUrl = (sponsor) => {
+    if (sponsor.isLocal) return sponsor.image_url;
+    return sponsor.image_url?.startsWith('http') 
+      ? sponsor.image_url 
+      : `http://localhost:5000${sponsor.image_url}`;
   };
 
-  // Tiered Rendering Logic
   const renderSponsorTier = (tierName) => {
     const tierSponsors = sponsors.filter((s) => s.tier === tierName);
     if (tierSponsors.length === 0) return null;
 
     return (
-      <div className={`tier-section tier-${tierName.toLowerCase()}`} key={tierName}>
-        <div className="tier-header">
-          <FaRibbon className="tier-icon" />
-          <h2>{tierName} Partners</h2>
-          <div className="tier-line"></div>
+      <div className={`sppg-tier-container tier-${tierName.toLowerCase()}`} key={tierName}>
+        <div className="sppg-tier-header">
+          <div className="sppg-tier-label">
+            <FaRibbon />
+            <span>{tierName} Partners</span>
+          </div>
+          <div className="sppg-tier-line"></div>
         </div>
-        <div className="sponsors-grid-container">
+        
+        <div className="sppg-grid">
           {tierSponsors.map((sponsor) => (
-            <div
-              key={sponsor.id}
-              className="glass-sponsor-card clickable"
+            <div 
+              key={sponsor.id} 
+              className="sppg-glass-card" 
               onClick={() => setSelectedSponsor(sponsor)}
             >
-              <div className="card-header">
-                <div className="sponsor-logo-wrapper bigger-logo">
-                  <img src={getImageUrl(sponsor.image_url)} alt={sponsor.name} />
+              <div className="sppg-logo-wrapper">
+                <img src={getImageUrl(sponsor)} alt={sponsor.name} />
+                <div className="sppg-card-overlay-hint">
+                  <span>View Details <FaArrowRight /></span>
                 </div>
               </div>
 
-              <div className="card-body">
-                <h2 className="sponsor-name">{sponsor.name}</h2>
-                {sponsor.discount_title ? (
-                  <div className="badge-perk">
-                    <FaPercentage /> Member Perk
-                  </div>
-                ) : (
-                  <div className="badge-donation">
-                    <FaHandshake /> Community Supporter
-                  </div>
-                )}
-              </div>
-
-              {sponsor.discount_title && (
-                <div className="card-footer-discount-mini">
-                  <p>{sponsor.discount_title}</p>
+              <div className="sppg-card-body">
+                <h3 className="sppg-sponsor-name">{sponsor.name}</h3>
+                <p className="sppg-sponsor-preview">
+                  {sponsor.description.substring(0, 90)}...
+                </p>
+                <div className="sppg-badge-container">
+                  {sponsor.discount_title ? (
+                    <span className="sppg-badge sppg-badge-perk">
+                      <FaPercentage /> {sponsor.discount_title}
+                    </span>
+                  ) : (
+                    <span className="sppg-badge sppg-badge-supporter">
+                      <FaHandshake /> Community Partner
+                    </span>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           ))}
         </div>
@@ -94,100 +136,107 @@ export default function Sponsors() {
     );
   };
 
-  if (loading) return <div className="loading-text">Connecting to Partners...</div>;
+  if (loading) return (
+    <div className="sppg-loading-screen">
+      <div className="loader-orbit"></div>
+      <p>Connecting to Partners...</p>
+    </div>
+  );
 
   return (
-    <div 
-      className="sponsors-page" 
-      style={{ '--sponsor-bg': `url(${sponsorPageBg})` }}
-    >
-      <header className="sponsors-hero">
-        <div className="title-glass-container">
-          <h1 className="page-title">
-            <span className="text-white">Our</span> 
-            <span className="text-orange">Partners</span>
+    <div className="sppg-page" style={{ '--sponsor-bg': `url(${sponsorPageBg})` }}>
+      {/* Hero Header */}
+      <header className="sppg-hero">
+        <div className="sppg-title-glass">
+          <h1 className="sppg-page-title">
+            <span className="sppg-text-white">Our</span> 
+            <span className="sppg-text-orange">Partners</span>
           </h1>
         </div>
-        <p className="page-subtitle">
-          Supporting the USask Bangladeshi community through strategic collaboration.
+        <p className="sppg-subtitle">
+          Collaborating with local businesses to empower and support the USask Bengali community.
         </p>
-
-        <button className="btn-become-sponsor-ubsa" onClick={() => setIsFormOpen(true)}>
-          <FaHandshake /> Become a Sponsor
-        </button>
+        
+        {/* Snake Border Wrapper */}
+        <div className="snake-border-container">
+          <div className="snake-line green"></div>
+          <div className="snake-line red"></div>
+          <button className="sppg-btn-become" onClick={() => setIsFormOpen(true)}>
+            <FaHandshake /> Become a Sponsor
+          </button>
+        </div>
       </header>
 
-      {/* Main Grid categorized by Tier */}
-      <section className="categorized-sponsors-list">
+      {/* Tiered Content */}
+      <section className="sppg-categorized-list">
         {['Platinum', 'Gold', 'Silver', 'Bronze'].map((tier) => renderSponsorTier(tier))}
       </section>
 
-      {/* Sponsor Details Modal */}
+      {/* Detail Modal */}
       {selectedSponsor && (
         <SponsorModal 
           sponsor={selectedSponsor} 
           onClose={() => setSelectedSponsor(null)} 
-          getImageUrl={getImageUrl}
+          getImageUrl={getImageUrl} 
         />
       )}
 
-      {/* Application Form Modal (Supports File Upload) */}
+      {/* Application Form */}
       {isFormOpen && <SponsorFormModal onClose={() => setIsFormOpen(false)} />}
     </div>
   );
 }
 
-/**
- * Sub-component: SponsorModal
- * Displays detailed information about a clicked sponsor
- */
 const SponsorModal = ({ sponsor, onClose, getImageUrl }) => (
-  <div className="event-modal-overlay" onClick={onClose}>
-    <div className="event-modal-glass sponsor-modal-wide" onClick={(e) => e.stopPropagation()}>
-      <button className="modal-close-btn" onClick={onClose}>&times;</button>
+  <div className="sppg-modal-overlay" onClick={onClose}>
+    <div className="sppg-modal-glass-card" onClick={(e) => e.stopPropagation()}>
+      <button className="sppg-modal-close-btn" onClick={onClose} aria-label="Close">
+        <FaTimes />
+      </button>
       
-      <div className="modal-content-wrapper">
-        <div className="modal-details">
-          <span className={`sponsor-tier-badge-modal tier-${sponsor.tier?.toLowerCase()}`}>
+      <div className="sppg-modal-layout">
+        <div className="sppg-modal-media-pane">
+          <img src={getImageUrl(sponsor)} alt={sponsor.name} className="sppg-modal-hero-img" />
+          <div className={`sppg-modal-tier-tag tag-${sponsor.tier.toLowerCase()}`}>
             {sponsor.tier} Partner
-          </span>
-          <h2 className="modal-title">{sponsor.name}</h2>
+          </div>
+        </div>
+
+        <div className="sppg-modal-details-pane">
+          <h2 className="sppg-modal-title">{sponsor.name}</h2>
           
-          <div className="sponsor-contact-actions">
+          <div className="sppg-modal-contact-bar">
             {sponsor.website_url && (
-              <a href={sponsor.website_url} target="_blank" rel="noreferrer" className="action-link-btn">
+              <a href={sponsor.website_url} target="_blank" rel="noreferrer" className="sppg-modal-action-link">
                 <FaGlobe /> Website
               </a>
             )}
             {sponsor.phone && (
-              <a href={`tel:${sponsor.phone}`} className="action-link-btn">
-                <FaPhoneAlt /> Call
+              <a href={`tel:${sponsor.phone}`} className="sppg-modal-action-link">
+                <FaPhoneAlt /> Contact
               </a>
             )}
           </div>
 
-          {sponsor.discount_title && (
-            <div className="sponsor-modal-discount gold-glow">
-              <h3><FaLock /> Member Exclusive Perk</h3>
-              <p className="discount-title"><FaPercentage /> {sponsor.discount_title}</p>
-            </div>
-          )}
+          <div className="sppg-modal-content-scroll">
+             {sponsor.discount_title && (
+               <div className="sppg-modal-offer-card">
+                  <FaPercentage className="offer-icon" />
+                  <div>
+                    <span className="offer-label">Exclusive Member Perk</span>
+                    <p className="offer-val">{sponsor.discount_title}</p>
+                  </div>
+               </div>
+             )}
 
-          <div className="modal-description-scroll">
-            <h3><FaInfoCircle /> About</h3>
-            <p>{sponsor.description}</p>
-            <p className="modal-location-text">
-              <FaMapMarkerAlt /> {sponsor.location || 'Saskatoon, SK'}
-            </p>
+             <div className="sppg-modal-bio">
+                <h3><FaInfoCircle /> About the Partner</h3>
+                <p>{sponsor.description}</p>
+                <div className="sppg-modal-loc-footer">
+                   <FaMapMarkerAlt /> {sponsor.location || 'Saskatoon, SK'}
+                </div>
+             </div>
           </div>
-        </div>
-
-        <div className="modal-image-col centered-logo-col">
-          <img 
-            src={getImageUrl(sponsor.image_url)} 
-            alt={sponsor.name} 
-            className="modal-logo-large" 
-          />
         </div>
       </div>
     </div>
