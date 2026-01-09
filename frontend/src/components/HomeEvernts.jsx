@@ -1,36 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaClock, FaMapMarkerAlt, FaTicketAlt, FaCalendarAlt } from "react-icons/fa";
+import { FaClock, FaMapMarkerAlt, FaTicketAlt, FaCalendarAlt, FaArrowRight } from "react-icons/fa";
 import "../style/HomeEvents.css";
 
 // Asset Imports
 import TigerBG from "../assets/Event_page.jpg"; 
 import EventIcon from "../assets/BD_Cultural_Elements/Event_icon.png";
+import MockWeddingImg from "../assets/Gallery/MockWeeding.jpg"; 
 
-/**
- * SUB-COMPONENT: HomeEventTitle
- * Renders the high-impact glassmorphism title with the custom icon.
- */
 const HomeEventTitle = () => (
   <div className="home-events-title-container">
-    <h2 className="home-events-title title-glass-card">
-      <img 
-        src={EventIcon} 
-        alt="Event Icon" 
-        className="title-custom-icon" 
-      />
-      <span className="latest">Upcoming </span>
-      <span className="ubsa">UBSA</span>
-      <span className="event-txt"> Events</span>
-    </h2>
+    <div className="title-glass-pill">
+      <img src={EventIcon} alt="Event Icon" className="title-custom-icon" />
+      <h2 className="home-events-title">
+        <span className="latest">Upcoming </span>
+        <span className="ubsa">UBSA</span>
+        <span className="event-txt"> Events</span>
+      </h2>
+    </div>
   </div>
 );
 
-/**
- * MAIN COMPONENT: HomeEvents
- * Features the dynamic "Tiger" background, Neon Snake animated border, 
- * and the latest upcoming event data.
- */
 export default function HomeEvents() {
   const [latestEvent, setLatestEvent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -46,123 +36,120 @@ export default function HomeEvents() {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        // Filter for future events and sort by date (closest first)
         const sortedUpcoming = data
           .filter((e) => e.date && new Date(e.date) >= today)
           .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-        setLatestEvent(sortedUpcoming[0] || null);
+        if (sortedUpcoming.length > 0) {
+          setLatestEvent(sortedUpcoming[0]);
+        } else {
+          setLatestEvent(DEMO_EVENT);
+        }
         setLoading(false);
       })
       .catch((err) => {
         console.error("Error fetching events:", err);
+        setLatestEvent(DEMO_EVENT);
         setLoading(false);
       });
   }, []);
 
-  const img = (u) =>
-    u ? `http://localhost:5000${u}` : "https://placehold.co/800x600";
+  const imgPath = (event) => {
+    if (event.isDemo) return MockWeddingImg;
+    return event.image_url ? `http://localhost:5000${event.image_url}` : "https://placehold.co/800x600";
+  };
 
-  const formatDateParts = (dateStr) => {
+  const formatDate = (dateStr) => {
     const d = new Date(dateStr);
     return {
       day: d.getDate(),
       month: d.toLocaleString("default", { month: "short" }),
+      full: d.toLocaleDateString(undefined, { 
+        weekday: 'short', 
+        month: 'short', 
+        day: 'numeric' 
+      })
     };
   };
 
   if (loading) return null;
 
   return (
-    <section className="home-events">
-      {/* --- IMMERSIVE BLURRED TIGER BACKGROUND --- */}
-      <div 
-        className="home-events-page-bg" 
-        style={{ '--events-bg': `url(${TigerBG})` }}
-      />
+    <section className="home-events-section">
+      <div className="home-events-parallax-bg" style={{ backgroundImage: `url(${TigerBG})` }} />
 
-      <div className="home-events-content-wrapper">
-        {/* Render the Sub-Component Defined Above */}
+      <div className="home-events-wrapper">
         <HomeEventTitle /> 
 
-        {latestEvent ? (
-          /* NEON SNAKE GLOW BORDER WRAPPER */
-          <div className="home-event-glow-wrapper">
-            {/* These divs are animated via CSS offset-path */}
-            <div className="snake-light red-snake"></div>
-            <div className="snake-light green-snake"></div>
+        {latestEvent && (
+          <div className="snake-border-container">
+            <div className="snake-line green"></div>
+            <div className="snake-line red"></div>
             
-            <div className="home-event-card wide-featured depth-shadow">
+            <div className="compact-event-card frosted-white">
               <div 
-                className="home-event-image" 
+                className="card-media" 
                 onClick={() => navigate(`/events?open=${latestEvent.id}`)}
               >
-                <img src={img(latestEvent.image_url)} alt={latestEvent.title} />
-                
-                <div className="featured-date-badge">
-                  <span className="badge-month">{formatDateParts(latestEvent.date).month}</span>
-                  <span className="badge-day">{formatDateParts(latestEvent.date).day}</span>
+                <img src={imgPath(latestEvent)} alt={latestEvent.title} />
+                <div className="mini-date-badge">
+                  <span className="d">{formatDate(latestEvent.date).day}</span>
+                  <span className="m">{formatDate(latestEvent.date).month}</span>
                 </div>
               </div>
 
-              <div className="home-event-card-body">
-                <h2>{latestEvent.title}</h2>
+              <div className="card-details">
+                <h3 className="event-title-small">{latestEvent.title}</h3>
                 
-                <div className="home-event-meta">
-                  <div className="meta-item">
-                    <FaCalendarAlt className="icon-date-only" /> 
-                    <span className="meta-text">
-                      {new Date(latestEvent.date).toLocaleDateString(undefined, { 
-                        weekday: 'long', 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
-                      })}
-                    </span>
+                <div className="event-info-strip">
+                  <div className="info-tag">
+                    <FaCalendarAlt className="tag-icon green-txt" /> 
+                    <span>{formatDate(latestEvent.date).full}</span>
                   </div>
-                  <div className="meta-item">
-                    <FaClock className="icon-time-only" /> 
-                    <span className="meta-text">{latestEvent.time || "TBA"}</span>
+                  <div className="info-tag">
+                    <FaClock className="tag-icon green-txt" /> 
+                    <span>{latestEvent.time}</span>
                   </div>
-                  <div className="meta-item">
-                    <FaMapMarkerAlt className="icon-loc-only" /> 
-                    <span className="meta-text">{latestEvent.location || "TBA"}</span>
+                  <div className="info-tag">
+                    <FaMapMarkerAlt className="tag-icon red-txt" /> 
+                    <span>{latestEvent.location}</span>
                   </div>
                 </div>
 
-                <p className="event-description">
-                  {latestEvent.description || 
-                    "Join us for our next big gathering! Immerse yourself in the culture and community of UBSA."}
-                </p>
-
-                <div className="home-event-actions">
+                <div className="event-action-footer">
                   <button 
-                    className="home-register-btn depth-btn"
+                    className="action-btn-dynamic"
                     onClick={() => navigate(`/events?open=${latestEvent.id}`)}
                   >
-                    Register Now
+                    Register
                   </button>
-                  <div className="ticket-price">
-                    <FaTicketAlt style={{ marginRight: "0.5rem" }} />
-                    {latestEvent.price ? `$${latestEvent.price}` : "FREE"}
+                  <div className="price-glass">
+                    <FaTicketAlt />
+                    <span>{latestEvent.price ? `$${latestEvent.price}` : "FREE"}</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        ) : (
-          /* FALLBACK STATE IF NO EVENTS ARE FOUND */
-          <div className="no-events-box glass-screen">
-            <p>No upcoming events scheduled. Check back soon!</p>
-          </div>
         )}
 
-        <div className="home-events-cta">
-          <button className="depth-btn" onClick={() => navigate("/events")}>
-            Explore More Events
+        <div className="events-explore-cta">
+          <button className="view-all-btn" onClick={() => navigate("/events")}>
+            More Events <FaArrowRight style={{ marginLeft: '10px' }} />
           </button>
         </div>
       </div>
     </section>
   );
 }
+
+const DEMO_EVENT = {
+  id: "demo-1",
+  isDemo: true,
+  title: "UBSA Mock Wedding 2026",
+  date: "2026-02-14",
+  time: "6:00 PM - 11:00 PM",
+  location: "Uni of Saskatchewan",
+  price: "25",
+  description: "Experience the vibrant colors and traditions of a Bengali wedding!"
+};

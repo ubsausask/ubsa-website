@@ -1,288 +1,261 @@
 /* =========================================
-   1. MAIN SECTION & TIGER BACKGROUND
+   1. SECTION WRAPPER & IMMERSIVE BG
    ========================================= */
-.home-events {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
+.home-events-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    background: #001a1a;
+    overflow: hidden; 
 }
 
-.home-events-page-bg {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: 
-    linear-gradient(to bottom, #001d1d 0%, rgba(0, 29, 29, 0.4) 20%, rgba(0, 0, 0, 0.9) 100%),
-    var(--events-bg);
-  background-size: cover;
-  background-position: center;
-  filter: blur(8px);
-  transform: scale(1.1);
+.home-events-parallax-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: brightness(0.2) blur(4px);
+    z-index: 0;
+}
+
+.home-events-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 950px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* =========================================
-   2. GLASS TITLE STYLES
+   2. HEADER PILL
    ========================================= */
-.home-events-title-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  z-index: 3;
-  margin-bottom: 1rem;
-  animation: slideDownFade 0.8s ease-out forwards;
+.title-glass-pill {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.8rem 2.5rem;
+    border-radius: 100px;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 50px;
 }
 
-@keyframes slideDownFade {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.home-events-title.title-glass-card {
-  display: flex;
-  align-items: center;
-  font-size: clamp(1.8rem, 5vw, 4rem); 
-  font-weight: 900;
-  text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px) saturate(180%);
-  padding: 1.5rem 4.5rem;
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.1);
-}
-
-.title-custom-icon {
-  width: clamp(50px, 8vw, 100px); 
-  height: auto;
-  margin-right: 2rem;
-  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
-}
-
-.home-events-title .latest { color: #ffeac8; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
-.home-events-title .ubsa { color: #d32f2f; margin: 0 0.8rem; text-shadow: 0 0 20px rgba(211, 47, 47, 0.4); }
-.home-events-title .event-txt { color: #ffeac8; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+.title-custom-icon { height: 45px; width: auto; }
+.home-events-title { font-size: 1.8rem; font-weight: 800; color: #fff; margin: 0; }
+.ubsa { color: #db280a; text-shadow: 0 0 15px rgba(219, 40, 10, 0.6); }
 
 /* =========================================
-   3. CYBER SNAKE & EVENT CARD
+   3. DUAL-COLOR SNAKE BORDER
    ========================================= */
-.home-events-content-wrapper {
-  position: relative;
-  z-index: 2;
-  width: 95%;
-  max-width: 1500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2.5rem;
-  padding: 2rem 0;
-  min-height: 100vh;
+.snake-border-container {
+    position: relative;
+    width: 100%;
+    border-radius: 32px;
+    padding: 2px; 
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
 }
 
-.home-event-glow-wrapper {
-  position: relative;
-  width: 92%;
-  max-width: 1350px;
-  padding: 3px; 
-  border-radius: 44px;
-  background: rgba(255, 255, 255, 0.05);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); 
+.snake-line {
+    position: absolute;
+    z-index: 1;
+    width: 150px; 
+    height: 2px;
+    offset-path: rect(0% 100% 100% 0% round 32px);
+    animation: snakeMove 6s linear infinite;
 }
 
-.snake-light {
-  position: absolute;
-  width: clamp(100px, 15vw, 200px); 
-  height: 40px; /* Reduced fixed height for consistent thinness */
-  z-index: 1;
-  will-change: offset-distance;
-  offset-path: rect(0% 100% 100% 0% round 44px);
-  animation: snakeMove 6s linear infinite;
-  offset-anchor: 100% 50%; 
+.snake-line.green { background: linear-gradient(90deg, transparent, #00ff95, #fff); }
+.snake-line.red { 
+    background: linear-gradient(90deg, transparent, #ff1111, #fff);
+    animation-delay: -3s; 
 }
 
-.red-snake {
-  background: radial-gradient(circle at 95% 50%, #ff1111 0%, #d32f2f 15%, transparent 70%);
-  filter: drop-shadow(0 0 12px #ff1111);
-}
-
-.green-snake {
-  background: radial-gradient(circle at 95% 50%, #00ff44 0%, #2e7d32 15%, transparent 70%);
-  filter: drop-shadow(0 0 12px #00ff44);
-  animation-delay: -3s; 
-}
-
-@keyframes snakeMove { from { offset-distance: 0%; } to { offset-distance: 100%; } }
-
-.home-event-card.wide-featured.depth-shadow {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: row; 
-  width: 100%;
-  height: 100%;
-  min-height: 500px;
-  background: transparent; 
-  border-radius: 41px;
-  overflow: hidden;
-}
-
-/* IMAGE SECTION */
-.home-event-image { flex: 0 0 42%; position: relative; cursor: pointer; background: #000; }
-.home-event-image img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
-
-/* DATE BADGE: Green Fill, Red Text, Dark Green Border */
-.featured-date-badge {
-  position: absolute;
-  top: 25px;
-  right: 25px;
-  background: #2e7d32; 
-  color: #d32f2f;      
-  padding: 10px 20px;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 3px solid #1b5e20; 
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-  z-index: 5;
-}
-
-.badge-month { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; }
-.badge-day { font-size: 3rem; font-weight: 900; line-height: 1; }
-
-/* INFO AREA: Glass Effect */
-.home-event-card-body {
-  flex: 1;
-  padding: 50px 70px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: rgba(0, 20, 15, 0.7); 
-  backdrop-filter: blur(25px) saturate(150%);
-  -webkit-backdrop-filter: blur(25px) saturate(150%);
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.home-event-card-body h2 {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 900;
-  color: #ffeac8;
-  margin-bottom: 1.5rem;
-}
-
-.home-event-meta {
-  display: flex;
-  gap: 2.5rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-}
-
-.meta-item { display: flex; align-items: center; gap: 10px; color: #f8f9fa; font-size: 1.1rem; }
-.icon-date-only { color: #ff9800; } 
-.icon-time-only { color: #00bcd4; } 
-.icon-loc-only { color: #ff5252; }  
-
-.event-description {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: rgba(248, 249, 250, 0.8);
-  margin-bottom: 3rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+@keyframes snakeMove {
+    from { offset-distance: 0%; }
+    to { offset-distance: 100%; }
 }
 
 /* =========================================
-   4. GLASS AMBIENT BUTTONS & CTA
+   4. COMPACT WHITE FROSTED CARD
    ========================================= */
-.home-event-actions { display: flex; align-items: center; gap: 2.5rem; }
-
-.depth-btn {
-  padding: 1.2rem 4rem;
-  background: rgba(46, 125, 50, 0.02); 
-  color: #ffffff;
-  border: 3px solid #1b5e20; 
-  border-radius: 100px;
-  font-weight: 900;
-  text-transform: uppercase;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(27, 94, 32, 0.2); 
-  transition: all 0.4s ease;
+.compact-event-card.frosted-white {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px);
+    border-radius: 30px;
+    overflow: hidden;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
 }
 
-.depth-btn:hover {
-  background: #2e7d32; 
-  color: #d32f2f; 
-  border-color: #2e7d32;
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(46, 125, 50, 0.6); 
+.card-media {
+    flex: 0 0 42%;
+    position: relative;
+    height: 400px; 
+    cursor: pointer;
 }
 
-.ticket-price {
-  font-size: 1.4rem; font-weight: 900; padding: 0.8rem 2rem; border: 3px solid #ff9800;
-  border-radius: 18px; color: #ff9800; background: rgba(255, 152, 0, 0.1); display: flex; align-items: center;
+.card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.8s cubic-bezier(0.2, 1, 0.2, 1);
 }
 
-.home-events-cta {
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  width: 100%;
+.card-media:hover img { transform: scale(1.08); }
+
+.mini-date-badge {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    background: rgba(0, 255, 149, 0.85); 
+    color: #000;
+    padding: 10px 14px;
+    border-radius: 14px;
+    text-align: center;
+    font-weight: 900;
 }
 
-.home-events-cta .depth-btn {
-  padding: 1rem 3.5rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 20px rgba(46, 125, 50, 0.3);
+.mini-date-badge .d { display: block; font-size: 1.8rem; line-height: 0.9; }
+.mini-date-badge .m { font-size: 0.8rem; text-transform: uppercase; }
+
+.card-details {
+    flex: 1;
+    padding: 40px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+.event-title-small { font-size: 2.4rem; font-weight: 900; color: #fff; margin-bottom: 20px; line-height: 1.1; }
+
+.event-info-strip { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; }
+
+.info-tag {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.green-txt { color: #00ff95; }
+.red-txt { color: #ff4747; }
+
+/* =========================================
+   5. BUTTONS: REGISTER (Solid) & EXPLORE (Crystal)
+   ========================================= */
+.event-action-footer {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* REGISTER BUTTON (Solid Frosted) */
+.action-btn-dynamic {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(64, 237, 150, 0.8); 
+    color: #fff;
+    border: 2px solid rgba(0, 255, 149, 0.4);
+    border-radius: 14px;
+    padding: 14px 28px;
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.action-btn-dynamic:hover {
+    background: #00ff95; 
+    color: #db280a; 
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0, 255, 149, 0.4);
+}
+
+/* EXPLORE BUTTON (Pure Neutral Crystal Glass) */
+.view-all-btn {
+    margin-top: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 3.5rem;
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 50px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.03); 
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: crystalBreathe 4s ease-in-out infinite;
+}
+
+.view-all-btn:hover {
+    background: #d92525; 
+    color: #fbf2f0; 
+    border-color: #ffffff;
+    transform: translateY(-3px) scale(1); /* The Pop */
+    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
+    animation: none;
+}
+
+@keyframes crystalBreathe {
+    0%, 100% { border-color: rgba(255, 255, 255, 0.2); transform: scale(1); }
+    50% { border-color: rgba(255, 255, 255, 0.5); transform: scale(1.02); }
+}
+
+.price-glass {
+    padding: 14px 22px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 /* =========================================
-   5. RESPONSIVE UTILITIES (FIXED SNAKE)
+   6. RESPONSIVENESS
    ========================================= */
-@media (max-width: 1200px) {
-  .home-event-card.wide-featured.depth-shadow { flex-direction: column; width: 95%; }
-  .home-event-image { flex: 0 0 350px; border-radius: 41px 41px 0 0; }
-  .home-event-card-body { 
-    padding: 30px; 
-    border-left: none; 
-    border-top: 1px solid rgba(255, 255, 255, 0.1); 
-    border-radius: 0 0 41px 41px; 
-  }
+@media (max-width: 900px) {
+    .compact-event-card.frosted-white { flex-direction: column; max-width: 480px; margin: 0 auto; }
+    .card-media { height: 280px; flex: none; }
+    .card-details { padding: 30px; }
+    .event-title-small { font-size: 1.8rem; }
 }
 
-@media (max-width: 768px) {
-  .home-event-glow-wrapper { border-radius: 32px; }
-  .home-event-card.wide-featured.depth-shadow { border-radius: 29px; }
-  
-  /* SNAKE FIX: Force thin line by reducing height and sharpening gradient center */
-  .snake-light { 
-    width: 120px; 
-    height: 12px; /* Force thin line on mobile sides */
-    offset-path: rect(0% 100% 100% 0% round 32px); 
-  }
-  
-  /* Sharpen the neon point so it doesn't bleed into a thick blob */
-  .red-snake { background: radial-gradient(circle at 100% 50%, #ff1111 0%, #d32f2f 40%, transparent 100%); }
-  .green-snake { background: radial-gradient(circle at 100% 50%, #00ff44 0%, #2e7d32 40%, transparent 100%); }
-
-  .home-event-card-body h2 { font-size: 2.2rem; }
-  .home-event-actions { flex-direction: column; align-items: stretch; gap: 1.5rem; }
-  .depth-btn { width: 100%; text-align: center; }
-  .ticket-price { justify-content: center; }
-  .home-events-content-wrapper { gap: 1.5rem; }
-}
-
-@media (max-height: 850px) {
-  .home-events-content-wrapper { gap: 1.5rem; }
-  .home-event-card.wide-featured.depth-shadow { min-height: 400px; }
+@media (max-width: 600px) {
+    .home-events-section { padding: 40px 15px; }
+    .home-events-title { font-size: 1.4rem; }
+    .view-all-btn { padding: 1rem 2rem; font-size: 1rem; }
 }
