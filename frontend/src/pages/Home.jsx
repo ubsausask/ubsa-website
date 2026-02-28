@@ -23,7 +23,7 @@ export default function Home() {
         <HomeSponsors />
 
         {/* 4. Instagram Feed */}
-        <HomeInsta />
+        {/* <HomeInsta /> */}
 
         {/* 4. Contact Form */}
         <HomeContact />

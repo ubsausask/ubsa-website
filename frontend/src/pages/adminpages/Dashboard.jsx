@@ -23,6 +23,7 @@ import CommitteeReform from './CommitteeReform';
 import SystemSettings from './SystemSettings';   
 
 import '../../style/adminpages/Dashboard.css';
+import { API_BASE, api } from '../../api';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -38,10 +39,10 @@ export default function Dashboard() {
     const fetchDashboardStats = async () => {
       try {
         const [members, sponsors, events, messages] = await Promise.all([
-          fetch('http://localhost:5000/api/members').then(res => res.json()),
-          fetch('http://localhost:5000/api/sponsors').then(res => res.json()),
-          fetch('http://localhost:5000/api/events').then(res => res.json()),
-          fetch('http://localhost:5000/api/contact-messages').then(res => res.json())
+          fetch(api('/members')).then(res => res.json()),
+          fetch(api('/sponsors')).then(res => res.json()),
+          fetch(api('/events')).then(res => res.json()),
+          fetch(api('/contact-messages')).then(res => res.json())
         ]);
 
         const now = new Date();
@@ -59,7 +60,7 @@ export default function Dashboard() {
       }
     };
     
-    if (localStorage.getItem('adminToken') === 'true') {
+    if (sessionStorage.getItem('adminToken') === 'true') {
         fetchDashboardStats();
     } else {
         navigate('/admin/login', { replace: true });
@@ -67,7 +68,7 @@ export default function Dashboard() {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem('adminToken');
+    sessionStorage.removeItem('adminToken');
     navigate('/', { replace: true });
   };
 

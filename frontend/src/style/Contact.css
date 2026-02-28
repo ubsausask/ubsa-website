@@ -1,262 +1,222 @@
 /* src/style/Contact.css */
 
-/* --- 1. PAGE LAYOUT & IMMERSIVE FLOW --- */
+/* --- 1. PAGE LAYOUT & BACKGROUND --- */
 .contact-page {
-    position: relative;
-    min-height: 100vh;
-    padding: 140px 2rem 5rem;
-    color: #fdfaf5;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+  padding: 140px 2rem 5rem;
+  color: #fdfaf5;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
 }
 
-/* THE FIXED TIGER/CONTACT BACKGROUND LAYER */
 .contact-page::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    /* Pulls from the import in Contact.jsx */
-    background: var(--contact-bg) no-repeat center center;
-    background-size: cover;
-    background-attachment: fixed; /* Still image effect */
-    z-index: -2;
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--contact-bg) no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  z-index: -2;
 }
 
-/* THE EMERALD FLOW (GREEN TINT) LAYER */
 .contact-page::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    /* Smooth transition from deep green to clear to deep green */
-    background: linear-gradient(
-        to bottom, 
-        #001a1a 0%,               /* Deep Green Top */
-        rgba(0, 40, 30, 0.7) 15%,  /* Emerald Fade */
-        rgba(0, 0, 0, 0) 50%,      /* 100% CLEAR CENTER - Tiger/BG is crisp here */
-        rgba(0, 40, 30, 0.7) 85%,  /* Emerald Fade */
-        #001a1a 100%              /* Deep Green Bottom */
-    );
-    z-index: -1;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    #001a1a 0%,
+    rgba(0, 40, 30, 0.72) 15%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 40, 30, 0.72) 85%,
+    #001a1a 100%
+  );
+  z-index: -1;
 }
 
-/* --- 2. HERO SECTION --- */
+/* --- 2. HERO --- */
 .contact-hero {
-    text-align: center;
-    margin-bottom: 5rem;
-    z-index: 10;
+  text-align: center;
+  margin-bottom: 4rem;
+  z-index: 10;
 }
 
 .page-title {
-    font-size: clamp(2.5rem, 8vw, 4rem); /* Dynamic sizing */
-    font-weight: 900;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: -1px;
-    text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 900;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
 }
 
-.text-highlight { 
-    color: #ff1111; /* UBSA Red Accent */
-    text-shadow: 0 0 20px rgba(255, 17, 17, 0.6);
+.text-highlight {
+  color: #ff1111;
+  text-shadow: 0 0 20px rgba(255, 17, 17, 0.6);
 }
 
 .page-subtitle {
-    font-size: 1.1rem;
-    opacity: 0.8;
-    max-width: 550px;
-    margin: 0 auto;
-    color: #c8ffe6; /* Light Green Tinted Text */
-    letter-spacing: 1px;
+  font-size: 1.08rem;
+  opacity: 0.9;
+  max-width: 620px;
+  margin: 0 auto;
+  color: #c8ffe6;
+  letter-spacing: 0.5px;
+  line-height: 1.7;
 }
 
-/* --- 3. THE FLOATING 5% GLASS CONTAINER --- */
+/* --- 3. CONTAINER / GLASS CARD --- */
 .contact-container {
-    display: grid;
-    grid-template-columns: 1fr 1.6fr;
-    gap: 2.5rem;
-    max-width: 1100px;
-    width: 100%;
-    margin: 0 auto;
-    z-index: 10;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  z-index: 10;
+}
+
+.simple-contact-container {
+  display: flex;
+  justify-content: center;
 }
 
 .glass-panel {
-    /* High-end 5% Frosted Glass Effect */
-    background: rgba(255, 255, 255, 0.05); 
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 30px;
-    padding: 3.5rem;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5); /* Makes it float */
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 30px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
 }
 
-/* --- 4. LEFT COLUMN: INFO SECTION --- */
+.simple-contact-card {
+  width: min(100%, 760px);
+  padding: 3rem;
+  text-align: center;
+}
+
+/* --- 4. INFO SECTION --- */
 .info-title {
-    color: #00ff95; /* Emerald Title */
-    margin-bottom: 2.5rem;
-    font-size: 1.8rem;
-    font-weight: 900;
-    text-transform: uppercase;
+  color: #00ff95;
+  margin-bottom: 2.5rem;
+  font-size: 1.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
 }
 
 .info-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: .75rem;
+  margin-bottom: 2rem;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
 }
 
 .info-item .icon {
-    font-size: 1.5rem;
-    color: #ff1111; /* Red Icons */
-    margin-top: 5px;
+  font-size: 1.4rem;
+  color: #ff1111;
+  margin-top: 6px;
+  flex-shrink: 0;
 }
 
-.info-item h3 {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #00ff95;
-    margin-bottom: 0.2rem;
+.info-text h3 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #00ff95;
+  margin: 0 0 0.35rem;
 }
 
-.info-item p, .info-item a {
-    color: #fff;
-    font-size: 1.05rem;
-    font-weight: 300;
-    text-decoration: none !important;
-    transition: 0.3s;
+.info-text p,
+.info-text a {
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 300;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  line-height: 1.6;
 }
 
-.info-item a:hover {
-    color: #ff1111;
+.info-text a:hover {
+  color: #ff1111;
+}
+
+/* --- 5. OPTIONAL SOCIAL ICON ROW --- */
+.social-links-contact {
+  margin-top: 2.5rem;
 }
 
 .social-links-contact h3 {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    color: #00ff95;
-    margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: #00ff95;
+  margin-bottom: 1.25rem;
+  letter-spacing: 1px;
 }
 
 .social-icons {
-    display: flex;
-    gap: 1.5rem;
+  display: flex;
+  gap: 1.25rem;
 }
 
 .social-icons a {
-    color: #fff;
-    font-size: 1.8rem;
-    transition: all 0.3s ease;
+  color: #fff;
+  font-size: 1.8rem;
+  transition: all 0.3s ease;
 }
 
 .social-icons a:hover {
-    color: #ff1111;
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 10px #ff1111);
+  color: #ff1111;
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 10px #ff1111);
 }
 
-/* --- 5. RIGHT COLUMN: DYNAMIC FORM --- */
-.contact-form-card h2 {
-    margin-bottom: 2.5rem;
-    font-size: 1.8rem;
-    font-weight: 900;
-    text-transform: uppercase;
-}
-
-.form-group {
-    margin-bottom: 1.8rem;
-}
-
-.form-group label {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #00ff95; /* Emerald Labels */
-    margin-bottom: 0.8rem;
-    display: block;
-    font-weight: 700;
-}
-
-.form-group input, 
-.form-group select, 
-.form-group textarea {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.4); /* Matte Dark Background */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
-    padding: 15px;
-    border-radius: 12px;
-    font-family: inherit;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.form-group input:focus, 
-.form-group select:focus, 
-.form-group textarea:focus {
-    outline: none;
-    border-color: #ff1111; /* Red Glow on focus */
-    background: rgba(0, 0, 0, 0.6);
-    box-shadow: 0 0 15px rgba(255, 17, 17, 0.2);
-}
-
-/* Fix for Select dropdown menu appearance */
-.form-group select option {
-    background: #001a1a;
-    color: white;
-}
-
-/* --- 6. SUBMIT BUTTON --- */
-.btn-submit {
-    width: 100%;
-    margin-top: 1rem;
-    padding: 1.2rem;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    border-radius: 100px; /* Pill shape */
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.btn-submit:hover:not(:disabled) {
-    background: #ff1111;
-    border-color: #ff1111;
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(255, 17, 17, 0.4);
-}
-
-.btn-submit:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* --- 7. MOBILE RESPONSIVENESS --- */
+/* --- 6. MOBILE --- */
 @media (max-width: 968px) {
-    .contact-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .glass-panel {
-        padding: 2.5rem 1.5rem;
-        border-radius: 20px;
-    }
-    
-    .page-title {
-        font-size: 2.5rem;
-    }
+  .contact-page {
+    padding: 100px 1rem 3rem;
+  }
 
-    .contact-page {
-        padding-top: 100px;
-    }
+  .contact-hero {
+    margin-bottom: 2.5rem;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+  }
+
+  .glass-panel {
+    border-radius: 20px;
+  }
+
+  .simple-contact-card {
+    padding: 2rem 1.25rem;
+  }
+
+  .info-item {
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-item .icon {
+    font-size: 1.2rem;
+  }
+
+  .info-text p,
+  .info-text a {
+    font-size: 0.98rem;
+  }
 }

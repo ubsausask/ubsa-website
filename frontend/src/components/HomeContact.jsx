@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaMapMarkerAlt, FaEnvelopeOpenText, FaPaperPlane } from 'react-icons/fa';
 import '../style/HomeContact.css';
 import TigerBG from '../assets/ContactPageBG.png'; 
@@ -44,17 +45,21 @@ export default function HomeContact() {
           
           {/* Left Half: Details */}
           <div className="hcon-details-side">
-            <h2 className="hcon-title">Get in <span className="hcon-highlight">Touch</span></h2>
+            <Link to="/contact" className="hcon-title-link">
+              <h2 className="hcon-title">
+                Get in <span className="hcon-highlight">Touch</span>
+              </h2>
+            </Link>
             <p className="hcon-subtitle">Drop us a message and we'll get back to you shortly.</p>
             
             <div className="hcon-info-stack">
-              <div className="hcon-info-item">
+              {/* <div className="hcon-info-item">
                 <div className="hcon-icon-box"><FaMapMarkerAlt /></div>
                 <div className="hcon-info-text">
                    <strong>Location</strong>
                    <p>Place Riel Student Centre</p>
                 </div>
-              </div>
+              </div> */}
               <div className="hcon-info-item">
                 <div className="hcon-icon-box"><FaEnvelopeOpenText /></div>
                 <div className="hcon-info-text">
@@ -66,7 +71,7 @@ export default function HomeContact() {
           </div>
 
           {/* Right Half: Form Fields */}
-          <div className="hcon-form-side">
+          {/* <div className="hcon-form-side">
             <form onSubmit={handleSubmit} className="hcon-form">
               <div className="hcon-input-group">
                 <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
@@ -81,7 +86,7 @@ export default function HomeContact() {
                 {isSubmitting ? '...' : <>Send Message <FaPaperPlane style={{marginLeft: '8px'}}/></>}
               </button>
             </form>
-          </div>
+          </div> */}
 
         </div>
       </div>

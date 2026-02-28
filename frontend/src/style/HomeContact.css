@@ -74,8 +74,19 @@
   margin-bottom: 3rem;
 }
 
-.hcon-info-stack { display: flex; flex-direction: column; gap: 2rem; }
+.hcon-info-stack { display: flex; align-items: center; gap: 15; }
 .hcon-info-item { display: flex; align-items: center; gap: 15px; }
+
+.hcon-title-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
+
+.hcon-title-link:hover .hcon-title {
+  opacity: 0.9;
+  cursor: pointer;
+}
 
 .hcon-icon-box {
   width: 48px;

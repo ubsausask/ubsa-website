@@ -30,7 +30,7 @@ export default function Navbar() {
           <Link to="/about" className={`nav-link ${isActive('/about')}`}>About</Link>
           <Link to="/events" className={`nav-link ${isActive('/events')}`}>Events</Link>
           <Link to="/gallery" className={`nav-link ${isActive('/gallery')}`}>Gallery</Link>
-          <Link to="/sponsors" className={`nav-link ${isActive('/sponsors')}`}>Sponsors</Link>
+          <Link to="/sponsors" className={`nav-link ${isActive('/sponsors')}`}>Partners</Link>
           <Link to="/contact" className={`nav-link ${isActive('/contact')}`}>Contact</Link>
         </nav>
 

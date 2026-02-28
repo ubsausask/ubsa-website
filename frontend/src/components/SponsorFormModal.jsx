@@ -87,7 +87,7 @@ export default function SponsorFormModal({ onClose }) {
     data.append('contact_person', formData.contact_person);
 
     try {
-      const res = await fetch('http://localhost:5000/api/sponsors', {
+      const res = await fetch('/api/sponsors', {
         method: 'POST',
         // Important: Do NOT set Content-Type header when sending FormData
         body: data 

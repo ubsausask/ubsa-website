@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { FaSearch, FaEnvelope, FaTrash, FaUsers, FaChartPie } from 'react-icons/fa';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import '../../style/adminpages/Memberpage.css';
+import { api } from '../../api';
 
 // Professional Dashboard Color Palette
 const COLORS = ['#FF8C00', '#FF4D4D', '#2ECC71', '#3498DB', '#9C27B0', '#F39C12'];
@@ -18,7 +19,7 @@ export default function MembersPage() {
 
   const fetchMembers = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/members');
+      const res = await fetch(api('/members'));
       const data = await res.json();
       setMembers(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -31,7 +32,7 @@ export default function MembersPage() {
   const handleDelete = async (id) => {
     if (!window.confirm("Permanently delete this member from the database?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/members/${id}`, { method: 'DELETE' });
+      const res = await fetch(api(`/members/${id}`), { method: 'DELETE' });
       if (res.ok) fetchMembers();
     } catch (err) {
       alert("Delete failed. Please check server connection.");

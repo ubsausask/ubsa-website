@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaCloudUploadAlt, FaArrowLeft, FaHistory, FaSave } from 'react-icons/fa';
 import '../../style/adminpages/Dashboard.css';
 import '../../style/adminpages/SetupCommittee.css';
+import { api } from '../../api';
 
 export default function SetupCommittee() {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ export default function SetupCommittee() {
 
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:5000/api/executives/reset', {
+            const response = await fetch(api('/executives/reset'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ execs })

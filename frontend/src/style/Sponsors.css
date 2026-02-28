@@ -179,34 +179,62 @@
 
 .sppg-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 60px;
 }
 
 /* ============================================================
    --- 5. THE DETAILED PERMANENT GLASS CARDS ---
    ============================================================ */
-.sppg-detailed-card {
+/* .sppg-detailed-card {
   background: rgba(25, 25, 25, 0.6);
   backdrop-filter: blur(25px) saturate(150%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 40px;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 42% 58%;
-  min-height: 500px;
+  grid-template-columns: 35% 65%;
+  min-height: 80px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+} */
+.sppg-detailed-card {
+  background: rgba(25, 25, 25, 0.6);
+  backdrop-filter: blur(25px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 38% 62%;
+  height: 260px;   /* force shorter */
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
 }
-
 .sppg-card-media-pane {
   position: relative;
+  overflow: hidden;
   background: #000;
+  box-sizing: border-box;
+  padding: 0;
+  /* ensure media pane is limited to the left column and respects card rounding */
+  border-top-left-radius: 28px;
+  border-bottom-left-radius: 28px;
+  align-self: stretch;
 }
 
 .sppg-card-hero-img {
+  /* width: 100%;
+  height: 100%; */
+  position: relative;
   width: 100%;
-  height: 100%;
   object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Extra safeguard: make sure image never overflows its container */
+.sppg-card-media-pane img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
 }
 
 .sppg-card-tier-tag {
@@ -224,16 +252,16 @@
 }
 
 .sppg-card-details-pane {
-  padding: 60px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .sppg-card-title {
-  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-size: 1.4rem;
   font-weight: 900;
-  margin-bottom: 25px;
+  margin-bottom: 12px;
   color: #ffeac8;
 }
 
@@ -271,10 +299,10 @@
 .offer-val { font-size: 1.25rem; font-weight: 800; color: #fff; margin: 0; }
 
 .sppg-card-bio {
-  font-size: 1.1rem;
+  font-size: 0.92rem;
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.75);
-  margin-bottom: 30px;
+  margin-bottom: 12px;
 }
 
 .sppg-card-loc-footer {
@@ -285,6 +313,41 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
+
+.sponsor-email-box {
+  width: min(90vw, 420px);
+  padding: 32px;
+  border-radius: 24px;
+  background: rgba(20, 20, 20, 0.88);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  position: relative;
+  color: white;
+}
+
+.sponsor-email-box h2 {
+  margin-bottom: 12px;
+  color: #ffeac8;
+}
+
+.sponsor-email-box p {
+  margin-bottom: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.sponsor-email-link {
+  color: #e36f04;
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.sponsor-email-link:hover {
+  text-decoration: underline;
+}
 /* ============================================================
    --- 6. RESPONSIVENESS ---
    ============================================================ */

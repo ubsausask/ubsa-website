@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaCalendarAlt, FaHistory, FaMapMarkerAlt, FaClock, FaTimes, FaCamera } from "react-icons/fa";
 import "../style/Events.css";
+import { API_BASE, api } from '../api';
 
 // --- IMPORT YOUR NEW EVENT ASSETS ---
-import FirstMeeting from "../assets/Events/First Meeting.png";
-import IfterParty from "../assets/Events/Ifter.png";
-import MockWedding from "../assets/Events/Mock Weeding.jpg";
+import Boishakh from "../assets/Events/RongilaBoishakh.jpg";
+import Iftar from "../assets/Events/AnnualIftar.jpg";
+import MockWedding2026 from "../assets/Events/MockWedding2026.jpg";
+import FuchkaFest from "../assets/Events/FuchkaFest.jpg";
+import ShondharAdda from "../assets/Events/ShondharAdda.jpg";
+import WebsiteDesign from "../assets/Events/WebsiteDesign.jpg";
 
 // Shared Background Assets
 import EventBG1 from "../assets/BD_Cultural_Elements/Event_BG.png";
@@ -21,7 +25,7 @@ export default function Events() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/events")
+    fetch(api('/events'))
       .then((res) => res.json())
       .then((data) => {
         if (data && data.length > 0) {
@@ -53,7 +57,7 @@ export default function Events() {
   const getImageUrl = (event) => {
     if (event.isLocal) return event.image_url;
     if (!event.image_url) return "https://placehold.co/800x600?text=UBSA+Event";
-    return event.image_url.startsWith("http") ? event.image_url : `http://localhost:5000${event.image_url}`;
+    return event.image_url.startsWith("http") ? event.image_url : `${API_BASE}${event.image_url}`;
   };
 
   const formatDate = (dateStr) => {
@@ -84,7 +88,7 @@ export default function Events() {
             </div>
             <div className="evpg-modal-desc">{event.description}</div>
             <div className="evpg-modal-actions">
-              <Link to={`/events/${event.id}`} className="evpg-reg-btn">Register Now</Link>
+              <Link to={event.register_url} className="evpg-reg-btn">Register Now</Link>
               <span className="evpg-price-badge">{event.price ? `$${event.price}` : "FREE"}</span>
             </div>
           </div>
@@ -118,6 +122,7 @@ export default function Events() {
 
         <section className="evpg-section">
           <h2 className="evpg-section-header"><FaCalendarAlt /> Upcoming Events</h2>
+          
           <div className="evpg-grid">
             {upcomingEvents.map((event) => {
               const { month, day } = formatDate(event.date);
@@ -148,7 +153,7 @@ export default function Events() {
           <h2 className="evpg-section-header"><FaHistory /> Past Events</h2>
           <div className="evpg-grid evpg-grid-small">
             {pastEvents.map((event) => (
-              <div key={event.id} className="evpg-card evpg-dimmed" onClick={() => navigate(`/gallery`)}>
+              <div key={event.id} className="evpg-card evpg-dimmed" onClick={() => window.open(event.event_url || "#", "_blank")}>
                 <div className="evpg-card-img">
                   <img src={getImageUrl(event)} alt={event.title} />
                   <div className="evpg-card-overlay"><FaCamera /> View Gallery</div>
@@ -170,33 +175,68 @@ export default function Events() {
 // --- UPDATED MOCK DATA WITH YOUR PHOTOS ---
 const MOCK_EVENTS = [
   {
-    id: "m1",
-    title: "UBSA Mock Wedding 2026",
-    date: "2026-03-20",
+    id: "6",
+    title: "Annual Iftar 2026",
+    date: "2026-03-09",
     time: "6:00 PM - 11:00 PM",
-    location: "USask Ballroom",
-    description: "Experience the grandeur of a traditional Bengali wedding! Join us for a night of dance, music, and an authentic multi-course wedding feast.",
-    price: "20",
-    image_url: MockWedding,
-    isLocal: true
-  },
-  {
-    id: "m2",
-    title: "Community Ifter Party",
-    date: "2026-03-28",
-    time: "7:00 PM - 9:30 PM",
-    location: "Place Riel",
-    description: "Join your fellow students for a community Ifter during the holy month of Ramadan. All are welcome to share in this meal and gathering.",
+    location: "Health Sciences D-Wing Atrium",
+    description: "Annual Iftar event with UBSA",
     price: "0",
-    image_url: IfterParty,
+    register_url: "https://www.zeffy.com/en-CA/ticketing/ubsa-iftar--2026",
+    event_url: "https://www.instagram.com/p/DVPZ05ODWlb/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    image_url: Iftar,
+    isLocal: true
+  },{
+    id: "5",
+    title: "UBSA Fusion Wedding 2026",
+    date: "2026-02-06",
+    time: "6:00 PM - 11:00 PM",
+    location: "Sutherland Hall",
+    description: "Fusion Mock Wedding with UBSA and PSA at USask",
+    price: "30",
+    event_url: "https://www.instagram.com/reel/DU7i8EbE5FQ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    image_url: MockWedding2026,
+    isLocal: true
+  },{
+    id: "4",
+    title: "Website Design Contest",
+    date: "2026-01-09",
+    time: "6:00 PM - 10:30 PM",
+    location: "Online",
+    description: "Website design contest for USask students",
+    price: "0",
+    event_url: "https://www.instagram.com/p/DSOKt0gjyUZ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    image_url: WebsiteDesign,
     isLocal: true
   },
   {
-    id: "p1",
-    title: "Annual General Meeting",
-    date: "2025-09-15",
-    description: "Our first meeting of the academic year where we discuss the roadmap for UBSA.",
-    image_url: FirstMeeting,
+    id: "3",
+    title: "Shondhar Adda 2026",
+    date: "2025-10-21",
+    time: "6:00 PM - 10:30 PM",
+    location: "Education Lounge",
+    description: "An evening of Bangladeshi adda.",
+    price: "3",
+    event_url: "https://www.instagram.com/reel/DRoJ98VkeFa/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    image_url: ShondharAdda,
+    isLocal: true
+  },
+  {
+    id: "2",
+    title: "Fuchka Fest 2025",
+    date: "2025-09-12",
+    description: "A fun-filled evening celebrating the beloved Bengali street food, Fuchka!",
+    event_url: "https://www.instagram.com/reel/DPks5YgjLUv/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    image_url: FuchkaFest,
+    isLocal: true
+  },
+  {
+    id: "1",
+    title: "Rongila Boishakh 2025",
+    date: "2025-04-29",
+    description: "Celebration of the Bengali New Year with traditional music, dance, and food.",
+    event_url: "https://www.instagram.com/p/DOFUZBjkfH5/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    image_url: Boishakh,
     isLocal: true
   }
 ];

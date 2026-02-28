@@ -4,22 +4,25 @@ import { FaArrowRight } from 'react-icons/fa';
 import '../style/HomeGallery.css';
 
 // Importing local team assets
-import AbirKhan from '../assets/Team/Abir_Khan.png';
-import IshratMaya from '../assets/Team/Ishrat_Maya.png';
-import MohammedKhan from '../assets/Team/Mohammed_Khan.png';
-import NusratAhona from '../assets/Team/Nusrat_Ahona.png';
-import RabAhmed from '../assets/Team/Rab_Ahmed_Rwna.png';
-import RodoshyPrithibi from '../assets/Team/Rodoshy_Prithibi.png';
-import RubanaSayeda from '../assets/Team/Rubana_Sayeda.png';
+import MockWedding from '../assets/Gallery/MockWeeding.jpg';
+import Meeting1 from '../assets/Gallery/IMG-20250923-WA0016.jpg';
+import Meeting2 from '../assets/Gallery/IMG-20250923-WA0018.jpg';
+import Meeting3 from '../assets/Gallery/IMG-20250923-WA0019.jpg';
+import PH1 from '../assets/Gallery/Image1.jpg';
+import PH2 from '../assets/Gallery/Image2.jpg';
+import PH3 from '../assets/Gallery/Image3.jpg';
+import PH4 from '../assets/Gallery/Image4.jpg';
+
 
 const LOCAL_PLACEHOLDERS = [
-  { id: 'l1', src: AbirKhan, isLocal: true },
-  { id: 'l2', src: IshratMaya, isLocal: true },
-  { id: 'l3', src: MohammedKhan, isLocal: true },
-  { id: 'l4', src: NusratAhona, isLocal: true },
-  { id: 'l5', src: RabAhmed, isLocal: true },
-  { id: 'l6', src: RodoshyPrithibi, isLocal: true },
-  { id: 'l7', src: RubanaSayeda, isLocal: true },
+  { id: 'l1', src: MockWedding, isLocal: true },
+  { id: 'l2', src: Meeting1, isLocal: true },
+  { id: 'l3', src: Meeting2, isLocal: true },
+  { id: 'l4', src: Meeting3, isLocal: true },
+  { id: 'l5', src: PH1, isLocal: true },
+  { id: 'l6', src: PH2, isLocal: true },
+  { id: 'l7', src: PH3, isLocal: true },
+  { id: 'l8', src: PH4, isLocal: true },
 ];
 
 export default function HomeGallery() {
@@ -29,7 +32,7 @@ export default function HomeGallery() {
 
   // 1. Fetch Data with fallback to LOCAL_PLACEHOLDERS
   useEffect(() => {
-    fetch('http://localhost:5000/api/gallery/photos')
+    fetch('/api/gallery/photos')
       .then(res => res.json())
       .then(data => {
         // Only override if we get a valid array from DB
@@ -63,7 +66,7 @@ export default function HomeGallery() {
 
   const getFullImgPath = (img) => {
     if (img.isLocal) return img.src;
-    return img.src.startsWith('http') ? img.src : `http://localhost:5000${img.src}`;
+    return img.src.startsWith('http') ? img.src : `${img.src}`;
   };
 
   return (
@@ -77,7 +80,7 @@ export default function HomeGallery() {
         <div className="gallery-stage-viewport">
           <div className={`gallery-flex-container ${isTransitioning ? 'stage-transition' : ''}`}>
             {/* Slice 7 to have an 'exit' node and an 'entry' node ready */}
-            {images.slice(0, 7).map((img, index) => {
+            {images.slice(0, 5).map((img, index) => {
               let columnClass = "gallery-glass-col";
 
               // Logic for 5 visible photos (indices 1 to 5)

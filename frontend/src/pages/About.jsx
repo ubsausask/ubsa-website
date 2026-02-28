@@ -58,7 +58,7 @@ export default function About() {
       <div className="about-content">
         
         {/* SECTION 1: STATS HERO */}
-        <section className="about-stats-hero">
+        {/* <section className="about-stats-hero">
           <div className="stats-container-row glass-screen">
             <div className="stat-item">
               <FaUsers className="stat-icon" />
@@ -76,15 +76,15 @@ export default function About() {
               </div>
             </div>
             <div className="stat-divider"></div>
-            <div className="stat-item">
+            {/* <div className="stat-item">
               <FaCalendarAlt className="stat-icon" />
               <div className="stat-text-group">
                 <h2>2024</h2>
                 <p>Founded</p>
               </div>
-            </div>
-          </div>
-        </section>
+            </div> */}
+          {/* </div>
+        </section> */} 
 
         {/* SECTION 2: MOTIVE */}
         <section className="mission-section">
@@ -95,9 +95,9 @@ export default function About() {
           >
              <h2 className="text-highlight"><FaQuoteLeft /> Our Motive</h2>
              <p>
-               UBSA aims to support the unique needs of Bangladeshi undergraduate students at USask[cite: 11]. 
+               UBSA aims to support the unique needs of Bangladeshi undergraduate students at USask. 
                We bridge the gap between tradition and campus life, helping students navigate university 
-               services and cultural representation[cite: 16, 18].
+               services and cultural representation.
              </p>
              {/* Corrected Navigation Route */}
              <button 
@@ -166,7 +166,7 @@ export default function About() {
         </section>
 
         {/* SECTION 4: LEGACY */}
-        <section className="legacy-section">
+        {/* <section className="legacy-section">
           <div className="glass-screen legacy-card-small">
             <FaHistory className="legacy-icon-small" />
             <h2>Our Legacy</h2>
@@ -174,18 +174,18 @@ export default function About() {
               Past Committees <FaArrowRight />
             </button>
           </div>
-        </section>
+        </section> */}
       </div>
     </div>
   );
 }
 
 const TEAM_DATA = [
-  { name: "Rubana Sayeda", role: "President", dept: "Economics", punchline: "Leading with vision, uniting with passion.", bio: "Oversees all positions and prepares the annual report[cite: 67].", image: PresidentImg },
-  { name: "Nusrat Ahona", role: "Vice President", dept: "Computer Science", punchline: "Debugging the blueprint for club success.", bio: "Manages administrative tasks and internal coordination[cite: 71].", image: VPImg },
-  { name: "Mohammed Khan", role: "Finance Director", dept: "Business", punchline: "Making every contribution count.", bio: "Manages funds and presents financial statements[cite: 73, 139].", image: FinanceImg },
-  { name: "Rodoshy Prithibi", role: "Event Director", dept: "Psychology", punchline: "Turning cultural ideas into reality.", bio: "Plans and organizes cultural and social activities[cite: 77].", image: EventDirImg },
-  { name: "Ishrat Maya", role: "Event Coordinator", dept: "Engineering", punchline: "Coordinating the art of perfect events.", bio: "Recruits volunteers and manages logistics[cite: 80].", image: EventCoordImg },
-  { name: "Rab Ahmed Rwna", role: "Outreach Director", dept: "Political Science", punchline: "Building bridges beyond the campus.", bio: "Coordinates volunteer opportunities and partnerships[cite: 84].", image: OutreachImg },
-  { name: "Abir Khan", role: "Social Director", dept: "Arts & Science", punchline: "Creating social vibes that stick.", bio: "Manages social media presence and promotes activities[cite: 75].", image: SocialImg }
+  { name: "Rubana Syeda", role: "President", dept: "Computer Science", punchline: "Debugging the blueprint for club success.", bio: "Oversees all positions and prepares the annual report.", image: PresidentImg },
+  { name: "Nusrat Ahona", role: "Vice President", dept: "Economics", punchline: "Leading with vision, uniting with passion.", bio: "Manages administrative tasks and internal coordination.", image: VPImg },
+  { name: "Mohammed Khan", role: "Finance Director", dept: "Env. Geoscience", punchline: "Making every contribution count.", bio: "Manages funds and presents financial statements.", image: FinanceImg },
+  { name: "Rodoshy Prithibi", role: "Event Director", dept: "Psychology", punchline: "Turning cultural ideas into reality.", bio: "Plans and organizes cultural and social activities.", image: EventDirImg },
+  { name: "Ishrat Maya", role: "Event Coordinator", dept: "Biomedical Sciences", punchline: "Coordinating the art of perfect events.", bio: "Recruits volunteers and manages logistics.", image: EventCoordImg },
+  { name: "Rab Ahmed Rawna", role: "Outreach Director", dept: "Economics", punchline: "Building bridges beyond the campus.", bio: "Coordinates outside relations and partnerships.", image: OutreachImg },
+  { name: "Abir Khan", role: "Social Director", dept: "Biomedical Sciences", punchline: "Creating social vibes that stick.", bio: "Manages social media presence and promotes activities.", image: SocialImg }
 ];

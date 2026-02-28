@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaClock, FaMapMarkerAlt, FaTicketAlt, FaCalendarAlt, FaArrowRight } from "react-icons/fa";
 import "../style/HomeEvents.css";
+import { api, API_BASE } from "../api";
 
 // Asset Imports
 import TigerBG from "../assets/Event_page.jpg"; 
 import EventIcon from "../assets/BD_Cultural_Elements/Event_icon.png";
-import MockWeddingImg from "../assets/Gallery/MockWeeding.jpg"; 
+import NextEventImg from "../assets/Events/AnnualIftar.jpg"; 
 
 const HomeEventTitle = () => (
   <div className="home-events-title-container">
@@ -27,7 +28,7 @@ export default function HomeEvents() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/events")
+    fetch(api('/events'))
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch events");
         return res.json();
@@ -55,8 +56,8 @@ export default function HomeEvents() {
   }, []);
 
   const imgPath = (event) => {
-    if (event.isDemo) return MockWeddingImg;
-    return event.image_url ? `http://localhost:5000${event.image_url}` : "https://placehold.co/800x600";
+    if (event.isDemo) return NextEventImg;
+    return event.image_url ? `${API_BASE.replace('/api', '')}${event.image_url}` : "https://placehold.co/800x600";
   };
 
   const formatDate = (dateStr) => {
@@ -89,7 +90,7 @@ export default function HomeEvents() {
             <div className="compact-event-card frosted-white">
               <div 
                 className="card-media" 
-                onClick={() => navigate(`/events?open=${latestEvent.id}`)}
+                onClick={() => window.open("https://www.instagram.com/p/DVPZ05ODWlb/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==", "_blank")}
               >
                 <img src={imgPath(latestEvent)} alt={latestEvent.title} />
                 <div className="mini-date-badge">
@@ -119,7 +120,7 @@ export default function HomeEvents() {
                 <div className="event-action-footer">
                   <button 
                     className="action-btn-dynamic"
-                    onClick={() => navigate(`/events?open=${latestEvent.id}`)}
+                    onClick={() => window.open("https://www.zeffy.com/en-CA/ticketing/ubsa-iftar--2026", "_blank")}
                   >
                     Register
                   </button>
@@ -146,10 +147,10 @@ export default function HomeEvents() {
 const DEMO_EVENT = {
   id: "demo-1",
   isDemo: true,
-  title: "UBSA Mock Wedding 2026",
-  date: "2026-02-14",
-  time: "6:00 PM - 11:00 PM",
-  location: "Uni of Saskatchewan",
-  price: "25",
+  title: "UBSA Annual Iftar 2026",
+  date: "2026-03-10",
+  time: "6:00 PM - 9:00 PM",
+  location: "Health Sciences D-Wing Atrium",
+  price: "FREE",
   description: "Experience the vibrant colors and traditions of a Bengali wedding!"
 };

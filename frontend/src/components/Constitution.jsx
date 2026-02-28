@@ -60,10 +60,8 @@ export default function Constitution() {
                   <li>• <strong>Cultural Awareness:</strong> Promote Bangladeshi culture through events to foster pride [Article I, Section 2, Obj 3].</li>
                   <li>• <strong>Access to Financial Aid:</strong> Assist students in accessing aid and university services [Article I, Section 2, Obj 4].</li>
                   <li>• <strong>Onboarding Support:</strong> Facilitate the process for new students to navigate university life [Article I, Section 2, Obj 5].</li>
+                  <li>• <strong>Non-Discrimination:</strong> This association and its members shall not promote any discrimination based on race, color, creed, religion, sexual orientation, gender, age, or disability [Article I, Section 3].</li>
                 </ul>
-                <p className="important-info-red">
-                  Non-Discrimination Policy: This association and its members shall not promote any discrimination based on race, color, creed, religion, sexual orientation, gender, age, or disability [Article I, Section 3].
-                </p>
               </div>
             </div>
           </div>
@@ -77,26 +75,30 @@ export default function Constitution() {
                 <span className="mini-role">Article II, Section 1 & 2</span>
                 <h3><FaUsers /> Membership</h3>
                 <ul className="bio-text list-no-bullets">
-                  <li><strong>General Members:</strong> All undergraduate students meeting eligibility [Article II, Section 2].</li>
-                  <li><strong>Executive Members:</strong> Subset elected to lead and manage the organization [Article II, Section 2].</li>
-                  <li><strong>Alumni Members:</strong> Graduates wishing to maintain ties [Article XI, Section 2].</li>
+                  <li>• <strong>General Members:</strong> All undergraduate students meeting eligibility [Article II, Section 2].</li>
+                  <li>• <strong>Executive Members:</strong> Subset elected to lead and manage the organization [Article II, Section 2].</li>
+                  <li>• <strong>Alumni Members:</strong> Graduates wishing to maintain ties [Article XI, Section 2].</li>
                 </ul>
               </div>
             </div>
             <div className="glass-screen team-card frosted-green-card">
               <div className="centered-content">
                 <span className="mini-role">Article II, Section 5</span>
-                <h3><FaBalanceScale /> Termination</h3>
-                <p className="bio-text">Membership may be terminated for acting against UBSA interests or failing responsibilities [Article II, Section 5].</p>
-                <p className="important-info-red">Harassment complaints lead to investigation and a potential 1-year ban [Article II, Section 5].</p>
+                <h3><FaUsers/> Termination</h3>
+                <ul className="bio-text list-no-bullets">
+                  <li>• Membership may be terminated for acting against UBSA interests or failing responsibilities [Article II, Section 5].</li>
+                  <li>• Harassment complaints lead to investigation and a potential 1-year ban [Article II, Section 5].</li>
+                </ul>
               </div>
             </div>
             <div className="glass-screen team-card frosted-green-card">
               <div className="centered-content">
                 <span className="mini-role">Article V, Section 2</span>
                 <h3><FaComments /> Meetings</h3>
-                <p className="bio-text">The Executive Team shall meet once a week excluding final exam seasons in December and April [Article V, Section 2].</p>
-                <p className="important-info-red">A quorum of at least 75% of Executive Team members is required for official business [Article V, Section 2].</p>
+                <ul className="bio-text list-no-bullets">
+                  <li>• The Executive Team shall meet once a week excluding final exam seasons in December and April [Article V, Section 2].</li>
+                  <li>• A quorum of at least 75% of Executive Team members is required for official business [Article V, Section 2].</li>
+                </ul>
               </div>
             </div>
           </div>
@@ -149,8 +151,10 @@ export default function Constitution() {
             <div className="centered-content">
               <span className="mini-role">Article VI, Section 1 & 2</span>
               <h3><FaHandHoldingUsd /> Accountability</h3>
-              <p className="bio-text">Financial transactions require joint signatures from the President and Director of Finance [Article VI, Section 1].</p>
-              <p className="important-info-red">Annual financial reports are presented to members before transitions [Article VI, Section 2].</p>
+              <ul className="bio-text list-no-bullets">
+                <li>• Financial transactions require joint signatures from the President and Director of Finance [Article VI, Section 1].</li>
+                <li>• Annual financial reports are presented to members before transitions [Article VI, Section 2].</li>
+              </ul>
             </div>
           </motion.div>
 
@@ -158,8 +162,10 @@ export default function Constitution() {
             <div className="centered-content">
               <span className="mini-role">Article XI, Section 5</span>
               <h3><FaGraduationCap /> Alumni Policy</h3>
-              <p className="bio-text">Alumni share experiences and provide mentorship for current undergraduate members [Article XI, Section 3].</p>
-              <p className="important-info-red">Alumni must pay 2-3 times the regular ticket price unless invited by the ET [Article XI, Section 5].</p>
+              <ul className="bio-text list-no-bullets">
+                <li>• Alumni share experiences and provide mentorship for current undergraduate members [Article XI, Section 3].</li>
+                <li>• Alumni must pay 2-3 times the regular ticket price unless invited by the ET [Article XI, Section 5].</li>
+              </ul>
             </div>
           </motion.div>
         </div>

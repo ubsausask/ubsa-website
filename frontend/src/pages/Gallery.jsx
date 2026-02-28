@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import '../style/Gallery.css';
+import { API_BASE, api } from '../api';
 import galleryBg from '../assets/HomeGalleryBG.jpg';
 import GalleryVideo from '../components/gallery/GalleryVideo';
 
@@ -9,8 +10,8 @@ import MockWedding from '../assets/Gallery/MockWeeding.jpg';
 import Meeting1 from '../assets/Gallery/IMG-20250923-WA0016.jpg';
 import Meeting2 from '../assets/Gallery/IMG-20250923-WA0018.jpg';
 import Meeting3 from '../assets/Gallery/IMG-20250923-WA0019.jpg';
-import PH1 from '../assets/Gallery/PlaceHolder (1).jpg';
-import PH2 from '../assets/Gallery/PlaceHolder (2).jpg';
+import PH1 from '../assets/Gallery/Image1.jpg';
+import PH2 from '../assets/Gallery/Image2.jpg';
 
 const MOCK_GALLERY = [
   { id: 'm1', src: MockWedding, caption: 'Mock Wedding 2025', category: 'Events', isLocal: true },
@@ -18,7 +19,7 @@ const MOCK_GALLERY = [
   { id: 'm3', src: Meeting2, caption: 'UBSA Discussion', category: 'Community', isLocal: true },
   { id: 'm4', src: Meeting3, caption: 'Planning Session', category: 'Events', isLocal: true },
   { id: 'm5', src: PH1, caption: 'Bengali Festival', category: 'Festivals', isLocal: true },
-  { id: 'm6', src: PH2, caption: 'Cricket Tournament', category: 'Sports', isLocal: true },
+  // { id: 'm6', src: PH2, caption: 'Cricket Tournament', category: 'Sports', isLocal: true },
 ];
 
 export default function Gallery() {
@@ -29,10 +30,10 @@ export default function Gallery() {
   const [showGrid, setShowGrid] = useState(false);
   
   const gridRef = useRef(null);
-  const categories = ['All', 'Festivals', 'Community', 'Sports', 'Events'];
+  const categories = ['All', 'Festivals', 'Community', 'Events'];
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/gallery/photos')
+    fetch(api('/gallery/photos'))
       .then(res => res.json())
       .then(data => {
         const finalData = (data && data.length > 0) ? data : MOCK_GALLERY;
@@ -54,7 +55,7 @@ export default function Gallery() {
 
   const getFullImgPath = (img) => {
     if (img.isLocal) return img.src;
-    return img.src.startsWith('http') ? img.src : `http://localhost:5000${img.src}`;
+    return img.src.startsWith('http') ? img.src : `${API_BASE}${img.src}`;
   };
 
   const moveNext = () => {
@@ -162,7 +163,7 @@ export default function Gallery() {
 
       <hr className="section-divider" />
       
-      <GalleryVideo />
+      {/* <GalleryVideo /> */}
 
       {showGrid && (
         <div className="gallery-grid-section" ref={gridRef}>

@@ -12,7 +12,7 @@ export default function Footer() {
         <div className="footer-left">
           <h2 className="footer-logo">UBSA</h2>
           <p className="footer-university">University of Saskatchewan</p>
-          <p className="footer-association">Bangladeshi Students' Association</p>
+          <p className="footer-association">Undergraduate Bangladeshi Students Association (UBSA)</p>
         </div>
 
         {/* Right Side: Links & Contact */}
@@ -24,15 +24,15 @@ export default function Footer() {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/events">Events</Link></li>
               <li><Link to="/about">About Us</Link></li>
-              {/* Added discrete admin link here as well */}
-              <li><Link to="/admin/login" className="admin-discrete-link">Admin Portal</Link></li>
+              {/* Added discrete admin link here as well
+              <li><Link to="/admin/login" className="admin-discrete-link">Admin Portal</Link></li> */}
             </ul>
           </div>
 
           <div className="footer-contact">
             <h3>Connect</h3>
             <p>Email: <a href="mailto:ubsa.usask@gmail.com">ubsa.usask@gmail.com</a></p>
-            <p className="address">Place Riel Student Centre<br/>Saskatoon, SK, Canada</p>
+            <p className="address">105 Administration Pl<br/>Saskatoon, SK, Canada</p>
             
             <div className="social-icons">
               <a href="https://www.facebook.com/profile.php?id=61569283955219" target="_blank" rel="noopener noreferrer" className="icon-link fb" aria-label="Facebook">
@@ -41,9 +41,9 @@ export default function Footer() {
               <a href="https://www.instagram.com/ubsa.usask/" target="_blank" rel="noopener noreferrer" className="icon-link insta" aria-label="Instagram">
                 <FaInstagram />
               </a>
-              <a href="https://chat.whatsapp.com/your-invite-link" target="_blank" rel="noopener noreferrer" className="icon-link wp" aria-label="WhatsApp">
+              {/* <a href="https://chat.whatsapp.com/your-invite-link" target="_blank" rel="noopener noreferrer" className="icon-link wp" aria-label="WhatsApp">
                 <FaWhatsapp />
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
@@ -56,11 +56,11 @@ export default function Footer() {
         </div>
         
         {/* --- ADMIN LOGIN BUTTON --- */}
-        <div className="footer-bottom-right">
+        {/* <div className="footer-bottom-right">
           <Link to="/admin/login" className="admin-login-btn">
             <FaUserShield /> Admin Login
           </Link>
-        </div>
+        </div> */}
       </div>
     </footer>
   );
