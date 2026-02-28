@@ -4,7 +4,6 @@ import HomeGallery from '../components/HomeGallery';
 import HomeSponsors from '../components/HomeSponsors';
 import HomeContact from '../components/HomeContact';
 import HomeEvents from '../components/HomeEvernts';
-import HomeInsta from '../pages/Instagram/HomeInsta';
 
 export default function Home() {
   return (
@@ -21,9 +20,6 @@ export default function Home() {
 
         {/* 3. Sponsors */}
         <HomeSponsors />
-
-        {/* 4. Instagram Feed */}
-        {/* <HomeInsta /> */}
 
         {/* 4. Contact Form */}
         <HomeContact />

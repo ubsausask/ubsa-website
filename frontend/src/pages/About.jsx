@@ -23,27 +23,9 @@ export default function About() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const [memRes, sponRes] = await Promise.all([
-          fetch('http://localhost:5000/api/members'),
-          fetch('http://localhost:5000/api/sponsors')
-        ]);
-        const memData = await memRes.json();
-        const sponData = await sponRes.json();
-
-        setStats({
-          members: Array.isArray(memData) ? memData.length : 0,
-          sponsors: Array.isArray(sponData) ? sponData.length : 0
-        });
-      } catch (err) {
-        console.error("Error fetching DB stats:", err);
-        setStats({ members: 500, sponsors: 15 });
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchStats();
+    // Static site: use deterministic demo stats
+    setStats({ members: 500, sponsors: 15 });
+    setLoading(false);
   }, []);
 
   const toggleExpand = (index) => {

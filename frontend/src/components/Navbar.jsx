@@ -4,6 +4,8 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import logo from '../assets/UBSA_Logo.png'; 
 import '../style/Navbar.css';
 
+// Should be static: no backend API calls
+
 export default function Navbar() {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

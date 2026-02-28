@@ -53,25 +53,37 @@ export default function Join() {
 
         {/* RIGHT: SIMPLE CTA */}
         <div className="form-column">
-          <div className="glass-panel join-form-card simple-join-card">
-            <div className="form-header">
-              <h2>Membership Registration</h2>
+          <div className="form-column">
+            <div className="glass-panel join-form-card simple-join-card">
+              <div className="form-header">
+                <h2>Join UBSA!</h2>
+              </div>
+
+              <p className="simple-join-text">Become a part of the UBSA community today!</p>
+
+              <p className="fee-notice">⚠️ Membership fee: Free!</p>
+
+              <div className="join-btn-group">
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSfOIeUOT0SkWJ4nsJnP-edrEMdyxlntYxZYwT9oJ053u9_OEw/viewform"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-join-submit join-google-btn"
+                >
+                  Fill Out Membership Form <FaExternalLinkAlt />
+                </a>
+
+                <p className="simple-join-text">Or get involved with our team:</p>
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSd6vv5UdB6O20dAJbe2OX1v9wRyBVjLjfDWHDYt-puqzrge1A/viewform"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-join-submit join-google-btn volunteer-btn"
+                >
+                  Volunteer With Us <FaExternalLinkAlt />
+                </a>
+              </div>
             </div>
-
-            <p className="simple-join-text">
-              To become a UBSA member, please complete our registration form.
-            </p>
-
-            <p className="fee-notice">⚠️ Membership fee: Free!</p>
-
-            <a
-              href={"https://docs.google.com/forms/d/e/1FAIpQLSfOIeUOT0SkWJ4nsJnP-edrEMdyxlntYxZYwT9oJ053u9_OEw/viewform"}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-join-submit join-google-btn"
-            >
-              Fill Out Google Form <FaExternalLinkAlt />
-            </a>
           </div>
         </div>
       </div>

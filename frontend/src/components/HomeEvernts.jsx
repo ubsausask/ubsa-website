@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaClock, FaMapMarkerAlt, FaTicketAlt, FaCalendarAlt, FaArrowRight } from "react-icons/fa";
 import "../style/HomeEvents.css";
-import { api, API_BASE } from "../api";
+// Static frontend: no backend API calls
 
 // Asset Imports
 import TigerBG from "../assets/Event_page.jpg"; 
@@ -28,36 +28,14 @@ export default function HomeEvents() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(api('/events'))
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch events");
-        return res.json();
-      })
-      .then((data) => {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        const sortedUpcoming = data
-          .filter((e) => e.date && new Date(e.date) >= today)
-          .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-        if (sortedUpcoming.length > 0) {
-          setLatestEvent(sortedUpcoming[0]);
-        } else {
-          setLatestEvent(DEMO_EVENT);
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching events:", err);
-        setLatestEvent(DEMO_EVENT);
-        setLoading(false);
-      });
+    // Static: use local demo event
+    setLatestEvent(DEMO_EVENT);
+    setLoading(false);
   }, []);
 
   const imgPath = (event) => {
     if (event.isDemo) return NextEventImg;
-    return event.image_url ? `${API_BASE.replace('/api', '')}${event.image_url}` : "https://placehold.co/800x600";
+    return event.image_url ? event.image_url : "https://placehold.co/800x600";
   };
 
   const formatDate = (dateStr) => {
@@ -144,6 +122,7 @@ export default function HomeEvents() {
   );
 }
 
+// Add upcoming event here as well as in the Events.jsx page. This is just for demo purposes since we don't have a backend API in the static build.
 const DEMO_EVENT = {
   id: "demo-1",
   isDemo: true,

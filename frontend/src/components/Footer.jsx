@@ -24,8 +24,6 @@ export default function Footer() {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/events">Events</Link></li>
               <li><Link to="/about">About Us</Link></li>
-              {/* Added discrete admin link here as well
-              <li><Link to="/admin/login" className="admin-discrete-link">Admin Portal</Link></li> */}
             </ul>
           </div>
 
@@ -41,9 +39,6 @@ export default function Footer() {
               <a href="https://www.instagram.com/ubsa.usask/" target="_blank" rel="noopener noreferrer" className="icon-link insta" aria-label="Instagram">
                 <FaInstagram />
               </a>
-              {/* <a href="https://chat.whatsapp.com/your-invite-link" target="_blank" rel="noopener noreferrer" className="icon-link wp" aria-label="WhatsApp">
-                <FaWhatsapp />
-              </a> */}
             </div>
           </div>
         </div>
@@ -54,13 +49,6 @@ export default function Footer() {
           <p>© 2025 UBSA. All rights reserved.</p>
           <p className="designer-credit">Designed by SHAHED</p>
         </div>
-        
-        {/* --- ADMIN LOGIN BUTTON --- */}
-        {/* <div className="footer-bottom-right">
-          <Link to="/admin/login" className="admin-login-btn">
-            <FaUserShield /> Admin Login
-          </Link>
-        </div> */}
       </div>
     </footer>
   );

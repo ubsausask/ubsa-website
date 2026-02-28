@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import '../style/Gallery.css';
-import { API_BASE, api } from '../api';
+// Static frontend: no backend API calls
 import galleryBg from '../assets/HomeGalleryBG.jpg';
-import GalleryVideo from '../components/gallery/GalleryVideo';
 
 // Local Placeholders imports
 import MockWedding from '../assets/Gallery/MockWeeding.jpg';
@@ -14,12 +13,12 @@ import PH1 from '../assets/Gallery/Image1.jpg';
 import PH2 from '../assets/Gallery/Image2.jpg';
 
 const MOCK_GALLERY = [
-  { id: 'm1', src: MockWedding, caption: 'Mock Wedding 2025', category: 'Events', isLocal: true },
-  { id: 'm2', src: Meeting1, caption: 'Community Meetup', category: 'Community', isLocal: true },
-  { id: 'm3', src: Meeting2, caption: 'UBSA Discussion', category: 'Community', isLocal: true },
-  { id: 'm4', src: Meeting3, caption: 'Planning Session', category: 'Events', isLocal: true },
-  { id: 'm5', src: PH1, caption: 'Bengali Festival', category: 'Festivals', isLocal: true },
-  // { id: 'm6', src: PH2, caption: 'Cricket Tournament', category: 'Sports', isLocal: true },
+  { id: 'm1', src: MockWedding, caption: 'Fusion Wedding 2025', category: 'Events', isLocal: true },
+  { id: 'm2', src: Meeting1, caption: 'Exec 2025-26', category: 'Community', isLocal: true },
+  { id: 'm3', src: Meeting2, caption: 'Girls Performance', category: 'Community', isLocal: true },
+  { id: 'm4', src: Meeting3, caption: 'Audience at FW', category: 'Events', isLocal: true },
+  { id: 'm5', src: PH1, caption: 'FW 2026', category: 'Festivals', isLocal: true },
+  { id: 'm6', src: PH2, caption: 'Iftar 2025', category: 'Community', isLocal: true },
 ];
 
 export default function Gallery() {
@@ -33,17 +32,9 @@ export default function Gallery() {
   const categories = ['All', 'Festivals', 'Community', 'Events'];
 
   useEffect(() => {
-    fetch(api('/gallery/photos'))
-      .then(res => res.json())
-      .then(data => {
-        const finalData = (data && data.length > 0) ? data : MOCK_GALLERY;
-        setImages(finalData);
-        setLoading(false);
-      })
-      .catch(() => {
-        setImages(MOCK_GALLERY);
-        setLoading(false);
-      });
+    // Static: use local mock gallery
+    setImages(MOCK_GALLERY);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -54,8 +45,7 @@ export default function Gallery() {
   }, [category, images]);
 
   const getFullImgPath = (img) => {
-    if (img.isLocal) return img.src;
-    return img.src.startsWith('http') ? img.src : `${API_BASE}${img.src}`;
+    return img.src;
   };
 
   const moveNext = () => {
@@ -163,7 +153,6 @@ export default function Gallery() {
 
       <hr className="section-divider" />
       
-      {/* <GalleryVideo /> */}
 
       {showGrid && (
         <div className="gallery-grid-section" ref={gridRef}>

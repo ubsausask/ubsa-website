@@ -5,8 +5,6 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop'; 
-import ProtectedAdminRoute from './components/ProtectedAdminRoute';
-
 // --- PUBLIC PAGES ---
 import Home from './pages/Home';
 import About from './pages/About';
@@ -16,20 +14,8 @@ import Sponsors from './pages/Sponsors';
 import Contact from './pages/Contact';
 import Join from './pages/Join';
 import Constitution from './components/Constitution';
-import GalleryVideo from './components/gallery/GalleryVideo';
-import HomeInsta from './pages/Instagram/HomeInsta';
 
-// --- ADMIN PAGES ---
-import Login from './pages/adminpages/Login';
-import Dashboard from './pages/adminpages/Dashboard';
-import MembersPage from './pages/adminpages/MembersPage';
-import Inbox from './pages/adminpages/Inbox';
-import ManageSponsors from './pages/adminpages/ManageSponsors';
-import AddEvent from './pages/adminpages/AddEvent';
-import ManageGallery from './pages/adminpages/ManageGallery';
-import ManageVideos from './pages/adminpages/ManageVideos'; 
-import CommitteeReform from './pages/adminpages/CommitteeReform';
-import SystemSettings from './pages/adminpages/SystemSettings';
+// Admin pages removed for static deployment
 
 function App() {
   const location = useLocation();
@@ -64,34 +50,6 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/join" element={<Join />} />
         <Route path="/constitution" element={<Constitution />} />
-        <Route path="/videos" element={<GalleryVideo />} />
-        <Route path="/instagram" element={<HomeInsta />} />
-        
-        {/* --- ADMIN AUTHENTICATION --- */}
-        <Route path="/admin/login" element={<Login />} />
-        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
-
-        {/* --- PROTECTED ADMIN DASHBOARD SHELL --- */}
-        <Route element={<ProtectedAdminRoute />}>
-          {/* IMPORTANT: The "/*" is required because Dashboard contains 
-              its own nested <Routes> component. Without it, sub-pages 
-              like /dashboard/videos will fail to render.
-          */}
-          <Route path="/admin/dashboard/*" element={<Dashboard newsStyle={true} />}>
-            {/* Default view when landing on dashboard */}
-            <Route index element={<Navigate to="members" replace />} />
-            
-            {/* Dashboard Sub-routes */}
-            <Route path="members" element={<MembersPage />} />
-            <Route path="inbox" element={<Inbox />} />
-            <Route path="sponsors" element={<ManageSponsors />} />
-            <Route path="add-event" element={<AddEvent />} />
-            <Route path="gallery" element={<ManageGallery />} />
-            <Route path="videos" element={<ManageVideos />} />
-            <Route path="committee" element={<CommitteeReform />} />
-            <Route path="settings" element={<SystemSettings />} />
-          </Route>
-        </Route>
 
         {/* --- 404 CATCH-ALL --- */}
         <Route path="*" element={

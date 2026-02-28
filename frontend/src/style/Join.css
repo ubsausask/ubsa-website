@@ -203,6 +203,25 @@
   text-decoration: none;
 }
 
+.join-btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.join-google-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.volunteer-btn {
+  background: rgba(255, 255, 255, 0.06);
+}
+
 /* --- ANIMATIONS --- */
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-10px); }

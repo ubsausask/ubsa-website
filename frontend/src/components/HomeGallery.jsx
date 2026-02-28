@@ -32,15 +32,8 @@ export default function HomeGallery() {
 
   // 1. Fetch Data with fallback to LOCAL_PLACEHOLDERS
   useEffect(() => {
-    fetch('/api/gallery/photos')
-      .then(res => res.json())
-      .then(data => {
-        // Only override if we get a valid array from DB
-        if (data && Array.isArray(data) && data.length >= 5) {
-          setImages(data.map(img => ({ ...img, isLocal: false })));
-        }
-      })
-      .catch(() => console.log("DB Offline: Showing Local Demo Pics"));
+    // Static site: keep using local placeholders only
+    setImages(LOCAL_PLACEHOLDERS);
   }, []);
 
   // 2. The Push-Logic Loop
@@ -65,8 +58,7 @@ export default function HomeGallery() {
   }, [images.length]);
 
   const getFullImgPath = (img) => {
-    if (img.isLocal) return img.src;
-    return img.src.startsWith('http') ? img.src : `${img.src}`;
+    return img.src;
   };
 
   return (

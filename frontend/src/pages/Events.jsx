@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaCalendarAlt, FaHistory, FaMapMarkerAlt, FaClock, FaTimes, FaCamera } from "react-icons/fa";
 import "../style/Events.css";
-import { API_BASE, api } from '../api';
+// Static frontend: no backend API calls
 
 // --- IMPORT YOUR NEW EVENT ASSETS ---
 import Boishakh from "../assets/Events/RongilaBoishakh.jpg";
@@ -25,20 +25,9 @@ export default function Events() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(api('/events'))
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.length > 0) {
-          setEvents(data);
-        } else {
-          setEvents(MOCK_EVENTS);
-        }
-        setLoading(false);
-      })
-      .catch(() => {
-        setEvents(MOCK_EVENTS);
-        setLoading(false);
-      });
+    // Use local mock events only (static site)
+    setEvents(MOCK_EVENTS);
+    setLoading(false);
   }, []);
 
   // Modal scroll lock
@@ -57,7 +46,7 @@ export default function Events() {
   const getImageUrl = (event) => {
     if (event.isLocal) return event.image_url;
     if (!event.image_url) return "https://placehold.co/800x600?text=UBSA+Event";
-    return event.image_url.startsWith("http") ? event.image_url : `${API_BASE}${event.image_url}`;
+    return event.image_url.startsWith("http") ? event.image_url : event.image_url;
   };
 
   const formatDate = (dateStr) => {
@@ -172,7 +161,7 @@ export default function Events() {
   );
 }
 
-// --- UPDATED MOCK DATA WITH YOUR PHOTOS ---
+// --- UPDATE this to add new events or remove older events  ---
 const MOCK_EVENTS = [
   {
     id: "6",

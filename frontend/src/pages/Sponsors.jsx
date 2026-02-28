@@ -8,9 +8,8 @@ import {
   FaPercentage, 
   FaRibbon
 } from 'react-icons/fa';
-import SponsorFormModal from '../components/SponsorFormModal';
 import '../style/Sponsors.css';
-import { API_BASE, api } from '../api';
+// Static frontend: no backend API calls
 
 // Local Assets
 import sponsorPageBg from '../assets/HomeSponsorBG.png';
@@ -101,23 +100,14 @@ export default function Sponsors() {
   const [isEmailBoxOpen, setIsEmailBoxOpen] = useState(false);
 
   useEffect(() => {
-    fetch(api('/sponsors'))
-      .then((res) => res.json())
-      .then((data) => {
-        setSponsors(data && data.length > 0 ? data : MOCK_DATA);
-        setLoading(false);
-      })
-      .catch(() => {
-        setSponsors(MOCK_DATA);
-        setLoading(false);
-      });
+    // Static: use mock sponsors only
+    setSponsors(MOCK_DATA);
+    setLoading(false);
   }, []);
 
   const getImageUrl = (sponsor) => {
     if (sponsor.isLocal) return sponsor.image_url;
-    return sponsor.image_url?.startsWith('http') 
-      ? sponsor.image_url 
-      : `${API_BASE}${sponsor.image_url}`;
+    return sponsor.image_url?.startsWith('http') ? sponsor.image_url : sponsor.image_url;
   };
 
   const renderSponsorTier = (tierName) => {
@@ -161,15 +151,6 @@ export default function Sponsors() {
                     </a>
                   )}
                 </div>
-
-                {/* {sponsor.discount_title && (
-                  <div className="sppg-card-offer-box">
-                    <FaPercentage className="offer-icon-red" />
-                    <div>
-                      <p className="offer-val">{sponsor.discount_title}</p>
-                    </div>
-                  </div>
-                )} */}
 
                 <div className="sppg-card-bio">
                   <p>{sponsor.description}</p>

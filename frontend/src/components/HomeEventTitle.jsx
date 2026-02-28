@@ -35,29 +35,10 @@ export default function HomeEvents() {
   const [latestEvent, setLatestEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
   useEffect(() => {
-    fetch("http://localhost:5000/api/events")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch events");
-        return res.json();
-      })
-      .then((data) => {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        // Filter for future events and sort by date (closest first)
-        const sortedUpcoming = data
-          .filter((e) => e.date && new Date(e.date) >= today)
-          .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-        setLatestEvent(sortedUpcoming[0] || null);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching events:", err);
-        setLoading(false);
-      });
+    // Static demo version: no backend calls
+    setLatestEvent(null);
+    setLoading(false);
   }, []);
 
   const img = (u) =>

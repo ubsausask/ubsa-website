@@ -36,7 +36,17 @@ export default function Constitution() {
             <div className="hero-logo-container">
                <img src={ubsaLogo} alt="UBSA Logo" className="hero-ubsa-logo" />
             </div>
-            <h1><span className="ubsa-red">UBSA</span> Constitution</h1>
+            <h1>
+              <span className="ubsa-red">UBSA</span> {' '}
+              <a
+                href="https://drive.google.com/drive/folders/1V5kKyPhKhkh7pm21QzgbqCwqoMbj5mse?usp=drive_link"
+                target="_blank"
+                rel="noreferrer"
+                className="constitution-link"
+              >
+                Constitution
+              </a>
+            </h1>
             <p className="subtitle-orange">Academic Year 2025 - 2026</p>
             <p className="hero-description">
               The governing framework for the Undergraduate Bangladeshi Students' Association at the University of Saskatchewan [Article I].
