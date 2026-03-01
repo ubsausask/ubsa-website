@@ -261,14 +261,14 @@
   cursor: pointer; z-index: 10; transition: 0.3s;
 }
 
-.evpg-modal-layout { display: flex; height: 100%; }
-.evpg-modal-img-col { flex: 1.2; background: #000; }
+.evpg-modal-layout { display: flex; height: 100%; min-height: 0;}
+.evpg-modal-img-col { flex: 1.2; background: #000; min-height: 0;}
 .evpg-modal-img-col img { width: 100%; height: 100%; object-fit: cover; }
 
-.evpg-modal-info-col { flex: 1; padding: 50px; display: flex; flex-direction: column; text-align: left; }
-.evpg-modal-title { font-size: 2.6rem; color: #ffeac8; font-weight: 900; margin-bottom: 20px; }
+.evpg-modal-info-col { flex: 1; padding: 50px; display: flex; flex-direction: column; text-align: left; min-height: 0; overflow: hidden; }
+.evpg-modal-title { font-size: 2.6rem; color: #ffeac8; font-weight: 900; margin-bottom: 20px; flex-shrink: 0;}
 
-.evpg-modal-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
+.evpg-modal-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; flex-shrink: 0;}
 .evpg-pill {
   display: flex; align-items: center; gap: 8px; font-weight: 700;
   color: #fff; background: rgba(255, 255, 255, 0.05);
@@ -278,7 +278,8 @@
 .evpg-modal-desc {
   flex: 1; overflow-y: auto;
   color: #ccc; line-height: 1.8;
-  margin-bottom: 35px; font-size: 1.05rem;
+  margin-bottom: 20px; font-size: 1.05rem;
+  min-height: 0;
 }
 
 .evpg-reg-btn { 
@@ -287,6 +288,7 @@
   font-weight: 900; text-decoration: none; 
   text-transform: uppercase; transition: 0.4s;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .evpg-price-badge {
@@ -294,6 +296,7 @@
   padding: 10px 20px; border-radius: 15px;
   font-weight: 900; font-size: 1.2rem;
   background: rgba(211, 47, 47, 0.1);
+  flex-shrink: 0;
 }
 
 /* ============================================================
@@ -309,9 +312,33 @@
 
 /* Tablets/Mobile: Modal adjustment */
 @media (max-width: 950px) {
-  .evpg-modal-layout { flex-direction: column; overflow-y: auto; }
-  .evpg-modal-img-col { height: 300px; flex: none; }
-  .evpg-modal-info-col { padding: 30px; }
+  .evpg-modal-layout {
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .evpg-modal-img-col {
+    height: 260px;
+    flex: none;
+  }
+
+  .evpg-modal-info-col {
+    padding: 24px;
+    overflow: visible;
+  }
+
+  .evpg-modal-title {
+    font-size: 1.8rem;
+    margin-bottom: 14px;
+  }
+
+  .evpg-modal-desc {
+    overflow: visible;
+    flex: unset;
+    min-height: auto;
+    margin-bottom: 18px;
+  }
 }
 
 /* Phones: 1 in a row */
