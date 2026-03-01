@@ -217,7 +217,7 @@ export default function Sponsors() {
               <h2>Become a Sponsor</h2>
               <p>Please email us at:</p>
               <a href="mailto:ubsa.usask@gmail.com" className="sponsor-email-link">
-                ubsa.usask@gmail.com
+                <strong style={{ color: 'green' }}>ubsa.usask@gmail.com</strong>
               </a>
             </div>
           </div>
