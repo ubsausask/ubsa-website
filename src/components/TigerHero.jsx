@@ -16,8 +16,10 @@ export default function TigerHero() {
     
     // --- CONFIGURATION ---
     const frameCount = 91; 
-    const currentFrame = index => 
-      `/tiger-frames/tiger_${(index + 1).toString().padStart(4, '0')}.jpg`;
+    const currentFrame = (index) =>
+      `${import.meta.env.BASE_URL}tiger-frames/tiger_${(index + 1)
+        .toString()
+        .padStart(4, '0')}.jpg`;
 
     const images = [];
     const tigerState = { frame: 0 };
