@@ -10,7 +10,7 @@ import Meeting1 from '../assets/Gallery/IMG-20250923-WA0016.jpg';
 import Meeting2 from '../assets/Gallery/IMG-20250923-WA0018.jpg';
 import Meeting3 from '../assets/Gallery/IMG-20250923-WA0019.jpg';
 import PH1 from '../assets/Gallery/Image1.jpg';
-import PH2 from '../assets/Gallery/Image2.jpg';
+import PH2 from '../assets/Gallery/ShondharAdda.jpg';
 
 const MOCK_GALLERY = [
   { id: 'm1', src: MockWedding, caption: 'Fusion Wedding 2025', category: 'Events', isLocal: true },
