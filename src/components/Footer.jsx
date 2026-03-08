@@ -47,7 +47,7 @@ export default function Footer() {
       <div className="footer-bottom">
         <div className="footer-bottom-left">
           <p>© 2025 UBSA. All rights reserved.</p>
-          <p className="designer-credit">Designed by SHAHED</p>
+          <p className="designer-credit">Designed by SHAHED. Sponsored by <a href="https://www.rsoltechnology.com/">RSol Technologies Inc.</a></p>
         </div>
       </div>
     </footer>
