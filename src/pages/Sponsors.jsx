@@ -85,7 +85,7 @@ const MOCK_DATA = [
     name: "First Choice Supermarket", 
     tier: "5% OFF", 
     discount_title: "5% OFF on All Groceries", 
-    description: "Saskatoon based local grocery and Halal mear shop with vibrant selection of food products.", 
+    description: "Saskatoon based local grocery and Halal meat shop with vibrant selection of food products.", 
     image_url: FirstChoice, 
     isLocal: true, 
     location: "1024 Louise Ave, Saskatoon SK", 
