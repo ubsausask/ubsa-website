@@ -100,7 +100,7 @@ export default function About() {
               <div className="pres-layout">
                 <img src={president.image} alt={president.name} className="pres-img" />
                 <div className="pres-info">
-                  <span className="role-tag-gold">President & Founder</span>
+                  <span className="role-tag-gold">President</span>
                   <h3>{president.name}</h3>
                   <p className="dept-text"><FaGraduationCap /> {president.dept}</p>
                   <p className="punchline">"{president.punchline}"</p>
