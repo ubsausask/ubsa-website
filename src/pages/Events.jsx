@@ -11,6 +11,7 @@ import MockWedding2026 from "../assets/Events/MockWedding2026.jpg";
 import FuchkaFest from "../assets/Events/FuchkaFest.jpg";
 import ShondharAdda from "../assets/Events/ShondharAdda.jpg";
 import WebsiteDesign from "../assets/Events/WebsiteDesign.jpg";
+import AGM from "../assets/Events/AGM.jpg";
 
 // Shared Background Assets
 import EventBG1 from "../assets/BD_Cultural_Elements/Event_BG.png";
@@ -164,6 +165,18 @@ export default function Events() {
 // --- UPDATE this to add new events or remove older events  ---
 const MOCK_EVENTS = [
   {
+    id: "7",
+    title: "Annual General Meeting 2026",
+    date: "2026-03-15",
+    time: "12:00 PM - 1:00 PM",
+    location: "Online",
+    description: "Annual General Meeting for UBSA members to discuss club updates and future plans.",
+    price: "0",
+    register_url: "https://forms.gle/45CtZ1YJpuSYEgJ49",
+    event_url: "https://www.instagram.com/p/DVzfJ9FjVKg/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    image_url: AGM,
+    isLocal: true
+  },{
     id: "6",
     title: "Annual Iftar 2026",
     date: "2026-03-09",

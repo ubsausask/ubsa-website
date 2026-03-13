@@ -7,7 +7,7 @@ import "../style/HomeEvents.css";
 // Asset Imports
 import TigerBG from "../assets/Event_page.jpg"; 
 import EventIcon from "../assets/BD_Cultural_Elements/Event_icon.png";
-import NextEventImg from "../assets/Events/AnnualIftar.jpg"; 
+import NextEventImg from "../assets/Events/AGM.jpg"; 
 
 const HomeEventTitle = () => (
   <div className="home-events-title-container">
@@ -126,10 +126,10 @@ export default function HomeEvents() {
 const DEMO_EVENT = {
   id: "demo-1",
   isDemo: true,
-  title: "UBSA Annual Iftar 2026",
-  date: "2026-03-10",
-  time: "6:00 PM - 9:00 PM",
-  location: "Health Sciences D-Wing Atrium",
+  title: "UBSA Annual General Meeting 2026",
+  date: "2026-03-15",
+  time: "12:00 PM - 1:00 PM",
+  location: "Online",
   price: "FREE",
-  description: "Experience the vibrant colors and traditions of a Bengali wedding!"
+  description: "Annual General Meeting for UBSA members to discuss club updates and future plans."
 };
