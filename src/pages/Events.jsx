@@ -50,13 +50,30 @@ export default function Events() {
     return event.image_url.startsWith("http") ? event.image_url : event.image_url;
   };
 
+  // const formatDate = (dateStr) => {
+  //   const d = new Date(dateStr);
+  //   return {
+  //     month: d.toLocaleString("default", { month: "short" }),
+  //     day: d.getDate(),
+  //     full: d.toLocaleDateString("en-US", {
+  //       weekday: "long", year: "numeric", month: "long", day: "numeric",
+  //     }),
+  //   };
+  // };
+
   const formatDate = (dateStr) => {
-    const d = new Date(dateStr);
-    return {
-      month: d.toLocaleString("default", { month: "short" }),
-      day: d.getDate(),
-      full: d.toLocaleDateString("en-US", {
-        weekday: "long", year: "numeric", month: "long", day: "numeric",
+  // const [datePart] = dateStr.split("T");
+  const [year, month, day] = dateStr.split("-").map(Number);
+  const d = new Date(year, month - 1, day);
+
+  return {
+    month: d.toLocaleString("default", { month: "short" }),
+    day: d.getDate(),
+    full: d.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
       }),
     };
   };
@@ -167,7 +184,7 @@ const MOCK_EVENTS = [
   {
     id: "7",
     title: "Annual General Meeting 2026",
-    date: "2026-03-15T00:00:00",
+    date: "2026-03-15",
     time: "12:00 PM - 1:00 PM",
     location: "Online",
     description: "Annual General Meeting for UBSA members to discuss club updates and future plans.",

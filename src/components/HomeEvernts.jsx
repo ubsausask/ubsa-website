@@ -38,16 +38,32 @@ export default function HomeEvents() {
     return event.image_url ? event.image_url : "https://placehold.co/800x600";
   };
 
+  // const formatDate = (dateStr) => {
+  //   const d = new Date(dateStr);
+  //   return {
+  //     day: d.getDate(),
+  //     month: d.toLocaleString("default", { month: "short" }),
+  //     full: d.toLocaleDateString(undefined, { 
+  //       weekday: 'short', 
+  //       month: 'short', 
+  //       day: 'numeric' 
+  //     })
+  //   };
+  // };
+
   const formatDate = (dateStr) => {
-    const d = new Date(dateStr);
-    return {
-      day: d.getDate(),
-      month: d.toLocaleString("default", { month: "short" }),
-      full: d.toLocaleDateString(undefined, { 
-        weekday: 'short', 
-        month: 'short', 
-        day: 'numeric' 
-      })
+  const [year, month, day] = dateStr.split("-").map(Number);
+  const d = new Date(year, month - 1, day);
+
+  return {
+    month: d.toLocaleString("default", { month: "short" }),
+    day: d.getDate(),
+    full: d.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      }),
     };
   };
 
@@ -127,7 +143,7 @@ const DEMO_EVENT = {
   id: "demo-1",
   isDemo: true,
   title: "UBSA Annual General Meeting 2026",
-  date: "2026-03-15T00:00:00",
+  date: "2026-03-15",
   time: "12:00 PM - 1:00 PM",
   location: "Online",
   price: "FREE",
