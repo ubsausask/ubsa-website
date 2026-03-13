@@ -98,7 +98,7 @@ export default function HomeEvents() {
                 <div className="event-action-footer">
                   <button 
                     className="action-btn-dynamic"
-                    onClick={() => window.open("https://www.zeffy.com/en-CA/ticketing/ubsa-iftar--2026", "_blank")}
+                    onClick={() => window.open(latestEvent.register_url, "_blank")}
                   >
                     Register
                   </button>
@@ -131,5 +131,6 @@ const DEMO_EVENT = {
   time: "12:00 PM - 1:00 PM",
   location: "Online",
   price: "FREE",
-  description: "Annual General Meeting for UBSA members to discuss club updates and future plans."
+  description: "Annual General Meeting for UBSA members to discuss club updates and future plans.",
+  register_url: "https://forms.gle/45CtZ1YJpuSYEgJ49"
 };
