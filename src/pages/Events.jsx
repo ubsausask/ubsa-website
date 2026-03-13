@@ -167,7 +167,7 @@ const MOCK_EVENTS = [
   {
     id: "7",
     title: "Annual General Meeting 2026",
-    date: "2026-03-15",
+    date: "2026-03-15T00:00:00",
     time: "12:00 PM - 1:00 PM",
     location: "Online",
     description: "Annual General Meeting for UBSA members to discuss club updates and future plans.",

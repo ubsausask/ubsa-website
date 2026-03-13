@@ -68,7 +68,7 @@ export default function HomeEvents() {
             <div className="compact-event-card frosted-white">
               <div 
                 className="card-media" 
-                onClick={() => window.open("https://www.instagram.com/p/DVPZ05ODWlb/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==", "_blank")}
+                onClick={() => window.open(latestEvent.event_url || latestEvent.register_url, "_blank")}
               >
                 <img src={imgPath(latestEvent)} alt={latestEvent.title} />
                 <div className="mini-date-badge">
@@ -102,10 +102,10 @@ export default function HomeEvents() {
                   >
                     Register
                   </button>
-                  <div className="price-glass">
+                  {/* <div className="price-glass">
                     <FaTicketAlt />
                     <span>{latestEvent.price ? `$${latestEvent.price}` : "FREE"}</span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -127,10 +127,11 @@ const DEMO_EVENT = {
   id: "demo-1",
   isDemo: true,
   title: "UBSA Annual General Meeting 2026",
-  date: "2026-03-15",
+  date: "2026-03-15T00:00:00",
   time: "12:00 PM - 1:00 PM",
   location: "Online",
   price: "FREE",
   description: "Annual General Meeting for UBSA members to discuss club updates and future plans.",
-  register_url: "https://forms.gle/45CtZ1YJpuSYEgJ49"
+  register_url: "https://forms.gle/45CtZ1YJpuSYEgJ49",
+  event_url: "https://www.instagram.com/p/DVzfJ9FjVKg/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
 };
