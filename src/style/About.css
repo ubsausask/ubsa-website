@@ -12,7 +12,7 @@
   content: "";
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: url('../assets/Team/about_page_bg.png') no-repeat center center/cover;
+  background: url('../assets/Exec2026-2027/about_bg.jpg') no-repeat center center/cover;
   filter: brightness(0.25);
   z-index: -1;
 }
@@ -98,6 +98,41 @@
 
 .text-highlight { color: #f42a41; font-size: 2.8rem; margin-bottom: 2rem; }
 .text-highlight-red { color: #f42a41; }
+
+.team-section .section-title {
+  text-align: center;
+  font-size: 2.8rem;
+  margin-bottom: 2.5rem;
+}
+
+.past-exec-bottom-toggle {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.5rem;
+}
+
+.btn-past-exec {
+  padding: 0.85rem 2.2rem;
+  border-radius: 50px;
+  background: rgba(0, 106, 78, 0.25);
+  border: 1px solid rgba(0, 106, 78, 0.6);
+  color: #ffeac8;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.btn-past-exec:hover {
+  background: rgba(0, 106, 78, 0.55);
+  border-color: #39ca5a;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(57, 202, 90, 0.25);
+}
 
 /* --- PRESIDENT SECTION --- */
 .president-featured-row {
